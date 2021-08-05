@@ -9,7 +9,7 @@ CREATE TABLE users (
 CREATE TABLE alimento (
     Id int NOT NULL AUTO_INCREMENT,
     Produto varchar(50) UNIQUE NOT NULL,
-    Estado int(1)
+    Estado int(1),
     PRIMARY KEY (Id)
 );
 
@@ -29,3 +29,5 @@ CREATE TABLE validade (
     PRIMARY KEY (Id),
     FOREIGN KEY (inventario_id) REFERENCES inventario (id)
 );
+
+INSERT INTO users (nome, password, tipo) VALUES ("Grupo 1", "$2a$10$7SoIHtKRdAV3F39mq9BFn.HUkGYrwL7dz6HTYFHVfQR1I66CNKkNa", "voluntario");
