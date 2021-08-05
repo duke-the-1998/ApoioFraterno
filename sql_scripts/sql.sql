@@ -9,7 +9,7 @@ CREATE TABLE users (
 CREATE TABLE alimento (
     Id int NOT NULL AUTO_INCREMENT,
     Produto varchar(50) UNIQUE NOT NULL,
-    Estado int(1)
+    Estado int(1),
     PRIMARY KEY (Id)
 );
 
