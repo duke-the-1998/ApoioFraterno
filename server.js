@@ -51,7 +51,7 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
         const username = req.body.nome;
-        const hashedPassword = await bcrypt.hash(req.body.password, 8);
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const tipo = "voluntario";
         await db.promise().query(`INSERT INTO USERS (nome,password,tipo) VALUES ('${username}', '${hashedPassword}', '${tipo}')`);
         res.redirect('/login');
