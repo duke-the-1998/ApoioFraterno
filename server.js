@@ -14,6 +14,8 @@ const db = require('./database');
 const initializePassport = require('./passport-config');
 initializePassport(passport);
 
+app.use(express.static(__dirname + '/public'));
+
 app.set('view-engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
@@ -26,8 +28,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
 
+
 app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.name })
+    res.render('menuPrincipal.ejs', { name: req.user.name })
 });
 
 app.get('/inventario', checkAuthenticated, (req, res) => {
