@@ -43,7 +43,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }));
 
 app.get('/menuPrincipal', checkAuthenticated, (req, res) => {
-    res.render('menuPrincipal.ejs', { name: req.user.name })
+    res.render('menuPrincipal.ejs');
 });
 
 app.get('/inventario', checkAuthenticated, async (req, res) => {
@@ -55,7 +55,7 @@ app.get('/inventario', checkAuthenticated, async (req, res) => {
 });
 
 app.get('/alimento', checkAuthenticated, (req, res) => {
-    res.render('alimento.ejs', { name: req.user.name })
+    res.render('alimento.ejs');
 });
 
 app.delete('/logout', (req, res) => {
@@ -67,13 +67,12 @@ function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-
     res.redirect('/login');
 }
 
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        return res.redirect('/');
+        return res.redirect('/menuPrincipal');
     }
     next();
 }
