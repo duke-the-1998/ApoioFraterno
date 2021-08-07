@@ -12,7 +12,6 @@ const methodOverride = require('method-override');
 const db = require('./database');
 
 const initializePassport = require('./passport-config');
-const modulo = require('./modules');
 initializePassport(passport);
 
 app.use(express.static(__dirname + '/public'));
@@ -50,7 +49,6 @@ app.get('/menuPrincipal', checkAuthenticated, (req, res) => {
 app.get('/inventario', checkAuthenticated, async (req, res) => {
     const array = await db.promise().query(`SELECT produto FROM ALIMENTO WHERE ESTADO = 1`);
     const newArray = construirArray(array[0]);
-    console.log(newArray);
     res.render('inventario.ejs', { 
         alimentos: newArray
     });

@@ -1,12 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 html,body{
-background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
-background-size: cover;
+background-image: url('/imagens/bg2.jpg');
+background-position: center;
+background-size: 750px;
 background-repeat: no-repeat;
 height: 100%;
 font-family: 'Numans', sans-serif;
 }
+
 
 .container{
 height: 100%;
@@ -47,7 +49,7 @@ box-shadow: 0 0 0 0 !important;
 .login_btn{
 color: black;
 background-color: #FFC312;
-width: 100px;
+width: 150px;
 }
 
 .login_btn:hover{
@@ -61,4 +63,8 @@ color: white;
 
 .links a{
 margin-left: 4px;
+}
+
+.card-body{
+    margin: 20px;
 }
