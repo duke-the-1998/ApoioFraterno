@@ -8,8 +8,8 @@ CREATE TABLE users (
 
 CREATE TABLE alimento (
     Id int NOT NULL AUTO_INCREMENT,
-    Produto varchar(50) UNIQUE NOT NULL,
-    Estado int(1),
+    produto varchar(50) UNIQUE NOT NULL,
+    estado int(1),
     PRIMARY KEY (Id)
 );
 
@@ -31,3 +31,7 @@ CREATE TABLE validade (
 );
 
 INSERT INTO users (nome, password, tipo) VALUES ("Grupo 1", "$2a$10$7SoIHtKRdAV3F39mq9BFn.HUkGYrwL7dz6HTYFHVfQR1I66CNKkNa", "voluntario");
+
+INSERT INTO alimento (produto, estado) VALUES ("Arroz", 1);
+INSERT INTO alimento (produto, estado) VALUES ("Esparguete", 0);
+INSERT INTO alimento (produto, estado) VALUES ("Azeite", 1);

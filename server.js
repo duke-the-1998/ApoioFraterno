@@ -12,6 +12,7 @@ const methodOverride = require('method-override');
 const db = require('./database');
 
 const initializePassport = require('./passport-config');
+const modulo = require('./modules');
 initializePassport(passport);
 
 app.use(express.static(__dirname + '/public'));
@@ -28,13 +29,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
 
-
-app.get('/', checkAuthenticated, (req, res) => {
-    res.render('menuPrincipal.ejs', { name: req.user.name })
-});
-
-app.get('/inventario', checkAuthenticated, (req, res) => {
-    res.render('inventario.ejs', { name: req.user.name })
+app.get('/', checkNotAuthenticated, (req, res) => {
+    res.render('login.ejs')
 });
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -42,25 +38,26 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 });
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/menuPrincipal',
     failureRedirect: '/login',
     failureFlash: true
 }));
 
-app.get('/register', checkNotAuthenticated, (req, res) => {
-    res.render('register.ejs')
+app.get('/menuPrincipal', checkAuthenticated, (req, res) => {
+    res.render('menuPrincipal.ejs', { name: req.user.name })
 });
 
-app.post('/register', checkNotAuthenticated, async (req, res) => {
-    try {
-        const username = req.body.nome;
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const tipo = "voluntario";
-        await db.promise().query(`INSERT INTO USERS (nome,password,tipo) VALUES ('${username}', '${hashedPassword}', '${tipo}')`);
-        res.redirect('/login');
-    } catch {
-        res.redirect('/register');
-    }
+app.get('/inventario', checkAuthenticated, async (req, res) => {
+    const array = await db.promise().query(`SELECT produto FROM ALIMENTO WHERE ESTADO = 1`);
+    const newArray = construirArray(array[0]);
+    console.log(newArray);
+    res.render('inventario.ejs', { 
+        alimentos: newArray
+    });
+});
+
+app.get('/alimento', checkAuthenticated, (req, res) => {
+    res.render('alimento.ejs', { name: req.user.name })
 });
 
 app.delete('/logout', (req, res) => {
@@ -82,5 +79,31 @@ function checkNotAuthenticated(req, res, next) {
     }
     next();
 }
+
+function construirArray(array) {
+    var newArray = new Array();
+
+    for (var n of array) {
+        const obj = {alimento: n.produto}
+        newArray.push(obj);
+    }
+    return newArray;
+}
+
+/*app.get('/register', checkNotAuthenticated, (req, res) => {
+    res.render('register.ejs')
+});
+
+app.post('/register', checkNotAuthenticated, async (req, res) => {
+    try {
+        const username = req.body.nome;
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const tipo = "voluntario";
+        await db.promise().query(`INSERT INTO USERS (nome,password,tipo) VALUES ('${username}', '${hashedPassword}', '${tipo}')`);
+        res.redirect('/login');
+    } catch {
+        res.redirect('/register');
+    }
+});*/
 
 app.listen(3000);

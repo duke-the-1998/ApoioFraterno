@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,body {
+    background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+}
+
+.inventario {
+    height: 100%;
+    margin-top: 20px;
+    align-content: center;
+}
+
+.card {
+    width: 25rem;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 50px;
+    background-color: rgba(0,0,0,0.5) !important;
+}
+    
+.card-body {
+    color: white;
+}
