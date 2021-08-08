@@ -16,11 +16,12 @@ html, body {
 
 .card {
     text-align: center;
-    width: 350px;
+    width: 340px;
     margin: 0 auto; 
     float: none; 
     margin-bottom: 10px;
     background-color: rgba(0,0,0,0.5) !important;
+   
 }
     
 .card-body {
