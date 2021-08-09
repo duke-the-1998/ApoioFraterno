@@ -16,7 +16,7 @@ CREATE TABLE inventario (
 CREATE TABLE alimento (
     Id int NOT NULL AUTO_INCREMENT,
     alimento_id int,
-    peso_produto int,
+    peso_produto varchar(50),
     PRIMARY KEY (Id),
     FOREIGN KEY (alimento_id) REFERENCES alimento (id)
 );

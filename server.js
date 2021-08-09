@@ -47,26 +47,34 @@ app.get('/menuPrincipal', checkAuthenticated, (req, res) => {
 });
 
 app.get('/inventario', checkNotAuthenticated, async (req, res) => {
-    const array = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
-    const newArray = construirArray(array[0]);
+    const inventario = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
+    const novoInventario = construirArrayInventario(inventario[0]);
     res.render('inventario.ejs', { 
-        alimentos: newArray
+        alimentos: novoInventario
     });
 });
 
 app.post('/alimento', checkNotAuthenticated, async (req, res) => {
     const produto = await db.promise().query(`SELECT produto FROM INVENTARIO WHERE ID ='${req.body.id}'`);
+    const listaPesos = await db.promise().query(`SELECT * FROM ALIMENTO WHERE ALIMENTO_ID ='${req.body.id}'`);
+    const novaListaPesos = construirArrayPeso(listaPesos[0]);
+
     res.render('alimento.ejs', {
-        alimento: produto[0][0].produto
+        alimento: produto[0][0].produto,
+        pesos: novaListaPesos,
+        id: produto[0][0].Id
     });
-    const pesoProduto = await db.promise().query(`SELECT * FROM ALIMENTO WHERE ALIMENTO_ID ='${req.body.id}'`);
-    console.log(pesoProduto[0])
+    
 });
 
 app.delete('/logout', (req, res) => {
     req.logOut();
     res.redirect('/login');
 });
+
+/**
+ * Funcoes auxiliares
+ */
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -82,12 +90,12 @@ function checkNotAuthenticated(req, res, next) {
     next();
 }
 
-function construirArray(array) {
+function construirArrayInventario(array) {
     var newArray = new Array();
 
     for (var n of array) {
         const obj = {
-            alimento: n.produto,
+            alimento: n.peso,
             id: n.Id
         }
         newArray.push(obj);
@@ -95,6 +103,18 @@ function construirArray(array) {
     return newArray;
 }
 
+function construirArrayPeso(array) {
+    var newArray = new Array();
+
+    for (var n of array) {
+        const obj = {
+            peso: n.peso_produto,
+            id: n.Id
+        }
+        newArray.push(obj);
+    }
+    return newArray;
+}
 /*app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs')
 });
