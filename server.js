@@ -55,8 +55,9 @@ app.get('/inventario', checkNotAuthenticated, async (req, res) => {
 });
 
 app.post('/alimento', checkNotAuthenticated, (req, res) => {
-    console.log(req.body);
-    res.render('alimento.ejs');
+    res.render('alimento.ejs', {
+        alimento: req.body.alimento
+    });
 });
 
 app.delete('/logout', (req, res) => {

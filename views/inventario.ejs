@@ -19,43 +19,27 @@
         <% for (var i = 0; i < alimentos.length; i+=2) { %>
             <div class="row">
                 <div class="col-sm">
-                    <% var alimento = alimentos[i].alimento; %>
-                    <div class="card" onclick=<%= "show(" + JSON.stringify(alimento) + ")" %>>
-                        <form action="/alimento" method="GET">
-                            <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimentos[i].alimento + ".jpg" %> alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <input type="submit" id="alimento" name="alimento" value=<%= alimentos[i].alimento %> />
-                                </h5>
+                    <form method="post" action='/alimento'>
+                        <button type="submit" classid="close-image">
+                            <div class="card">
+                                <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimentos[i].alimento + ".jpg" %> alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title"> <%= alimentos[i].alimento %></h5>
+                                    <input type="hidden" class="form-control" name="alimento" value= <%= alimentos[i].alimento %>>
+                                </div>
                             </div>
-                        </form>
-                    </div>
+                        </button>
+                    </form>
                 </div>
-                <script>
-                    async function show(n) {
-
-                        const obj = { alimento: n };
-                        console.log(obj);
-
-                        const res = await fetch('http://localhost:3000/alimento', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(obj),
-                        }).then((res) => console.log(res));
-                }
-                </script>
                 <% if (i+1 < alimentos.length) { %>
                     <div class="col-sm">
-                        <div class="card">
-                            <a href="/alimento">
+                        <form method="post" action='/alimento'>
+                            <button type="submit" classid="close-image">
                                 <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimentos[i+1].alimento + ".jpg" %> alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title"> <%= alimentos[i+1].alimento %></h5>
-                                </div>
-                            </a>
-                        </div>
+                                <h5 class="card-title"> <%= alimentos[i+1].alimento %></h5>
+                                <input type="hidden" class="form-control" name="alimento" value= <%= alimentos[i+1].alimento %>>
+                            </button>
+                        </form>
                     </div>
                 <% } %>
             </div>

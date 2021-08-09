@@ -19,14 +19,9 @@
             <div class="row">
                 <div class="col-sm">
                     <div class="card">
-                        <img class="card-img-top" src="/imagens/Alimentos/arroz.jpg" alt="Card image cap">
+                        <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimento + ".jpg" %> alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <script>
-                                function show() {
-                                    document.getElementsByClassName("card-title").innerHTML = window.location.search;
-                                }
-                            </script>
+                            <h5 class="card-title"> <%= alimento %></h5>
                         </div>
                     </div>
                 </div>
