@@ -67,6 +67,10 @@ app.post('/alimento', checkNotAuthenticated, async (req, res) => {
     
 });
 
+app.post('/concluir', checkNotAuthenticated, async (req, res) => {
+    console.log(req.body)
+});
+
 app.delete('/logout', (req, res) => {
     req.logOut();
     res.redirect('/login');
@@ -95,7 +99,7 @@ function construirArrayInventario(array) {
 
     for (var n of array) {
         const obj = {
-            alimento: n.peso,
+            alimento: n.produto,
             id: n.Id
         }
         newArray.push(obj);
