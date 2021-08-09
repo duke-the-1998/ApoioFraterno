@@ -47,17 +47,20 @@ app.get('/menuPrincipal', checkAuthenticated, (req, res) => {
 });
 
 app.get('/inventario', checkNotAuthenticated, async (req, res) => {
-    const array = await db.promise().query(`SELECT produto FROM ALIMENTO WHERE ESTADO = 1`);
+    const array = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
     const newArray = construirArray(array[0]);
     res.render('inventario.ejs', { 
         alimentos: newArray
     });
 });
 
-app.post('/alimento', checkNotAuthenticated, (req, res) => {
+app.post('/alimento', checkNotAuthenticated, async (req, res) => {
+    const produto = await db.promise().query(`SELECT produto FROM INVENTARIO WHERE ID ='${req.body.id}'`);
     res.render('alimento.ejs', {
-        alimento: req.body.alimento
+        alimento: produto[0][0].produto
     });
+    const pesoProduto = await db.promise().query(`SELECT * FROM ALIMENTO WHERE ALIMENTO_ID ='${req.body.id}'`);
+    console.log(pesoProduto[0])
 });
 
 app.delete('/logout', (req, res) => {
@@ -83,7 +86,10 @@ function construirArray(array) {
     var newArray = new Array();
 
     for (var n of array) {
-        const obj = {alimento: n.produto}
+        const obj = {
+            alimento: n.produto,
+            id: n.Id
+        }
         newArray.push(obj);
     }
     return newArray;
