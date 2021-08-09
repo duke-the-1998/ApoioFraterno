@@ -46,7 +46,7 @@ app.get('/menuPrincipal', checkAuthenticated, (req, res) => {
     res.render('menuPrincipal.ejs');
 });
 
-app.get('/inventario', checkAuthenticated, async (req, res) => {
+app.get('/inventario', checkNotAuthenticated, async (req, res) => {
     const array = await db.promise().query(`SELECT produto FROM ALIMENTO WHERE ESTADO = 1`);
     const newArray = construirArray(array[0]);
     res.render('inventario.ejs', { 
@@ -54,7 +54,8 @@ app.get('/inventario', checkAuthenticated, async (req, res) => {
     });
 });
 
-app.get('/alimento', checkAuthenticated, (req, res) => {
+app.post('/alimento', checkNotAuthenticated, (req, res) => {
+    console.log(req.body);
     res.render('alimento.ejs');
 });
 
