@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html, body {
+   background-color: rgb(187, 207, 187);  
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+}
+
+.inventario {
+    height: 100%;
+    margin-top: 20px;
+    align-content: center;
+}
+
+.card {
+    text-align: center;
+    width: 340px;
+    margin: 0 auto; 
+    float: none; 
+    margin-bottom: 10px;
+    background-color: rgba(0,0,0,0.5) !important;
+   
+}
+    
+.card-body {
+    color: white;
+}
+
+.card-title{
+    font-size: 30px;
+}
+
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+  
+    display: flex;
+    align-items: center;
+  }
