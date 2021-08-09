@@ -21,13 +21,9 @@
                 <div class="col-sm">
                     <form method="post" action='/alimento'>
                         <button type="submit" classid="close-image">
-                            <div class="card">
-                                <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimentos[i].alimento + ".jpg" %> alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title"> <%= alimentos[i].alimento %></h5>
-                                    <input type="hidden" class="form-control" name="id" value= <%= alimentos[i].id %>>
-                                </div>
-                            </div>
+                            <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimentos[i].alimento + ".jpg" %> alt="Card image cap">
+                            <h5 class="card-title"> <%= alimentos[i].alimento %></h5>
+                            <input type="hidden" class="form-control" name="id" value= <%= alimentos[i].id %>>
                         </button>
                     </form>
                 </div>
