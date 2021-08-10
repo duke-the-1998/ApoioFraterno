@@ -54,7 +54,20 @@ app.get('/inventario', checkAuthenticated, async (req, res) => {
     });
 });
 
+app.get('/inventario/message', checkAuthenticated, async (req, res) => {
+    const inventario = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
+    const novoInventario = construirArrayInventario(inventario[0]);
+    res.render('inventario.ejs', { 
+        alimentos: novoInventario,
+        message: 'Operação concluida com sucesso'
+    });
+});
+
+
 app.post('/alimento', checkAuthenticated, async (req, res) => {
+
+    console.log(req.body);
+
     const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${req.body.id}'`);
     const listaPesos = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${req.body.id}'`);
     const novaListaPesos = construirArrayPeso(listaPesos[0]);
@@ -78,7 +91,7 @@ app.post('/concluir', checkAuthenticated, async (req, res) => {
         darSaidaProduto(row[0], alimento[0][0].id, body.validade, body.quantidade);
     }
 
-    res.redirect('/inventario');
+    res.redirect('/inventario/message');
 });
 
 app.delete('/logout', (req, res) => {
