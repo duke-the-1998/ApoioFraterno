@@ -68,7 +68,11 @@ app.post('/alimento', checkNotAuthenticated, async (req, res) => {
 });
 
 app.post('/concluir', checkNotAuthenticated, async (req, res) => {
-    console.log(req.body)
+    const body = req.body;
+    console.log(body)
+    if(body.Entrar === 'on' && body.Sair === 'on') {
+        res.render('alimento.ejs', {message: 'Apenas selecione uma opção'})
+    }
 });
 
 app.delete('/logout', (req, res) => {
