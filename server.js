@@ -65,9 +65,6 @@ app.get('/inventario/message', checkAuthenticated, async (req, res) => {
 
 
 app.post('/alimento', checkAuthenticated, async (req, res) => {
-
-    console.log(req.body);
-
     const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${req.body.id}'`);
     const listaPesos = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${req.body.id}'`);
     const novaListaPesos = construirArrayPeso(listaPesos[0]);
