@@ -18,7 +18,7 @@
         <div class="inventario"> 
         <% for (var i = 0; i < alimentos.length; i+=2) { %>
             <div class="row">
-                <div class="col-sm">
+                <div class="col-sm" >
                     <form method="post" action='/alimento'>
                         <button type="submit" classid="close-image">
                             <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimentos[i].alimento + ".jpg" %> alt="Card image cap">

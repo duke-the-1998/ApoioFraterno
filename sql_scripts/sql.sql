@@ -41,7 +41,7 @@ INSERT INTO inventario (produto, estado) VALUES ("Arroz", 1);
 INSERT INTO inventario (produto, estado) VALUES ("Esparguete", 1);
 INSERT INTO inventario (produto, estado) VALUES ("Azeite", 1);
 INSERT INTO inventario (produto, estado) VALUES ("Oleo", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Batatas-Fritas", 1);
+INSERT INTO inventario (produto, estado) VALUES ("Batatas_Fritas", 1);
 INSERT INTO inventario (produto, estado) VALUES ("Massa", 1);
 INSERT INTO inventario (produto, estado) VALUES ("Leite", 1);
 INSERT INTO inventario (produto, estado) VALUES ("Leguminosas_Frasco", 1);
@@ -53,7 +53,7 @@ INSERT INTO inventario (produto, estado) VALUES ("Cereais", 1);
 INSERT INTO inventario (produto, estado) VALUES ("Bolachas", 1);
 INSERT INTO inventario (produto, estado) VALUES ("Farinha", 1);
 INSERT INTO inventario (produto, estado) VALUES ("Farinha_Lactea", 1);
-
+INSERT INTO inventario (produto, estado) VALUES ("Açucar", 1);
 
 INSERT INTO alimento (inventario_id, peso_produto) VALUES (1, "1kg");
 INSERT INTO alimento (inventario_id, peso_produto) VALUES (1, "500g");
