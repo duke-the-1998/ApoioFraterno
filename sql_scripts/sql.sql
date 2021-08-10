@@ -1,3 +1,8 @@
+DROP TABLE validade;
+DROP TABLE alimento;
+DROP TABLE inventario;
+DROP TABLE users;
+
 CREATE TABLE users (
     id int NOT NULL AUTO_INCREMENT,
     nome varchar(50) UNIQUE NOT NULL,
