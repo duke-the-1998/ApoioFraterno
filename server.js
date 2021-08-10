@@ -46,7 +46,7 @@ app.get('/menuPrincipal', checkAuthenticated, (req, res) => {
     res.render('menuPrincipal.ejs');
 });
 
-app.get('/inventario', checkNotAuthenticated, async (req, res) => {
+app.get('/inventario', checkAuthenticated, async (req, res) => {
     const inventario = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
     const novoInventario = construirArrayInventario(inventario[0]);
     res.render('inventario.ejs', { 
@@ -54,25 +54,31 @@ app.get('/inventario', checkNotAuthenticated, async (req, res) => {
     });
 });
 
-app.post('/alimento', checkNotAuthenticated, async (req, res) => {
-    const produto = await db.promise().query(`SELECT produto FROM INVENTARIO WHERE ID ='${req.body.id}'`);
+app.post('/alimento', checkAuthenticated, async (req, res) => {
+    const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${req.body.id}'`);
     const listaPesos = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${req.body.id}'`);
     const novaListaPesos = construirArrayPeso(listaPesos[0]);
 
     res.render('alimento.ejs', {
         alimento: produto[0][0].produto,
         pesos: novaListaPesos,
-        id: produto[0][0].Id
+        id: produto[0][0].id
     });
     
 });
 
-app.post('/concluir', checkNotAuthenticated, async (req, res) => {
+app.post('/concluir', checkAuthenticated, async (req, res) => {
     const body = req.body;
-    console.log(body)
-    if(body.Entrar === 'on' && body.Sair === 'on') {
-        res.render('alimento.ejs', {message: 'Apenas selecione uma opção'})
+    const alimento = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID = '${body.id}' AND PESO_PRODUTO = '${body.peso}'`);
+    const row = await db.promise().query(`SELECT * FROM VALIDADE WHERE ALIMENTO_ID = '${alimento[0][0].id}' AND DATA = '${body.validade}'`);
+
+    if(body.add) {
+        darEntradaProduto(row[0], alimento[0][0].id, body.validade, body.quantidade);
+    } else {
+        darSaidaProduto(row[0], alimento[0][0].id, body.validade, body.quantidade);
     }
+
+    res.redirect('/inventario');
 });
 
 app.delete('/logout', (req, res) => {
@@ -117,12 +123,34 @@ function construirArrayPeso(array) {
     for (var n of array) {
         const obj = {
             peso: n.peso_produto,
-            id: n.Id
+            id: n.id
         }
         newArray.push(obj);
     }
     return newArray;
 }
+
+async function darEntradaProduto(row, alimento_id, validade, quantidade) {
+    if (row.length === 0) {
+        db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}', '${quantidade}')`)
+        return
+    } else {
+        db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE+'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`)
+        return
+    }
+}
+
+async function darSaidaProduto(row, alimento_id, validade, quantidade) {
+    if (row.length === 0) {
+        //Eh preciso decidir
+        return
+    } else {
+        db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`)
+        return
+    }
+}
+
+
 /*app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs')
 });
