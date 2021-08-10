@@ -104,7 +104,7 @@ function construirArrayInventario(array) {
     for (var n of array) {
         const obj = {
             alimento: n.produto,
-            id: n.Id
+            id: n.id
         }
         newArray.push(obj);
     }
