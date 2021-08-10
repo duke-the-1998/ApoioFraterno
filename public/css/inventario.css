@@ -13,6 +13,7 @@ html, body {
     height: 100%;
     margin-top: 20px;
     align-content: center;
+    
 }
 
 .card {
@@ -22,10 +23,12 @@ html, body {
     float: none; 
     margin-bottom: 10px;
     background-color: rgba(0,0,0,0.5) !important;
+   
 }
     
 .card-body {
     color: white;
+   
 }
 
 .card-title{
@@ -34,6 +37,7 @@ html, body {
 
 .col-sm{
     text-align: center;
+    
 }
 
 .alert {
@@ -56,3 +60,21 @@ html, body {
   .closebtn:hover {
     color: white;
   }
+
+.card-img-top{
+    border-radius: 20px;
+   
+  }
+
+  
+.btn-primary{
+    border-radius: 20px;
+    background-color: #c4c08b;
+    border-color: #c4c08b;
+  }
+
+  .btn-primary:hover{
+    border-color: #7a8b75;
+    background-color: #7a8b75;
+  }
+  
