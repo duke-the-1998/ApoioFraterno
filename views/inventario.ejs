@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-sm" >
                     <form method="post" action='/alimento'>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" >
                             <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimentos[i].alimento + ".jpg" %> alt="Card image cap">
                             <h5 class="card-title"> <%= alimentos[i].alimento %></h5>
                             <input type="hidden" class="form-control" name="id" value= <%= alimentos[i].id %>>
@@ -37,7 +37,7 @@
                 <% if (i+1 < alimentos.length) { %>
                     <div class="col-sm">
                         <form method="post" action='/alimento'>
-                            <button type="submit">
+                            <button type="submit" class="btn btn-primary">
                                 <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimentos[i+1].alimento + ".jpg" %> alt="Card image cap">
                                 <h5 class="card-title"> <%= alimentos[i+1].alimento %></h5>
                                 <input type="hidden" class="form-control" name="id" value= <%= alimentos[i+1].id %>>

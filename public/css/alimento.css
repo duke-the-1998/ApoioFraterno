@@ -1,10 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 html, body {
-   background-color: rgb(187, 207, 187);  
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 100%;
+    background-color: rgba(212, 255, 95, 0.568);
+    
     font-family: 'Numans', sans-serif;
 }
 
@@ -32,9 +30,7 @@ html, body {
     font-size: 30px;
 }
 
-.vertical-center {
-    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-    min-height: 100vh; /* These two lines are counted as one :-)       */
-    display: flex;
-    align-items: center;
-  }
+.col-md{
+    text-align: center;
+}
+
