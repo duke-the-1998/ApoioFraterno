@@ -3,53 +3,72 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-    <!--Bootsrap 4 CDN-->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        
-    <!--Fontawesome CDN-->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-        <link href="/css/inventario.css" rel="stylesheet" type="text/css">
-        <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
-        <title>Inventário</title>
-    </head>
 
-    <body>
-        <% if (typeof message != 'undefined') { %>
-            <div class="alert">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <strong>Operação conluída!</strong>
-              </div>
-        <% } %>
-        <div class="inventario"> 
-        
-        <% for (var i = 0; i < alimentos.length; i+=2) { %>
-            <div class="row">
-                <div class="col-sm" >
-                    <form method="post" action='/alimento'>
-                        <button type="submit" class="btn" >
-                            <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimentos[i].alimento + ".jpg" %> alt="Card image cap">
-                            <h5 class="card-title"> <%= alimentos[i].alimento %></h5>
-                            <input type="hidden" class="form-control" name="id" value= <%= alimentos[i].id %>>
-                        </button>
-                    </form>
-                </div>
-                <% if (i+1 < alimentos.length) { %>
-                    <div class="col-sm">
-                        <form method="post" action='/alimento'>
-                            <button type="submit" class="btn">
-                                <img class="card-img-top" src=<%= "/imagens/Alimentos/" + alimentos[i+1].alimento + ".jpg" %> alt="Card image cap">
-                                <h5 class="card-title"> <%= alimentos[i+1].alimento %></h5>
-                                <input type="hidden" class="form-control" name="id" value= <%= alimentos[i+1].id %>>
-                            </button>
-                        </form>
-                    </div>
-                <% } else { %>
-                    <div class="col-sm"></div>
-                <% } %>
-            </div>
-        <% } %>
-        <a href="/menuPrincipal"><i class="fa fa-arrow-left"></i> Voltar</a>
+<meta name="viewport" content="width=device-width, initial-scale=0.4">
+
+<head>
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="/css/inventario.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
+    <title>Inventário</title>
+</head>
+
+<body>
+
+
+    <% if (typeof message !='undefined' ) { %>
+        <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>Operação conluída!</strong>
         </div>
-    </body>
+        <% } %>
+            <div class="inventario">
+
+                <% for (var i=0; i < alimentos.length; i+=2) { %>
+                    <div class="row">
+                        <div class="col-sm">
+                            <form method="post" action='/alimento'>
+                                <button type="submit" class="btn">
+                                    <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].alimento
+                                        + ".jpg" %> alt="Card image cap">
+                                    <h5 class="card-title">
+                                        <%= alimentos[i].alimento %>
+                                    </h5>
+                                    <input type="hidden" class="form-control" name="id" value=<%=alimentos[i].id %>>
+                                </button>
+                            </form>
+                        </div>
+                        <% if (i+1 < alimentos.length) { %>
+                            <div class="col-sm">
+                                <form method="post" action='/alimento'>
+                                    <button type="submit" class="btn">
+                                        <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].alimento
+                                            + ".jpg" %> alt="Card image cap">
+                                        <h5 class="card-title">
+                                            <%= alimentos[i+1].alimento %>
+                                        </h5>
+                                        <input type="hidden" class="form-control" name="id" value=<%=alimentos[i+1].id
+                                            %>>
+                                    </button>
+                                </form>
+                            </div>
+                            <% } else { %>
+                                <div class="col-sm"></div>
+                                <% } %>
+                    </div>
+                    <% } %>
+                        <div class="navbar">
+                            <a href="/menuPrincipal"><i class="fa fa-arrow-left"></i> Voltar</a>
+                            <a href="/CriarAlimento">Criar Alimento</a>
+                        </div>
+
+            </div>
+</body>
+
 </html>
