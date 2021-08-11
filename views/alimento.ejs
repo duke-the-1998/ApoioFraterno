@@ -44,7 +44,7 @@
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputState">Data de validade</label><br>
-                        <input type="date" class="form-control" name="validade" data-date-format="dd/mm/yyyy" required>
+                        <input type="date" class="form-control" name="validade" data-date-format="dd/mm/yyyy">
                     </div>
                 </div>
                 <div class="form-row">
@@ -54,8 +54,9 @@
                     </div>
                 </div>
                 <input type="hidden" name="id" value=<%= id %>>
-                <input type="submit" onclick='return btnClick();' class="btn btn-primary" name="add" value="Entrada de produto">
-                <input type="submit" onclick='return btnClick();' class="btn btn-primary" name="sub" value="Saída de produto">
+                <input type="submit" onclick='return btnClick();' class="btn" name="add" value="Entrada de produto">
+                <input type="submit" onclick='return btnClick();' class="btn" name="sub" value="Saída de produto">
+                <a href="/inventario"><i class="fa fa-arrow-left"></i> Voltar</a>
                 <script>
                     function btnClick() {
                       var r = confirm("Deseja confirmar a submissão?");
@@ -64,5 +65,6 @@
                 </script>
             </div>
         </form>
+        
     </body>
 </html>
