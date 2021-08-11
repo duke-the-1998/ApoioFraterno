@@ -67,14 +67,18 @@ html, body {
   }
 
   
-.btn-primary{
+.btn{
     border-radius: 20px;
     background-color: #c4c08b;
     border-color: #c4c08b;
   }
 
-  .btn-primary:hover{
+  .btn:hover{
     border-color: #7a8b75;
     background-color: #7a8b75;
   }
   
+  .btn:focus{
+    border-color: #7a8b75;
+    background-color: #7a8b75;
+  }
