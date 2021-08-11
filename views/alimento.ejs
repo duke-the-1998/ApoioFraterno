@@ -24,70 +24,57 @@
                 <div class="card">
                     <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimento + ".jpg" %> alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            <%= alimento %>
-                        </h5>
+                        <h5 class="card-title"><%= alimento %></h5>
+                        <p> Uma descrição sobre o alimento</p>
                     </div>
                 </div>
             </div>
             <div class="form-group col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <p> Uma descrição sobre o alimento asdasdasdasdasdfgdhhdgfhgbdjnyujhdxtrtwesgjdaldajsnvjeaubfhb
-                        </p>
+                        <div class="container text-center vertical-center">
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Peso do alimento</label>
+                                    <select id="inputState" name="peso" class="form-control">
+                                        <% for (var peso of pesos) { %>
+                                            <option>
+                                                <%= peso.peso %>
+                                            </option>
+                                            <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Data de validade</label><br>
+                                    <input type="date" class="form-control" name="validade" data-date-format="dd/mm/yyyy">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputZip">Quantidade</label>
+                                </div>
+                            </div>
+                            <input type="number" class="form-control" name="quantidade" required>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <div class="card">
-            <div class="card-body">
-
-                <div class="container text-center vertical-center">
-                    <div class="form-row">
-                        <div class="form-group col-md">
-                            <label for="inputState">Peso do alimento</label>
-                            <select id="inputState" name="peso" class="form-control">
-                                <% for (var peso of pesos) { %>
-                                    <option>
-                                        <%= peso.peso %>
-                                    </option>
-                                    <% } %>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md">
-                            <label for="inputState">Data de validade</label><br>
-                            <input type="date" class="form-control" name="validade" data-date-format="dd/mm/yyyy">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md">
-                            <label for="inputZip">Quantidade</label>
-                        </div>
-                    </div>
-                    <input type="number" class="form-control" name="quantidade" required>
-                </div>
-
-            </div>
-        </div>
-
-
-        <input type="hidden" name="id" value=<%=id %>>
-        <input type="submit" onclick='return btnClick();' class="btn" name="add" value="Entrada de produto">
-        <input type="submit" onclick='return btnClick();' class="btn" name="sub" value="Saída de produto">
-        <a href="/inventario"><i class="fa fa-arrow-left"></i> Voltar</a>
-        <script>
-            function btnClick() {
-                var r = confirm("Deseja confirmar a submissão?");
-                return r;
-            }
-        </script>
+        <footer class="btn-submit"> 
+            <input class="inputs" type="hidden" name="id" value=<%=id %>>
+            <input type="submit" onclick='return btnClick();' class="btn" name="add" value="Entrada de produto">
+            <input type="submit" onclick='return btnClick();' class="btn" name="sub" value="Saída de produto">
+            <a href="/inventario"><i class="fa fa-arrow-left"></i> Voltar</a>
+            <script>
+                function btnClick() {
+                    var r = confirm("Deseja confirmar a submissão?");
+                    return r;
+                }
+            </script>
         </div>
     </form>
-
+    
 </body>
-
 </html>

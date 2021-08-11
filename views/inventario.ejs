@@ -19,56 +19,59 @@
     <title>Inventário</title>
 </head>
 
-<body>
+<% if (typeof message !='undefined' ) { %>
+    <body onload="myFunction()">
+<% } else { %>
+    <body>
+<% } %>
 
+<script>
+    function myFunction() {
+        alert('Operação concluida com sucesso')
+    }
+</script>
 
-    <% if (typeof message !='undefined' ) { %>
-        <div class="alert">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-            <strong>Operação conluída!</strong>
-        </div>
-        <% } %>
-            <div class="inventario">
+    <div class="inventario">
 
-                <% for (var i=0; i < alimentos.length; i+=2) { %>
-                    <div class="row">
-                        <div class="col-sm">
-                            <form method="post" action='/alimento'>
-                                <button type="submit" class="btn">
-                                    <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].alimento
-                                        + ".jpg" %> alt="Card image cap">
-                                    <h5 class="card-title">
-                                        <%= alimentos[i].alimento %>
-                                    </h5>
-                                    <input type="hidden" class="form-control" name="id" value=<%=alimentos[i].id %>>
-                                </button>
-                            </form>
-                        </div>
-                        <% if (i+1 < alimentos.length) { %>
-                            <div class="col-sm">
-                                <form method="post" action='/alimento'>
-                                    <button type="submit" class="btn">
-                                        <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].alimento
-                                            + ".jpg" %> alt="Card image cap">
-                                        <h5 class="card-title">
-                                            <%= alimentos[i+1].alimento %>
-                                        </h5>
-                                        <input type="hidden" class="form-control" name="id" value=<%=alimentos[i+1].id
-                                            %>>
-                                    </button>
-                                </form>
-                            </div>
-                            <% } else { %>
-                                <div class="col-sm"></div>
-                                <% } %>
+        <% for (var i=0; i < alimentos.length; i+=2) { %>
+            <div class="row">
+                <div class="col-sm">
+                    <form method="post" action='/alimento'>
+                        <button type="submit" class="btn">
+                            <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].alimento
+                                + ".jpg" %> alt="Card image cap">
+                            <h5 class="card-title">
+                                <%= alimentos[i].alimento %>
+                            </h5>
+                            <input type="hidden" class="form-control" name="id" value=<%=alimentos[i].id %>>
+                        </button>
+                    </form>
+                </div>
+                <% if (i+1 < alimentos.length) { %>
+                    <div class="col-sm">
+                        <form method="post" action='/alimento'>
+                            <button type="submit" class="btn">
+                                <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].alimento
+                                    + ".jpg" %> alt="Card image cap">
+                                <h5 class="card-title">
+                                    <%= alimentos[i+1].alimento %>
+                                </h5>
+                                <input type="hidden" class="form-control" name="id" value=<%=alimentos[i+1].id
+                                    %>>
+                            </button>
+                        </form>
                     </div>
-                    <% } %>
-                        <div class="navbar">
-                            <a href="/menuPrincipal"><i class="fa fa-arrow-left"></i> Voltar</a>
-                            <a href="/CriarAlimento">Criar Alimento</a>
-                        </div>
-
+                <% } else { %>
+                    <div class="col-sm"></div>
+                <% } %>
             </div>
+        <% } %>
+        <div class="navbar">
+            <a href="/menuPrincipal"><i class="fa fa-arrow-left"></i> Voltar</a>
+            <a href="/CriarAlimento">Criar Alimento</a>
+        </div>
+
+    </div>
 </body>
 
 </html>
