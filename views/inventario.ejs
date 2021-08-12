@@ -27,10 +27,10 @@
 
     <div class="inventario">
 
-        <% for (var i=0; i < alimentos.length; i+=2) { %>
+        <% for (var i = 0; i < alimentos.length; i += 2) { %>
             <div class="row">
                 <div class="col-sm">
-                    <form method="post" action='/alimento'>
+                    <form method="POST" action='/alimento'>
                         <button type="submit" class="btn">
                             <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].alimento
                                 + ".jpg" %> alt="Card image cap">
@@ -43,7 +43,7 @@
                 </div>
                 <% if (i+1 < alimentos.length) { %>
                     <div class="col-sm">
-                        <form method="post" action='/alimento'>
+                        <form method="POST" action='/alimento'>
                             <button type="submit" class="btn">
                                 <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].alimento
                                     + ".jpg" %> alt="Card image cap">
@@ -55,10 +55,30 @@
                             </button>
                         </form>
                     </div>
+                </div>
+                <% } else if (alimentos.length % 2 !== 0) { %>
+                        <div class="col-sm">
+                            <form method="GET" action='/outros'>
+                                <button type="submit" class="btn">
+                                    <img class="card-img-top" src="/imagens/outros.jpg">
+                                    <h5 class="card-title">Outros</h5>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 <% } else { %>
-                    <div class="col-sm"></div>
+                    <div class="row"></div>
+                        <div class="col-sm">
+                            <form method="GET" action='/outros'>
+                                <button type="submit" class="btn">
+                                    <img class="card-img-top" src="/imagens/outros.jpg">
+                                    <h5 class="card-title">Outros</h5>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 <% } %>
-            </div>
+            
         <% } %>
         <div class="navbar">
             <a href="/menuPrincipal"><i class="fa fa-arrow-left"></i> Voltar</a>
