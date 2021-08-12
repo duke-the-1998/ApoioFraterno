@@ -165,7 +165,7 @@ async function darSaidaProduto(row, alimento_id, validade, quantidade) {
 }
 
 
-/*app.get('/register', checkNotAuthenticated, (req, res) => {
+app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs')
 });
 
@@ -179,6 +179,6 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
     } catch {
         res.redirect('/register');
     }
-});*/
+});
 
 app.listen(3000);
