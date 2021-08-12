@@ -46,6 +46,10 @@ app.get('/menuPrincipal', checkAuthenticated, (req, res) => {
     res.render('menuPrincipal.ejs');
 });
 
+app.get('/menuAdmin', checkAuthenticated, (req, res) => {
+    res.render('menuAdmin.ejs');
+});
+
 app.get('/inventario', checkAuthenticated, async (req, res) => {
     const inventario = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
     const novoInventario = construirArrayInventario(inventario[0]);
