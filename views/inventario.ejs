@@ -20,16 +20,10 @@
 </head>
 
 <% if (typeof message !='undefined' ) { %>
-    <body onload="myFunction()">
+    <body onload="showMessage()">
 <% } else { %>
     <body>
 <% } %>
-
-<script>
-    function myFunction() {
-        alert('Operação concluida com sucesso')
-    }
-</script>
 
     <div class="inventario">
 
@@ -72,6 +66,7 @@
         </div>
 
     </div>
+    <script src="/scripts/modules.js"></script>
 </body>
 
 </html>

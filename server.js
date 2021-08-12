@@ -156,7 +156,7 @@ async function darEntradaProduto(row, alimento_id, validade, quantidade) {
 
 async function darSaidaProduto(row, alimento_id, validade, quantidade) {
     if (row.length === 0) {
-        //Eh preciso decidir
+        db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}','${- quantidade}')`)
         return
     } else {
         db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`)

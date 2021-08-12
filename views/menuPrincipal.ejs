@@ -2,49 +2,54 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <meta name="viewport" content="width=device-width, initial-scale=0.6">
+<meta name="viewport" content="width=device-width, initial-scale=0.6">
+
 <head>
-<!--Bootsrap 4 CDN-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    
-<!--Fontawesome CDN-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
-    <link href="/css/menuPrincipal.css" rel="stylesheet" type="text/css">
+  <!--Bootsrap 4 CDN-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-	<title>Menu Principal</title>
+  <!--Fontawesome CDN-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
+  <link href="/css/menuPrincipal.css" rel="stylesheet" type="text/css">
 
-  <body>
-    <div class="container">
-      <div class="d-flex justify-content-center h-100">
-        <div class="card">
-            <div class="card-header">
-                <h3>Menu Principal</h3>
-                <!-- linhas para teste-->
-                <div class="d-flex justify-content-end social_icon">
-                    <span><img src="/imagens/apoioFratlogo.png"  width="100" height="100"></i></span>   
-                </div>
+  <title>Menu Principal</title>
+</head>
 
-            </div>
+<body>
+  <div class="container">
+    <div class="d-flex justify-content-center h-100">
+      <div class="card">
+        <div class="card-header">
+          <h3>Menu Principal</h3>
+          <!-- linhas para teste-->
+          <div class="d-flex justify-content-end social_icon">
+            <span><img src="/imagens/apoioFratlogo.png" width="100" height="100"></i></span>
+          </div>
 
-            <div class="card-body">
-              <form action="/inventario" method="GET">
-                <img src="/imagens/gerirStock.png" width="60" height="60"></i>
-                <button type="submit" id="logoutbtn">Gerir Stock</button>
-              </form>
-        
-              <form action="/inventario" method="GET">
-                <img src="/imagens/consultarStock.png" width="60" height="60"></i>
-                <button type="submit" id="logoutbtn" >Consultar Stock</button>
-              </form>
-        
-              <form action="/logout?_method=DELETE" method="POST">
-                <img src="/imagens/logout.png" width="60" height="60"></i>
-                <button type="submit" id="logoutbtn">Log Out</button>
-              </form>
-            </div> 
+        </div>
+
+        <div class="card-body">
+          <form action="/inventario" method="GET">
+            <img src="/imagens/gerirStock.png" width="60" height="60"></i>
+            <button type="submit" id="logoutbtn">Gerir Stock</button>
+          </form>
+
+          <form action="/inventario" method="GET">
+            <img src="/imagens/consultarStock.png" width="60" height="60"></i>
+            <button type="submit" id="logoutbtn">Consultar Stock</button>
+          </form>
+
+          <form action="/logout?_method=DELETE" method="POST">
+            <img src="/imagens/logout.png" width="60" height="60"></i>
+            <button type="submit" id="logoutbtn">Log Out</button>
+          </form>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
