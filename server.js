@@ -71,6 +71,8 @@ app.post('/alimento', checkAuthenticated, async (req, res) => {
 
     res.render('alimento.ejs', {
         alimento: produto[0][0].produto,
+        imagem: produto[0][0].imagem,
+        observacoes: produto[0][0].observacoes,
         pesos: novaListaPesos,
         id: produto[0][0].id
     });
@@ -124,6 +126,7 @@ function construirArrayInventario(array) {
     for (var n of array) {
         const obj = {
             alimento: n.produto,
+            imagem: n.imagem,
             id: n.id
         }
         newArray.push(obj);
