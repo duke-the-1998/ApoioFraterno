@@ -77,6 +77,10 @@ app.post('/alimento', checkAuthenticated, async (req, res) => {
     
 });
 
+app.get('/outros', checkNotAuthenticated, (req, res) => {
+    res.render('outros.ejs');
+});
+
 app.post('/concluir', checkAuthenticated, async (req, res) => {
     const body = req.body;
     const alimento = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID = '${body.id}' AND PESO_PRODUTO = '${body.peso}'`);

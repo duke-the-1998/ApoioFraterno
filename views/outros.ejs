@@ -14,7 +14,7 @@
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="/css/alimento.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
-    <title>Alimento</title>
+    <title>Outros</title>
 </head>
 
 <body>
@@ -22,10 +22,10 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <div class="card">
-                    <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimento + ".jpg" %>>
+                    <img class="card-img-top" src="">
                     <div class="card-body">
-                        <h5 class="card-title"><%= alimento %></h5>
-                        <p> Uma descrição sobre o alimento</p>
+                        <h5 class="card-title">Outros</h5>
+                        <p> O que escrever na caixa de texto, ex: 250g, arrumado ao pé dos leites</p>
                     </div>
                 </div>
             </div>
@@ -36,19 +36,19 @@
                             <div class="form-row">
                                 <div class="form-group col-md">
                                     <label for="inputState">Peso do alimento</label>
-                                    <select id="inputState" name="peso" class="form-control">
-                                        <% for (var peso of pesos) { %>
-                                            <option>
-                                                <%= peso.peso %>
-                                            </option>
-                                            <% } %>
-                                    </select>
+                                    <input type="text" class="form-control" name="nome">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Peso do alimento</label>
+                                    <input type="number" class="form-control" name="peso">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md">
                                     <label for="inputState">Data de validade</label><br>
-                                    <input type="month" class="form-control" name="validade" data-date-format="dd/mm/yyyy">
+                                    <input type="month" class="form-control" name="validade">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -57,13 +57,18 @@
                                     <input type="number" class="form-control" name="quantidade" required>
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Observações</label>
+                                    <input type="text" class="form-control" name="nome">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="btn-submit"> 
-            <input class="inputs" type="hidden" name="id" value=<%=id %>>
             <input type="submit" onclick='return btnClick();' class="btn" name="add" value="Entrada de produto">
             <input type="submit" onclick='return btnClick();' class="btn" name="sub" value="Saída de produto">
             <a href="/inventario"><i class="fa fa-arrow-left"></i> Voltar</a>
