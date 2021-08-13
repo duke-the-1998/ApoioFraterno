@@ -103,7 +103,11 @@ app.post('/concluir', checkAuthenticated, async (req, res) => {
 
 app.delete('/logout', (req, res) => {
     req.logOut();
-    res.redirect('/login');
+    res.redirect('/exitPage');
+});
+
+app.get('/exitPage', (req, res) => {
+    res.render('exitPage.ejs');
 });
 
 /**
