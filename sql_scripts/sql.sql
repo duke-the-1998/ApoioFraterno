@@ -14,6 +14,8 @@ CREATE TABLE users (
 CREATE TABLE inventario (
     id int NOT NULL AUTO_INCREMENT,
     produto varchar(50) UNIQUE NOT NULL,
+    imagem varchar(50) NOT NULL,
+    observacoes varchar(255),
     estado int(1),
     PRIMARY KEY (Id)
 );
@@ -37,23 +39,23 @@ CREATE TABLE validade (
 
 INSERT INTO users (nome, password, tipo) VALUES ("Grupo 1", "$2a$10$7SoIHtKRdAV3F39mq9BFn.HUkGYrwL7dz6HTYFHVfQR1I66CNKkNa", "voluntario");
 
-INSERT INTO inventario (produto, estado) VALUES ("Arroz", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Esparguete", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Azeite", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Oleo", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Batatas_Fritas", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Massa", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Leite", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Leguminosas_Frasco", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Leguminosas_Lata", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Leguminosas_Secas", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Salsichas", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Atum", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Cereais", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Bolachas", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Farinha", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Farinha_Lactea", 1);
-INSERT INTO inventario (produto, estado) VALUES ("Açucar", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Arroz", "Arroz", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Esparguete", "Esparguete", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Azeite", "Azeite", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Oleo", "Oleo", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Batatas Fritas", "Batatas_Fritas", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Massa", "Massa", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Leite", "Leite", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Leguminosas Frasco", "Leguminosas_Frasco", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Leguminosas Lata", "Leguminosas_Lata", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Leguminosas Secas", "Leguminosas_Secas", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Salsichas", "Salsichas", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Atum", "Atum", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Cereais", "Cereais", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Bolachas", "Bolachas", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Farinha", "Farinha", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Farinha Lactea", "Farinha_Lactea", "Dicas sobre os alimentos", 1);
+INSERT INTO inventario (produto, imagem, observacoes, estado) VALUES ("Açucar", "Açucar", "Dicas sobre os alimentos", 1);
 
 INSERT INTO alimento (inventario_id, peso_produto) VALUES (1, "1kg");
 INSERT INTO alimento (inventario_id, peso_produto) VALUES (1, "500g");

@@ -46,6 +46,10 @@ app.get('/menuPrincipal', checkAuthenticated, (req, res) => {
     res.render('menuPrincipal.ejs');
 });
 
+app.get('/menuAdmin', checkAuthenticated, (req, res) => {
+    res.render('menuAdmin.ejs');
+});
+
 app.get('/inventario', checkAuthenticated, async (req, res) => {
     const inventario = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
     const novoInventario = construirArrayInventario(inventario[0]);
@@ -71,6 +75,8 @@ app.post('/alimento', checkAuthenticated, async (req, res) => {
 
     res.render('alimento.ejs', {
         alimento: produto[0][0].produto,
+        imagem: produto[0][0].imagem,
+        observacoes: produto[0][0].observacoes,
         pesos: novaListaPesos,
         id: produto[0][0].id
     });
@@ -97,7 +103,11 @@ app.post('/concluir', checkAuthenticated, async (req, res) => {
 
 app.delete('/logout', (req, res) => {
     req.logOut();
-    res.redirect('/login');
+    res.redirect('/exitPage');
+});
+
+app.get('/exitPage', (req, res) => {
+    res.render('exitPage.ejs');
 });
 
 /**
@@ -124,6 +134,7 @@ function construirArrayInventario(array) {
     for (var n of array) {
         const obj = {
             alimento: n.produto,
+            imagem: n.imagem,
             id: n.id
         }
         newArray.push(obj);

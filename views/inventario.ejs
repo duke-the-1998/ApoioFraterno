@@ -32,7 +32,7 @@
                 <div class="col-sm">
                     <form method="POST" action='/alimento'>
                         <button type="submit" class="btn">
-                            <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].alimento
+                            <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].imagem
                                 + ".jpg" %> alt="Card image cap">
                             <h5 class="card-title">
                                 <%= alimentos[i].alimento %>
@@ -45,7 +45,7 @@
                     <div class="col-sm">
                         <form method="POST" action='/alimento'>
                             <button type="submit" class="btn">
-                                <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].alimento
+                                <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].imagem
                                     + ".jpg" %> alt="Card image cap">
                                 <h5 class="card-title">
                                     <%= alimentos[i+1].alimento %>
@@ -78,7 +78,6 @@
                         </div>
                     </div>
                 <% } %>
-            
         <% } %>
         <div class="navbar">
             <a href="/menuPrincipal"><i class="fa fa-arrow-left"></i> Voltar</a>
