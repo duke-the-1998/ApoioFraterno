@@ -50,7 +50,7 @@ app.post('/login', modules.notAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }));
 
-app.get('/menuAdmin', modules.notAuthenticated, (req, res) => {
+app.get('/menuAdmin', modules.authenticated, (req, res) => {
     return res.render('menuAdmin.ejs');
 });
 
