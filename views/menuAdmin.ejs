@@ -13,9 +13,9 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
-  <link href="/css/menuPrincipal.css" rel="stylesheet" type="text/css">
+  <link href="/css/menuAdmin.css" rel="stylesheet" type="text/css">
 
-  <title>Menu Principal</title>
+  <title>Menu Administrador</title>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
     <div class="d-flex justify-content-center h-100">
       <div class="card">
         <div class="card-header">
-          <h3>Menu Principal</h3>
+          <h3>Menu Administrador</h3>
           <!-- linhas para teste-->
           <div class="d-flex justify-content-end social_icon">
             <span><img src="/imagens/apoioFratlogo.png" width="100" height="100"></i></span>
@@ -32,19 +32,24 @@
         </div>
 
         <div class="card-body">
-          <form action="/inventario" method="GET">
-            <img src="/imagens/gerirStock.png" width="60" height="60"></i>
-            <button type="submit" id="logoutbtn">Gerir Stock</button>
+          <form action="/register" method="GET">
+            <img src="/imagens/registarGrupo.png" width="60" height="60"></i>
+            <button type="submit" id="logoutbtn">Registar</button>
           </form>
 
           <form action="/inventario" method="GET">
             <img src="/imagens/consultarStock.png" width="60" height="60"></i>
-            <button type="submit" id="logoutbtn">Administradores</button>
+            <button type="submit" id="logoutbtn">Consultar Stock</button>
           </form>
 
-          <form action="/logout?_method=DELETE" method="POST">
-            <img src="/imagens/logout.png" width="60" height="60"></i>
-            <button type="submit" id="logoutbtn">Log Out</button>
+          <form action="/inventario" method="POST">
+            <img src="/imagens/relatorio.png" width="60" height="60"></i>
+            <button type="submit" id="logoutbtn">Gerar relatorio</button>
+          </form>
+
+          <form action="/menuPrincipal" method="GET">
+            <img src="/imagens/voltar.png" width="60" height="60"></i>
+            <button type="submit" id="logoutbtn">Menu Principal</button>
           </form>
         </div>
       </div>

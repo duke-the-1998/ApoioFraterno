@@ -61,6 +61,7 @@ input:focus {
     width: 150px;  
     border-radius: 15px;
     border-color: #FFC312;
+    margin-right: 9px;
 }
 
 #registerbtn:hover {
