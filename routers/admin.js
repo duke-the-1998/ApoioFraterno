@@ -16,18 +16,23 @@ router.get('/menu', modules.authenticated, (req, res) => {
 });
 
 router.get('/register', modules.authenticated, (req, res) => {
-    res.render('register.ejs')
+    res.render('register.ejs');
 });
 
 router.post('/register', modules.authenticated, async (req, res) => {
     try {
         const username = req.body.username;
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const tipo = "voluntario";
-        await db.promise().query(`INSERT INTO USERS (nome,password,tipo) VALUES ('${username}', '${hashedPassword}', '${tipo}')`);
-        res.redirect('/admin/register/sucesso');
+        const row = await db.promise().query(`SELECT nome FROM USERS`);
+        if (row[0][0].nome === username) {
+            res.render('register.ejs', { message: 'username'});
+        } else {
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            const tipo = "voluntario";
+            await db.promise().query(`INSERT INTO USERS (nome,password,tipo) VALUES ('${username}', '${hashedPassword}', '${tipo}')`);
+            res.render('register.ejs', { message: 'sucesso'});
+        }
     } catch {
-        res.redirect('/admin/register/insucesso');
+        res.render('register.ejs', { message: 'fail'});
     }
 });
 

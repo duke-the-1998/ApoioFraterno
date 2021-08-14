@@ -2,7 +2,9 @@ function showMessage() {
     alert('Operação concluida com sucesso')
 }
 
-function btnClick() {
-    var r = confirm("Deseja confirmar a submissão?");
-    return r;
+function btnEntrada() {
+    return confirm("Deseja fazer entrada do produto?");
+}
+function btnSaida() {
+    return confirm("Deseja fazer saída do produto?");
 }

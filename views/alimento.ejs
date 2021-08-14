@@ -17,8 +17,12 @@
     <title>Alimento</title>
 </head>
 
-<body>
-    <form action="/voluntarios/concluir" method="POST">
+<% if (typeof message !='undefined') { %>
+    <body onload="showMessage()">
+<% } else { %>
+    <body>
+<% } %>
+    <form action="/voluntarios/inventario" method="POST">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <div class="card">
@@ -64,8 +68,8 @@
         </div>
         <div class="btn-submit"> 
             <input class="inputs" type="hidden" name="id" value=<%=id %>>
-            <input type="submit" onclick='return btnClick();' class="btn" name="add" value="Entrada de produto">
-            <input type="submit" onclick='return btnClick();' class="btn" name="sub" value="Saída de produto">
+            <input type="submit" onclick='return btnEntrada();' class="btn" name="add" value="Entrada de produto">
+            <input type="submit" onclick='return btnSaida();' class="btn" name="sub" value="Saída de produto">
             <a href="/voluntarios/inventario"><i class="fa fa-arrow-left"></i> Voltar</a>
         </div>
     </form>

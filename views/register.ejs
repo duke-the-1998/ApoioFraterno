@@ -44,10 +44,26 @@
               <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
             </div>
             <button type="submit" value="register" id="registerbtn" class="btn float-right login_btn">Registar</button>
-            <a href="/admin/menuAdmin" id="registerbtn" class="btn float-right login_btn"><i
+            <a href="/admin/menu" id="registerbtn" class="btn float-right login_btn"><i
                 class="fa fa-arrow-left"></i> Voltar</a>
           </form>
+          
         </div>
+        <% if (typeof message != 'undefined' ) { %>
+          <% if (message === 'sucesso') { %>
+            <div class="alert alert-success">
+              <strong>Success!</strong> Voluntário adicionado com sucesso.
+            </div>
+          <% } else if (message === 'username') { %>
+            <div class="alert alert-warning">
+              <strong>Aviso!</strong> Já existe um voluntário com esse nome, por favor escolha outro nome.
+            </div>
+          <% } else { %>
+            <div class="alert alert-danger">
+              <strong>Erro!</strong> Não foi possível registar o voluntário.
+            </div>
+          <% } %>
+        <% } %>
       </div>
     </div>
   </div>

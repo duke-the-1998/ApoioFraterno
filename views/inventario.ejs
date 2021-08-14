@@ -19,12 +19,8 @@
     <title>Inventário</title>
 </head>
 
-<% if (typeof message !='undefined' ) { %>
-    <body onload="showMessage()">
-<% } else { %>
-    <body>
-<% } %>
 
+<body>
     <div class="inventario">
 
         <% for (var i = 0; i < alimentos.length; i += 2) { %>
@@ -79,14 +75,11 @@
                     </div>
                 <% } %>
         <% } %>
-        <div class="navbar">
-            <a href="/voluntarios/menuPrincipal"><i class="fa fa-arrow-left"></i> Voltar</a>
-            <!--Fazer backend da barra de pesquisa-->
-            <a href="/CriarAlimento"><i class="fa fa-plus"></i> Criar Alimento</a>
-        </div>
-
     </div>
-    <script src="/scripts/modules.js"></script>
+    <div class="navbar">
+        <a href="/voluntarios/menuPrincipal"><i class="fa fa-arrow-left"></i> Voltar</a>
+        <!--Fazer backend da barra de pesquisa-->
+    </div>
 </body>
 
 </html>
