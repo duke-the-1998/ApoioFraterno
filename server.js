@@ -176,11 +176,11 @@ async function darSaidaProduto(row, alimento_id, validade, quantidade) {
 }
 
 
-app.get('/register', checkNotAuthenticated, (req, res) => {
+app.get('/register', checkAuthenticated, (req, res) => {
     res.render('register.ejs')
 });
 
-app.post('/register', checkNotAuthenticated, async (req, res) => {
+app.post('/register', checkAuthenticated, async (req, res) => {
     try {
         const username = req.body.nome;
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
