@@ -30,31 +30,27 @@
           </div>
         </div>
         <div class="card-body">
-          <form action="/register" method="POST">
+          <form action="/admin/register" method="POST">
             <div class="input-group form-group">
               <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-user"></i></span>
-              </div> 
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              </div>
               <input type="text" id="nome" class="form-control" cname="nome" placeholder="Nome do Grupo" name="username" required>
             </div>
-
-           
-              <div class="input-group form-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                </div>
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+              </div>
               <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
             </div>
-            <button type="submit" value="register" id="registerbtn"  class="btn float-right login_btn">Registar</button> 
-            <a href="/menuAdmin" id="registerbtn" class="btn float-right login_btn"><i class="fa fa-arrow-left"></i> Voltar</a>
+            <button type="submit" value="register" id="registerbtn" class="btn float-right login_btn">Registar</button>
+            <a href="/admin/menuAdmin" id="registerbtn" class="btn float-right login_btn"><i
+                class="fa fa-arrow-left"></i> Voltar</a>
           </form>
-         
         </div>
-        
       </div>
     </div>
   </div>
 </body>
-
 
 </html>

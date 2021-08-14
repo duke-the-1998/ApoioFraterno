@@ -8,7 +8,7 @@ const router = Router();
 
 router.use((req, res, next) => {
     next();
-})
+});
 
 router.get('/menuPrincipal', modules.authenticated, (req, res) => {
     return res.render('menuPrincipal.ejs');
