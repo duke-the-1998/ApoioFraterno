@@ -26,17 +26,17 @@ module.exports = {
         }
         return inventario;
     },
-    pesos: function construirListaPesos(lista) {
-        var pesos = new Array();
+    capacidades: function construirListaCapacidades(lista) {
+        var capacidades = new Array();
     
         for (var n of lista) {
             const obj = {
-                peso: n.peso_produto,
+                capacidade: n.capacidade,
                 id: n.id
             }
-            pesos.push(obj);
+            capacidades.push(obj);
         }
-        return pesos;
+        return capacidades;
     },
     adicionar: async function darEntradaProduto(row, alimento_id, validade, quantidade) {
         if (row.length === 0) {
