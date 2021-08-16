@@ -28,8 +28,7 @@
                 <div class="col-sm">
                     <form action='/voluntarios/alimento' method='POST'>
                         <button type="submit" class="btn">
-                            <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].imagem
-                                + ".jpg" %> alt="Card image cap">
+                            <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].imagem + ".jpg" %>>
                             <h5 class="card-title">
                                 <%= alimentos[i].alimento %>
                             </h5>
@@ -41,40 +40,39 @@
                     <div class="col-sm">
                         <form action='/voluntarios/alimento' method="POST">
                             <button type="submit" class="btn">
-                                <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].imagem
-                                    + ".jpg" %> alt="Card image cap">
+                                <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].imagem + ".jpg" %>>
                                 <h5 class="card-title">
                                     <%= alimentos[i+1].alimento %>
                                 </h5>
-                                <input type="hidden" class="form-control" name="id" value=<%=alimentos[i+1].id
-                                    %>>
+                                <input type="hidden" class="form-control" name="id" value=<%=alimentos[i+1].id %>>
                             </button>
                         </form>
                     </div>
                 </div>
-                <% } else if (alimentos.length % 2 !== 0) { %>
-                        <div class="col-sm">
-                            <form action='/voluntarios/outros' method="GET">
-                                <button type="submit" class="btn">
-                                    <img class="card-img-top" src="/imagens/outros.jpg">
-                                    <h5 class="card-title">Outros</h5>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                <% } else { %>
-                    <div class="row">
-                        <div class="col-sm">
-                            <form action='/voluntarios/outros' method="GET">
-                                <button type="submit" class="btn">
-                                    <img class="card-img-top" id="outros" src="/imagens/outros1.jpg">
-                                    <h5 class="card-title">Outros</h5>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
                 <% } %>
         <% } %>
+        <% if (alimentos.length % 2 !== 0) { %>
+                <div class="col-sm">
+                    <form action='/voluntarios/outros' method="GET">
+                        <button type="submit" class="btn">
+                            <img class="card-img-top" src="/imagens/outros1.jpg">
+                            <h5 class="card-title">Outros</h5>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="row">
+                <div class="col-sm">
+                    <form action='/voluntarios/outros' method="GET">
+                        <button type="submit" class="btn">
+                            <img class="card-img-top" src="/imagens/outros1.jpg">
+                            <h5 class="card-title">Outros</h5>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        <% } %>     
     </div>
     <div class="navbar">
         <a href="/voluntarios/menuPrincipal"><i class="fa fa-arrow-left"></i> Voltar</a>

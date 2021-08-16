@@ -115,4 +115,9 @@ a:link {
   color: black;
 }
 
-
+img {
+ 
+  border-radius: 20px;
+  
+  width: 150px;
+}
