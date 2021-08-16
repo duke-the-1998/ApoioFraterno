@@ -32,6 +32,7 @@ html, body {
 
 .col-sm{
   text-align: center;
+ 
 }
 
 .alert {
@@ -113,3 +114,5 @@ a:link {
   background: #ddd;
   color: black;
 }
+
+
