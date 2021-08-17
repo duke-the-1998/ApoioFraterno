@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Tabela Outros</title>
+</head>
+<body>
+    <div class="table-data">
+<h2>Tabela Outros</h2>
+    <table border="1">
+        <tr>
+            <th>Produto</th>
+            <th>Capacidade</th>
+            <th>Data</th>
+            <th>Quantidade</th>
+            <th>Observações</th>
+            <th>Delete</th>
+        </tr>
+        
+        <%
+        if(listaOutros.length != 0){
+            listaOutros.forEach(function(l){
+        %>
+        <tr>
+            <td><%=l.produto; %></td>
+            <td><%=l.capacidade %></td>
+            <td><%=l.mes + " de " + l.ano%></td>
+            <td><%=l.quantidade %></td>
+            <td><%=l.observacoes %></td>
+            <td><a href="/admin/delete/<%=l.id%>">Apagar</a></td>
+        </tr>
+        <% }) %>
+        <% } else { %>
+            <tr>
+                <td colspan="7">Não existe nenhum alimento</td>
+            </tr>
+        <% } %>
+    </table>
+    </div>
+</body>
+</html>

@@ -36,4 +36,14 @@ router.post('/register', modules.authenticated, async (req, res) => {
     }
 });
 
+router.get('/outros', async (req, res) => {
+    var sql = 'SELECT produto, capacidade,' +
+            'MONTH(data) AS mes, YEAR(data) AS ano, ' + 
+            'quantidade, observacoes FROM outros';
+    db.query(sql, function (err, data, fields) {
+        if (err) throw err;
+        res.render('tabelaOutros.ejs', { listaOutros: data});
+  });
+});
+
 module.exports = router;
