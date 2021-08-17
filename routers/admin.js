@@ -19,6 +19,10 @@ router.get('/register', modules.authenticated, (req, res) => {
     res.render('register.ejs');
 });
 
+router.get('/gerirVoluntarios', modules.authenticated, (req, res) => {
+    res.render('gerirVoluntarios.ejs');
+});
+
 router.post('/register', modules.authenticated, async (req, res) => {
     try {
         const username = req.body.username;
