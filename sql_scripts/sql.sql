@@ -2,10 +2,12 @@ DROP TABLE validade;
 DROP TABLE alimento;
 DROP TABLE inventario;
 DROP TABLE users;
+DROP TABLE outros;
 
 CREATE TABLE users (
     id int NOT NULL AUTO_INCREMENT,
-    nome varchar(50) UNIQUE NOT NULL,
+    nome varchar(50) NOT NULL,
+    email varchar(50) UNIQUE, 
     password varchar(255) NOT NULL,
     tipo varchar(50) NOT NULL,
     PRIMARY KEY (id)
@@ -49,7 +51,7 @@ CREATE TABLE outros (
 );
 
 INSERT INTO users (nome, password, tipo) VALUES ("admin", "$2a$10$ohUHjwo1Nc9dNkM20Na3nu.fLItq3MaObXuvMrOz9GAJ4Uqfn0fGi", "admin");
-INSERT INTO users (nome, password, tipo) VALUES ("Grupo 1", "$2a$10$7SoIHtKRdAV3F39mq9BFn.HUkGYrwL7dz6HTYFHVfQR1I66CNKkNa", "voluntario");
+INSERT INTO users (nome, email, password, tipo) VALUES ("Grupo 1", "grupo1@gmail.com", "$2a$10$7SoIHtKRdAV3F39mq9BFn.HUkGYrwL7dz6HTYFHVfQR1I66CNKkNa", "voluntario");
 
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Arroz", "Arroz", "Dicas sobre os alimentos", 1, 1);
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Esparguete", "Esparguete", "Dicas sobre os alimentos", 1, 1);
