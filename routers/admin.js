@@ -40,14 +40,19 @@ router.post('/register', modules.authenticated, async (req, res) => {
     }
 });
 
-router.get('/outros', async (req, res) => {
-    var sql = 'SELECT produto, capacidade,' +
+router.get('/outros', modules.notAuthenticated, async (req, res) => {
+    var sql = 'SELECT id, produto, capacidade,' +
             'MONTH(data) AS mes, YEAR(data) AS ano, ' + 
             'quantidade, observacoes FROM outros';
-    db.query(sql, function (err, data, fields) {
-        if (err) throw err;
-        res.render('tabelaOutros.ejs', { listaOutros: data});
-  });
+
+    const data = await db.promise().query(sql);
+    res.render('tabelaOutros.ejs', { listaOutros: data[0] });
+});
+
+router.get('/delete/outros/:id', modules.notAuthenticated, async (req, res) => {
+    console.log('ola')
+    await db.promise().query(`DELETE FROM outros WHERE id = '${req.params.id}';`);
+    res.redirect('/admin/outros');
 });
 
 module.exports = router;

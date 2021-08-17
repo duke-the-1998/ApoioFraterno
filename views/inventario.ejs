@@ -26,25 +26,23 @@
         <% for (var i = 0; i < alimentos.length; i += 2) { %>
             <div class="row">
                 <div class="col-sm">
-                    <form action='/voluntarios/alimento' method='POST'>
+                    <form action='/voluntarios/alimento/<%= alimentos[i].id %>' method='GET'>
                         <button type="submit" class="btn">
                             <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].imagem + ".jpg" %>>
                             <h5 class="card-title">
                                 <%= alimentos[i].alimento %>
                             </h5>
-                            <input type="hidden" class="form-control" name="id" value=<%=alimentos[i].id %>>
                         </button>
                     </form>
                 </div>
                 <% if (i+1 < alimentos.length) { %>
                     <div class="col-sm">
-                        <form action='/voluntarios/alimento' method="POST">
+                        <form action='/voluntarios/alimento/<%= alimentos[i+1].id %>' method="GET">
                             <button type="submit" class="btn">
                                 <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].imagem + ".jpg" %>>
                                 <h5 class="card-title">
                                     <%= alimentos[i+1].alimento %>
                                 </h5>
-                                <input type="hidden" class="form-control" name="id" value=<%=alimentos[i+1].id %>>
                             </button>
                         </form>
                     </div>
