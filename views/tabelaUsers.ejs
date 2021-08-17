@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
     <link href="/css/tabelaOutros.css" rel="stylesheet" type="text/css">
 
-    <title>Tabela Outros</title>
+    <title>Tabela Utilizadores</title>
 
 </head>
 
@@ -23,39 +23,29 @@
     <ul>
         <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
         <li><a href="/admin/menu">Menu Administrador</a></li>
-        <li><a href="/admin/criarAlimento">Criar Alimento</a></li>
-
     </ul>
     <div class="table-data">
         <h2>Tabela Outros</h2>
         <table border="1">
             <tr>
-                <th>Produto</th>
-                <th>Capacidade</th>
-                <th>Data</th>
-                <th>Quantidade</th>
-                <th>Observações</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Tipo</th>
                 <th>Apagar</th>
             </tr>
 
-            <% if(listaOutros.length !=0){ listaOutros.forEach(function(l){ %>
+            <% if(listaUsers.length !=0){ listaUsers.forEach(function(l){ %>
                 <tr>
                     <td>
-                        <%=l.produto; %>
+                        <%=l.nome; %>
                     </td>
                     <td>
-                        <%=l.capacidade %>
+                        <%=l.email %>
                     </td>
                     <td>
-                        <%=l.mes + " de " + l.ano%>
+                        <%=l.tipo %>
                     </td>
-                    <td>
-                        <%=l.quantidade %>
-                    </td>
-                    <td>
-                        <%=l.observacoes %>
-                    </td>
-                    <td><a href="/admin/delete/outros/<%=l.id%>">Apagar</a></td>
+                    <td><a href="/admin/delete/user/<%=l.email%>">Apagar</a></td>
                 </tr>
                 <% }) %>
             <% } else { %>
