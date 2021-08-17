@@ -29,28 +29,8 @@ router.get('/alimento', modules.authenticated, async (req, res) => {
     const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
     const novaListaCapacidades = modules.capacidades(listaCapacidades[0]);
 
-    if(produto[0][0].validade === 1) {
-        res.render('alimento.ejs', {
-            id: produto[0][0].id,
-            alimento: produto[0][0].produto,
-            imagem: produto[0][0].imagem,
-            observacoes: produto[0][0].observacoes,
-            capacidades: novaListaCapacidades,
-            validade: "on",
-            message: "on"
-        });
-    } else {
-        res.render('alimento.ejs', {
-            id: produto[0][0].id,
-            alimento: produto[0][0].produto,
-            imagem: produto[0][0].imagem,
-            observacoes: produto[0][0].observacoes,
-            capacidades: novaListaCapacidades,
-            validade: "off",
-            message: "on"
-        });
-    }
-    
+    const body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, true);
+    res.render('alimento.ejs', body);
 });
 
 router.post('/alimento', modules.authenticated, async (req, res) => {
@@ -59,25 +39,8 @@ router.post('/alimento', modules.authenticated, async (req, res) => {
     const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
     const novaListaCapacidades = modules.capacidades(listaCapacidades[0]);
 
-    if(produto[0][0].validade === 1) {
-        res.render('alimento.ejs', {
-            id: produto[0][0].id,
-            alimento: produto[0][0].produto,
-            imagem: produto[0][0].imagem,
-            observacoes: produto[0][0].observacoes,
-            capacidades: novaListaCapacidades,
-            validade: "on"
-        });
-    } else {
-        res.render('alimento.ejs', {
-            id: produto[0][0].id,
-            alimento: produto[0][0].produto,
-            imagem: produto[0][0].imagem,
-            observacoes: produto[0][0].observacoes,
-            capacidades: novaListaCapacidades,
-            validade: "off"
-        });
-    }
+    const body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, false);
+    res.render('alimento.ejs', body);
 });
 
 router.post('/concluir', modules.authenticated, async (req, res) => {
@@ -100,8 +63,38 @@ router.post('/concluir', modules.authenticated, async (req, res) => {
     }));
 });
 
-router.get('/outros', modules.notAuthenticated, (req, res) => {
-    res.render('outros.ejs');
+router.get('/outros', modules.authenticated, (req, res) => {
+    if (Object.keys(req.query).length !== 0) {
+        res.render('outros.ejs', { 
+            message: req.query.message
+        });
+    } else {
+        res.render('outros.ejs');
+    }
+});
+
+router.post('/outros', modules.authenticated, async (req, res) => {
+    const body = req.body;
+    const produto = body.nome;
+    const capacidade = body.capacidade;
+    const validade = body.validade + "-01";
+    const quantidade = body.quantidade;
+    const observacoes = body.observacoes;
+    if (body.add) {
+        await db.promise().query(`INSERT INTO OUTROS (produto, capacidade, data, quantidade, observacoes)
+         VALUES ('${produto}', '${capacidade}', '${validade}', '${quantidade}', '${observacoes}')`);
+    } else {
+        await db.promise().query(`INSERT INTO OUTROS (produto, capacidade, data, quantidade, observacoes)
+         VALUES ('${produto}', '${capacidade}', '${validade}', '${-quantidade}', '${observacoes}')`);
+    }
+
+    res.redirect(url.format({
+        pathname:"/voluntarios/outros",
+        query: {
+           "message": "Operação feita com sucesso"
+        }
+    }));
+    
 });
 
 
