@@ -17,8 +17,12 @@
     <title>Outros</title>
 </head>
 
-<body>
-    <form action="/concluir" method="POST">
+<% if (typeof message != 'undefined') { %>
+    <body onload="showMessage()">
+<% } else { %>
+    <body>
+<% } %>
+    <form action="/voluntarios/outros" method="POST">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <div class="card">
@@ -36,19 +40,19 @@
                             <div class="form-row">
                                 <div class="form-group col-md">
                                     <label for="inputState">Nome do alimento</label>
-                                    <input type="text" class="form-control" name="nome">
+                                    <input type="text" class="form-control" name="nome" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md">
                                     <label for="inputState">Capacidade</label>
-                                    <input type="number" class="form-control" name="peso">
+                                    <input type="text" class="form-control" name="capacidade" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md">
                                     <label for="inputState">Data de validade</label><br>
-                                    <input type="month" class="form-control" name="validade">
+                                    <input type="month" class="form-control" name="validade" required>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -60,7 +64,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md">
                                     <label for="inputState">Observações</label>
-                                    <input type="text" class="form-control" name="nome">
+                                    <input type="text" class="form-control" name="observacoes">
                                 </div>
                             </div>
                         </div>

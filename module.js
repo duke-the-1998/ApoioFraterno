@@ -15,7 +15,7 @@ module.exports = {
     },
     inventario: function construirInventario(lista) {
         var inventario = new Array();
-    
+
         for (var n of lista) {
             const obj = {
                 alimento: n.produto,
@@ -28,7 +28,7 @@ module.exports = {
     },
     capacidades: function construirListaCapacidades(lista) {
         var capacidades = new Array();
-    
+
         for (var n of lista) {
             const obj = {
                 capacidade: n.capacidade,
@@ -54,6 +54,51 @@ module.exports = {
         } else {
             db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`)
             return
+        }
+    },
+    bodyAlimento: function bodyAlimento(id, alimento, imagem, observacoes, capacidades, validade, message) {
+        if (message === true) {
+            if (validade === 1) {
+                return {
+                    id: id,
+                    alimento: alimento,
+                    imagem: imagem,
+                    observacoes: observacoes,
+                    capacidades: capacidades,
+                    validade: "on",
+                    message: "on"
+                };
+            } else {
+                return {
+                    id: id,
+                    alimento: alimento,
+                    imagem: imagem,
+                    observacoes: observacoes,
+                    capacidades: capacidades,
+                    validade: "off",
+                    message: "on"
+                };
+            }
+        } else {
+            if (validade === 1) {
+                return {
+                    id: id,
+                    alimento: alimento,
+                    imagem: imagem,
+                    observacoes: observacoes,
+                    capacidades: capacidades,
+                    validade: "on",
+                };
+            } else {
+                return {
+                    id: id,
+                    alimento: alimento,
+                    imagem: imagem,
+                    observacoes: observacoes,
+                    capacidades: capacidades,
+                    validade: "off",
+                };
+            }
         }
     }
 };

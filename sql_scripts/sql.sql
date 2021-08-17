@@ -8,7 +8,7 @@ CREATE TABLE users (
     nome varchar(50) UNIQUE NOT NULL,
     password varchar(255) NOT NULL,
     tipo varchar(50) NOT NULL,
-    PRIMARY KEY (Id)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE inventario (
@@ -16,26 +16,36 @@ CREATE TABLE inventario (
     produto varchar(50) UNIQUE NOT NULL,
     imagem varchar(50) NOT NULL,
     observacoes varchar(255),
-    validade int(1),
-    estado int(1),
-    PRIMARY KEY (Id)
+    validade int(1) NOT NULL,
+    estado int(1) NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE alimento (
     id int NOT NULL AUTO_INCREMENT,
-    inventario_id int,
-    capacidade varchar(50),
+    inventario_id int NOT NULL,
+    capacidade varchar(50) NOT NULL,
     PRIMARY KEY (Id),
     FOREIGN KEY (inventario_id) REFERENCES inventario (id)
 );
 
 CREATE TABLE validade (
     id int NOT NULL AUTO_INCREMENT,
-    alimento_id int,
+    alimento_id int NOT NULL,
     data date,
     quantidade int NOT NULL,
-    PRIMARY KEY (Id),
+    PRIMARY KEY (id),
     FOREIGN KEY (alimento_id) REFERENCES alimento (id)
+);
+
+CREATE TABLE outros (
+    id int NOT NULL AUTO_INCREMENT,
+    produto varchar(50) UNIQUE NOT NULL,
+    capacidade varchar(50) NOT NULL,
+    data date,
+    quantidade int NOT NULL,
+    observacoes varchar(255),
+    PRIMARY KEY (id)
 );
 
 INSERT INTO users (nome, password, tipo) VALUES ("admin", "$2a$10$ohUHjwo1Nc9dNkM20Na3nu.fLItq3MaObXuvMrOz9GAJ4Uqfn0fGi", "admin");
