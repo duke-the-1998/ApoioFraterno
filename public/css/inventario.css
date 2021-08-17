@@ -32,6 +32,7 @@ html, body {
 
 .col-sm{
   text-align: center;
+ 
 }
 
 .alert {
@@ -57,6 +58,8 @@ html, body {
 
 .card-img-top{
   border-radius: 30px;
+  width: 617px;
+  height: 370px;
 }
 
   
@@ -113,3 +116,4 @@ a:link {
   background: #ddd;
   color: black;
 }
+
