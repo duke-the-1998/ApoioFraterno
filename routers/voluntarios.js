@@ -63,7 +63,7 @@ router.post('/concluir', modules.authenticated, async (req, res) => {
     }));
 });
 
-router.get('/outros', modules.notAuthenticated, (req, res) => {
+router.get('/outros', modules.authenticated, (req, res) => {
     if (Object.keys(req.query).length !== 0) {
         res.render('outros.ejs', { 
             message: req.query.message
@@ -73,7 +73,7 @@ router.get('/outros', modules.notAuthenticated, (req, res) => {
     }
 });
 
-router.post('/outros', modules.notAuthenticated, async (req, res) => {
+router.post('/outros', modules.authenticated, async (req, res) => {
     const body = req.body;
     const produto = body.nome;
     const capacidade = body.capacidade;
