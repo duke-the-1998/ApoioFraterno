@@ -5,38 +5,41 @@ ul {
     overflow: hidden;
     background-color: #333;
     opacity: 0.85;
-  }
-  
-  li {
+}
+
+li {
     float: left;
-  }
-  
-  li a {
+}
+
+li a {
     display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-  }
-  
-  li a:hover {
+}
+
+li a:hover {
     background-color: #111;
     color: white;
-  }
+}
 
 table {
-    border-collapse: collapse;
+    border: #111;
+    border-style: solid;
     width: 100%;
-  }
-  
-  th, td {
+}
+
+th, td {
     text-align: left;
     padding: 8px;
-  }
-  
-  tr:nth-child(even){background-color: #f2f2f2}
-  
-  th {
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+th {
     background-color: #04AA6D;
     color: white;
-  }
+}
