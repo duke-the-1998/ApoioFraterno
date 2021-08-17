@@ -104,4 +104,6 @@ router.get('/outros', modules.notAuthenticated, (req, res) => {
     res.render('outros.ejs');
 });
 
+
+
 module.exports = router;

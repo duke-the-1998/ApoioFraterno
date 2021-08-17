@@ -36,4 +36,12 @@ router.post('/register', modules.authenticated, async (req, res) => {
     }
 });
 
+router.get('/tabela', modules.authenticated, async (req, res) => {
+    const tabela = await db.promise().query(`SELECT * FROM INVENTARIO ORDER BY produto`);
+    const novoInventario = modules.inventario(tabela[0]);
+    res.render('opcoesAlimentos.ejs', { 
+        info: novoInventario
+    });
+});
+
 module.exports = router;
