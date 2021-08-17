@@ -100,5 +100,20 @@ module.exports = {
                 };
             }
         }
+    },
+    alimentoInventario: function construirAlimentoInventario(lista) {
+        var alimento = new Array();
+
+        for (var n of lista) {
+            const obj = {
+                produto: n.produto,
+                inventario_id: n.inventario_id,
+                id: n.id,
+                capacidade:n.capacidade
+            }
+            alimento.push(obj);
+        }
+        return alimento;
     }
+
 };

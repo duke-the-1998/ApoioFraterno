@@ -37,10 +37,13 @@ router.post('/register', modules.authenticated, async (req, res) => {
 });
 
 router.get('/tabela', modules.authenticated, async (req, res) => {
-    const tabela = await db.promise().query(`SELECT * FROM INVENTARIO ORDER BY produto`);
-    const novoInventario = modules.inventario(tabela[0]);
-    res.render('opcoesAlimentos.ejs', { 
-        info: novoInventario
+    const alimentoInventario = await db.promise().query(`SELECT * 
+    FROM INVENTARIO i 
+    LEFT JOIN Alimento ON Alimento.inventario_id = i.id
+    ORDER BY i.produto`);
+    const novoAlimentoInventario = modules.alimentoInventario(alimentoInventario[0]);
+    res.render('tabelaAlimentos.ejs', { 
+        alimentoInventario: novoAlimentoInventario
     });
 });
 

@@ -12,22 +12,39 @@
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link href="/css/tabela.css" rel="stylesheet" type="text/css">
+    <link href="/css/tabelaAlimentos.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
     <title>Tabela</title>
 </head>
 
 <body>
-    <div class="tabela" style="width: 18rem;">
-        <% for (var i = 0; i < info.length; i += 1) { %>
-            <div class="row" >
-                <div class="col-sm">
-                    <%= info[i].id %>
-                </div>
-                <div class="col-sm">
-                    <%= info[i].imagem %>
-                </div>
-            </div>
-            <% } %>
+    <div class="container">
+
+    <table class="table table-striped">
+        <thread>
+            <tr>
+                <th>
+                    Nome
+                </th>
+                <th>
+                    Capacidade
+                </th>
+            </tr>
+        </thread>
+        <tbody>
+            <% for (var i=0; i < alimentoInventario.length; i +=1) { %>
+
+                <tr>
+                    <td>
+                        <%= alimentoInventario[i].produto %>
+                    </td>
+                    <td>
+                        <%= alimentoInventario[i].capacidade %>
+                    </td>
+                </tr>
+
+                <% } %>
+        </tbody>
+    </table>
     </div>
 </body>
