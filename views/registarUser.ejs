@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form action="/admin/register" method="POST">
+          <form action="/admin/registarUser" method="POST">
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -43,8 +43,13 @@
               </div>
               <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
             </div>
+            <div class="input-group form-group">
+              <label for="inputState">Admin</label>
+              <input type="checkbox" name="admin" class="form-control" >
+            </div>
+            
             <button type="submit" value="register" id="registerbtn" class="btn float-right login_btn">Registar</button>
-            <a href="/admin/gerirVoluntarios" id="registerbtn" class="btn float-right login_btn"><i
+            <a href="/admin/gerirUtilizadores" id="registerbtn" class="btn float-right login_btn"><i
                 class="fa fa-arrow-left"></i> Voltar</a>
           </form>
           

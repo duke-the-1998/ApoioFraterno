@@ -8,6 +8,7 @@ const modules = require('../module');
 //const { check, validationResult } = require('express-validator');
 
 const router = Router();
+router.use(fileUpload());
 
 router.use((req, res, next) => {
     next();
@@ -17,28 +18,28 @@ router.get('/menu', modules.authenticated, (req, res) => {
     return res.render('menuAdmin.ejs');
 });
 
-router.get('/gerirVoluntarios', modules.authenticated, (req, res) => {
-    res.render('gerirVoluntarios.ejs');
+router.get('/gerirUtilizadores', modules.authenticated, (req, res) => {
+    res.render('gerirUtilizadores.ejs');
 });
 
 router.get('/registarUser', modules.authenticated, (req, res) => {
     res.render('registarUser.ejs');
 });
 
-router.post('/register', modules.authenticated, async (req, res) => {
+router.post('/registarUser', modules.authenticated, async (req, res) => {
     try {
         const username = req.body.username;
         const row = await db.promise().query(`SELECT nome FROM USERS`);
         if (row[0][0].nome === username) {
-            res.render('register.ejs', { message: 'username'});
+            res.render('registarUser.ejs', { message: 'username'});
         } else {
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
             const tipo = "voluntario";
             await db.promise().query(`INSERT INTO USERS (nome,password,tipo) VALUES ('${username}', '${hashedPassword}', '${tipo}')`);
-            res.render('register.ejs', { message: 'sucesso'});
+            res.render('registarUser.ejs', { message: 'sucesso'});
         }
     } catch {
-        res.render('register.ejs', { message: 'fail'});
+        res.render('registarUser.ejs', { message: 'fail'});
     }
 });
 
@@ -85,12 +86,24 @@ router.get('/delete/outros/:id', modules.authenticated, async (req, res) => {
     }));
 });
 
-router.get('/criarAlimento', modules.authenticated, (req, res) => {
+router.get('/criarAlimento', modules.notAuthenticated, (req, res) => {
     res.render('criarAlimento.ejs');
 });
 
-router.post('/criarAlimento', modules.authenticated, async (req, res) => {
+router.post('/criarAlimento', modules.notAuthenticated, async (req, res) => {
+    console.log(req.body)
+    /*
+    const file = req.files.imagem;
+    const uploadPath = './public/imagens/Alimentos/' + file.name
+    file.mv(uploadPath, function (err) {
+        if (err) return res.status(500).send(err);
+        res.send('200')
+    })*/
 
+    // inserir na tabela inventario
+    // inserir na tabela alimento
+    // inserir na tabela validade
+    // não deixar criar alimentos caso ja existam
 })
 
 module.exports = router;

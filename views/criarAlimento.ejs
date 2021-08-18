@@ -14,7 +14,7 @@
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="/css/alimento.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
-    <title>Outros</title>
+    <title>Criar Alimento</title>
 </head>
 
 <% if (typeof message != 'undefined') { %>
@@ -22,7 +22,7 @@
 <% } else { %>
     <body>
 <% } %>
-    <form action="/voluntarios/outros" method="POST">
+    <form action="/admin/criarAlimento" method="POST" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group col-md">
                 <div class="card">
@@ -42,18 +42,6 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md">
-                                    <label for="inputState">Data de validade</label><br>
-                                    <input type="month" class="form-control" name="validade" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md">
-                                    <label for="inputZip">Quantidade</label>
-                                    <input type="number" class="form-control" name="quantidade" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md">
                                     <label for="inputState">Observações</label>
                                     <input type="text" class="form-control" name="observacoes">
                                 </div>
@@ -64,14 +52,20 @@
                                     <input type="file" name="imagem" accept="image/*" required>
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Validade</label>
+                                    <input type="checkbox" name="validade" >
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="btn-submit"> 
-            <input type="submit" onclick='return btnClick();' class="btn" name="criar" value="Criar">
-            <a href="/admin/consultarStock"><i class="fa fa-arrow-left"></i> Voltar</a>
+            <input type="submit" onclick='return btnClick();' class="btn" value="Criar">
+            <a href="/admin/outros"><i class="fa fa-arrow-left"></i> Voltar</a>
         </div>
     </form>
     <script src="/scripts/modules.js" ></script>
