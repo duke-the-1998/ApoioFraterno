@@ -19,57 +19,59 @@
 
 </head>
 
-<% if (typeof message != 'undefined') { %>
+<% if (typeof message !='undefined' ) { %>
+
     <body onload="showMessage()">
-<% } else { %>
-    <body>
-<% } %>
-    <ul>
-        <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
-        <li><a href="/admin/menu">Menu Administrador</a></li>
-        <li><a href="/admin/criarAlimento">Criar Alimento</a></li>
+        <% } else { %>
 
-    </ul>
-    <div class="table-data">
-        <h2>Tabela Outros</h2>
-        <table border="1">
-            <tr>
-                <th>Produto</th>
-                <th>Capacidade</th>
-                <th>Data</th>
-                <th>Quantidade</th>
-                <th>Observações</th>
-                <th>Apagar</th>
-            </tr>
+            <body>
+                <% } %>
+                    <ul>
+                        <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
+                        <li><a href="/admin/menu">Menu Administrador</a></li>
+                        <li><a href="/admin/criarAlimento">Criar Alimento</a></li>
+                    </ul>
 
-            <% if(listaOutros.length !=0){ listaOutros.forEach(function(l){ %>
-                <tr>
-                    <td>
-                        <%=l.produto; %>
-                    </td>
-                    <td>
-                        <%=l.capacidade %>
-                    </td>
-                    <td>
-                        <%=l.mes + " de " + l.ano%>
-                    </td>
-                    <td>
-                        <%=l.quantidade %>
-                    </td>
-                    <td>
-                        <%=l.observacoes %>
-                    </td>
-                    <td><a href="/admin/delete/outros/<%=l.id%>">Apagar</a></td>
-                </tr>
-                <% }) %>
-            <% } else { %>
-                <tr>
-                    <td colspan="7">Não existe nenhum alimento</td>
-                </tr>
-            <% } %>
-        </table>
-    </div>
-    <script src="/scripts/modules.js"></script>
-</body>
+                    <div class="table-data">
+                        <h2>Tabela Outros</h2>
+                        <table border="1">
+                            <tr>
+                                <th>Produto</th>
+                                <th>Capacidade</th>
+                                <th>Data</th>
+                                <th>Quantidade</th>
+                                <th>Observações</th>
+                                <th>Apagar</th>
+                            </tr>
+
+                            <% if(listaOutros.length !=0){ listaOutros.forEach(function(l){ %>
+                                <tr>
+                                    <td>
+                                        <%=l.produto; %>
+                                    </td>
+                                    <td>
+                                        <%=l.capacidade %>
+                                    </td>
+                                    <td>
+                                        <%=l.mes + " de " + l.ano%>
+                                    </td>
+                                    <td>
+                                        <%=l.quantidade %>
+                                    </td>
+                                    <td>
+                                        <%=l.observacoes %>
+                                    </td>
+                                    <td><a href="/admin/delete/outros/<%=l.id%>">Apagar</a></td>
+                                </tr>
+                                <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="7">Não existe nenhum alimento</td>
+                                        </tr>
+                                        <% } %>
+                        </table>
+                    </div>
+                    <script src="/scripts/modules.js"></script>
+            </body>
 
 </html>
