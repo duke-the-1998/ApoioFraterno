@@ -7,7 +7,7 @@ DROP TABLE outros;
 CREATE TABLE users (
     id int NOT NULL AUTO_INCREMENT,
     nome varchar(50) NOT NULL,
-    email varchar(50) UNIQUE, 
+    email varchar(50) UNIQUE NOT NULL, 
     password varchar(255) NOT NULL,
     tipo varchar(50) NOT NULL,
     PRIMARY KEY (id)
@@ -57,7 +57,7 @@ INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES (
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Esparguete", "Esparguete.jpg", "Dicas sobre os alimentos", 1, 1);
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Azeite", "Azeite.jpg", "Dicas sobre os alimentos", 1, 1);
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Oleo", "Oleo.jpg", "Dicas sobre os alimentos", 1, 1);
-INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Batatas Fritas.jpg", "Batatas_Fritas", "Dicas sobre os alimentos", 1, 1);
+INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Batatas Fritas", "Batatas_Fritas.jpg", "Dicas sobre os alimentos", 1, 1);
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Massa", "Massa.jpg", "Dicas sobre os alimentos", 1, 1);
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Leite", "Leite.jpg", "Dicas sobre os alimentos", 1, 1);
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Leguminosas Frasco", "Leguminosas_Frasco.jpg", "Dicas sobre os alimentos", 1, 1);
