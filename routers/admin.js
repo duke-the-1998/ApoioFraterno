@@ -54,7 +54,11 @@ router.get('/delete/user/:email', modules.authenticated, async (req, res) => {
     res.redirect('/admin/tabelaUsers');
 });
 
-router.get('/outros', modules.notAuthenticated, async (req, res) => {
+router.get('/consultarStock', modules.authenticated, (req, res) => {
+    res.render('consultarStock.ejs');
+});
+
+router.get('/outros', modules.authenticated, async (req, res) => {
     var sql = 'SELECT id, produto, capacidade,' +
             'MONTH(data) AS mes, YEAR(data) AS ano, ' + 
             'quantidade, observacoes FROM outros';
@@ -71,7 +75,7 @@ router.get('/outros', modules.notAuthenticated, async (req, res) => {
     } 
 });
 
-router.get('/delete/outros/:id', modules.notAuthenticated, async (req, res) => {
+router.get('/delete/outros/:id', modules.authenticated, async (req, res) => {
     await db.promise().query(`DELETE FROM outros WHERE id = '${req.params.id}';`);
     res.redirect(url.format({
         pathname: '/admin/outros',
@@ -81,11 +85,11 @@ router.get('/delete/outros/:id', modules.notAuthenticated, async (req, res) => {
     }));
 });
 
-router.get('/criarAlimento', modules.notAuthenticated, (req, res) => {
+router.get('/criarAlimento', modules.authenticated, (req, res) => {
     res.render('criarAlimento.ejs');
 });
 
-router.post('/criarAlimento', modules.notAuthenticated, async (req, res) => {
+router.post('/criarAlimento', modules.authenticated, async (req, res) => {
 
 })
 
