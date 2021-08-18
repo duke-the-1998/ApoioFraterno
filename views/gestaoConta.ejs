@@ -32,24 +32,18 @@
         <div class="card-body">
           <form action="/admin/register" method="POST">
             <div class="input-group form-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
               </div>
-              <input type="text" id="email" class="form-control" cname="email" placeholder="Email" name="email" required>
-            </div>
-            <div class="input-group form-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
-              </div>
-              <input type="text" id="nome" class="form-control" cname="nome" placeholder="Nome do utilizador" name="username" required>
-            </div>
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-key"></i></span>
               </div>
-              <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Nova password" required>
             </div>
-            <button type="submit" value="register" id="registerbtn" class="btn float-right login_btn">Registar</button>
+            <button type="submit" value="register" id="registerbtn" class="btn float-right login_btn">Confirmar</button>
             <a href="/admin/gerirVoluntarios" id="registerbtn" class="btn float-right login_btn"><i
                 class="fa fa-arrow-left"></i> Voltar</a>
           </form>
