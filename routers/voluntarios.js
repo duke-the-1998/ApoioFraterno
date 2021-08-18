@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const url = require('url');
 const db = require('../database');
+const { checkAuthenticated, checkNotAuthenticated } = require('../middleware/checkAuthenticated');
 const modules = require('../module');
 
 //const { check, validationResult } = require('express-validator');
@@ -11,23 +12,23 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/menuPrincipal', modules.authenticated, (req, res) => {
+router.get('/menuPrincipal', checkAuthenticated, (req, res) => {
     return res.render('menuPrincipal.ejs');
 });
 
-router.get('/inventario', modules.authenticated, async (req, res) => {
+router.get('/inventario', checkAuthenticated, async (req, res) => {
     const inventario = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
-    const novoInventario = modules.inventario(inventario[0]);
+    const novoInventario = modules.construirInventario(inventario[0]);
     res.render('inventario.ejs', { 
         alimentos: novoInventario
     });
 });
 
-router.get('/alimento/:id', modules.authenticated, async (req, res) => {
+router.get('/alimento/:id', checkAuthenticated, async (req, res) => {
     const id = req.params.id;
     const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${id}'`);
     const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
-    const novaListaCapacidades = modules.capacidades(listaCapacidades[0]);
+    const novaListaCapacidades = modules.construirListaCapacidades(listaCapacidades[0]);
 
     var body;
     if (Object.keys(req.query).length === 0) {
@@ -38,16 +39,16 @@ router.get('/alimento/:id', modules.authenticated, async (req, res) => {
     res.render('alimento.ejs', body);
 });
 
-router.post('/alimento', modules.authenticated, async (req, res) => {
+router.post('/alimento', checkAuthenticated, async (req, res) => {
     const body = req.body;
     const validade = body.validade + "-01";
     const alimento = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID = '${body.id}' AND CAPACIDADE= '${body.peso}'`);
     const row = await db.promise().query(`SELECT * FROM VALIDADE WHERE ALIMENTO_ID = '${alimento[0][0].id}' AND DATA = '${validade}'`);
 
     if(body.add) {
-        modules.adicionar(row[0], alimento[0][0].id, validade, body.quantidade);
+        modules.darEntradaProduto(row[0], alimento[0][0].id, validade, body.quantidade);
     } else {    
-        modules.doar(row[0], alimento[0][0].id, validade, body.quantidade);
+        modules.darSaidaProduto(row[0], alimento[0][0].id, validade, body.quantidade);
     }
 
     const link = "/voluntarios/alimento/" + body.id;
@@ -59,7 +60,7 @@ router.post('/alimento', modules.authenticated, async (req, res) => {
     }));
 });
 
-router.get('/outros', modules.authenticated, (req, res) => {
+router.get('/outros', checkAuthenticated, (req, res) => {
     if (Object.keys(req.query).length !== 0) {
         res.render('outros.ejs', { 
             message: req.query.message
@@ -69,7 +70,7 @@ router.get('/outros', modules.authenticated, (req, res) => {
     }
 });
 
-router.post('/outros', modules.authenticated, async (req, res) => {
+router.post('/outros', checkAuthenticated, async (req, res) => {
     const body = req.body;
     const produto = body.nome;
     const capacidade = body.capacidade;
