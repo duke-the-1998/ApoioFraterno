@@ -58,14 +58,19 @@
                                     <input type="text" class="form-control" name="observacoes">
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Imagem</label>
+                                    <input type="file" name="imagem" accept="image/*" required>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="btn-submit"> 
-            <input type="submit" onclick='return btnClick();' class="btn" name="add" value="Entrada de produto">
-            <input type="submit" onclick='return btnClick();' class="btn" name="sub" value="Saída de produto">
+            <input type="submit" onclick='return btnClick();' class="btn" name="criar" value="Criar">
             <a href="/voluntarios/inventario"><i class="fa fa-arrow-left"></i> Voltar</a>
         </div>
     </form>

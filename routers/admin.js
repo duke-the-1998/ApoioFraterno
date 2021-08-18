@@ -1,5 +1,7 @@
 const { Router } = require('express');
+const url = require('url');
 const bcrypt = require('bcrypt');
+const fileUpload = require('express-fileupload');
 const db = require('../database');
 const modules = require('../module');
 
@@ -58,16 +60,33 @@ router.get('/outros', modules.notAuthenticated, async (req, res) => {
             'quantidade, observacoes FROM outros';
 
     const data = await db.promise().query(sql);
-    res.render('tabelaOutros.ejs', { listaOutros: data[0] });
+    
+    if (Object.keys(req.query).length === 0) {
+        res.render('tabelaOutros.ejs', { listaOutros: data[0] });
+    } else {
+        res.render('tabelaOutros.ejs', { 
+            listaOutros: data[0],
+            message: "Alimento apagado com sucesso"
+        });
+    } 
 });
 
 router.get('/delete/outros/:id', modules.notAuthenticated, async (req, res) => {
     await db.promise().query(`DELETE FROM outros WHERE id = '${req.params.id}';`);
-    res.redirect('/admin/outros');
+    res.redirect(url.format({
+        pathname: '/admin/outros',
+        query: {
+           "message": true
+        }
+    }));
 });
 
-router.get('/criarAlimento', modules.notAuthenticated, async (req, res) => {
-    res.render('criarAlimento.ejs')
+router.get('/criarAlimento', modules.notAuthenticated, (req, res) => {
+    res.render('criarAlimento.ejs');
 });
+
+router.post('/criarAlimento', modules.notAuthenticated, async (req, res) => {
+
+})
 
 module.exports = router;

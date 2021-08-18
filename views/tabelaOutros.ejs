@@ -19,7 +19,11 @@
 
 </head>
 
-<body>
+<% if (typeof message != 'undefined') { %>
+    <body onload="showMessage()">
+<% } else { %>
+    <body>
+<% } %>
     <ul>
         <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
         <li><a href="/admin/menu">Menu Administrador</a></li>
@@ -65,6 +69,7 @@
             <% } %>
         </table>
     </div>
+    <script src="/scripts/modules.js"></script>
 </body>
 
 </html>
