@@ -2,7 +2,7 @@
 html, body {
     background-image: url('/imagens/bg2.jpg');
     background-position: center;
-    background-size: 750px;
+    background-size: 850px;
     background-repeat: no-repeat;
     height: 100%;
     font-family: 'Numans', sans-serif;
@@ -58,7 +58,7 @@ input:focus {
 #registerbtn {
     color: black;
     background-color: #FFC312;
-    width: 150px;  
+    width: 150px;
     border-radius: 15px;
     border-color: #FFC312;
     margin-right: 9px;
@@ -70,6 +70,18 @@ input:focus {
     border-color: white;
 }
 
-#p{
+#p {
     color: white;
+}
+
+.radio {
+    color: white;
+    font-size: 25px;
+    margin-bottom: 5px;
+    margin-top: -5px;
+}
+
+input.largerCheckbox {
+    width: 20px;
+    height: 20px;
 }
