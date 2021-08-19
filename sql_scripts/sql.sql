@@ -7,7 +7,7 @@ DROP TABLE outros;
 CREATE TABLE users (
     id int NOT NULL AUTO_INCREMENT,
     nome varchar(50) NOT NULL,
-    email varchar(50) UNIQUE, 
+    email varchar(50) UNIQUE NOT NULL, 
     password varchar(255) NOT NULL,
     tipo varchar(50) NOT NULL,
     PRIMARY KEY (id)
