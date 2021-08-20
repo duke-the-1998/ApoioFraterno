@@ -50,7 +50,7 @@ CREATE TABLE outros (
     PRIMARY KEY (id)
 );
 
-INSERT INTO users (nome, password, tipo) VALUES ("admin", "$2a$10$ohUHjwo1Nc9dNkM20Na3nu.fLItq3MaObXuvMrOz9GAJ4Uqfn0fGi", "admin");
+INSERT INTO users (nome, email, password, tipo) VALUES ("admin", "admin@admin.pt", "$2a$10$ohUHjwo1Nc9dNkM20Na3nu.fLItq3MaObXuvMrOz9GAJ4Uqfn0fGi", "admin");
 INSERT INTO users (nome, email, password, tipo) VALUES ("Grupo 1", "grupo1@gmail.com", "$2a$10$7SoIHtKRdAV3F39mq9BFn.HUkGYrwL7dz6HTYFHVfQR1I66CNKkNa", "voluntario");
 
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Arroz", "Arroz.jpg", "Dicas sobre os alimentos", 1, 1);

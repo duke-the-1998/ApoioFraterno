@@ -3,12 +3,10 @@ const url = require('url');
 const bcrypt = require('bcrypt');
 const fileUpload = require('express-fileupload');
 const db = require('../database');
-const modules = require('../module');
 const { checkAuthenticated } = require('../middleware/checkAuthenticated');
 const { validateRequestSchema } = require('../middleware/validateRequestSchema');
 const { registarSchema } = require('../schema/registarSchema');
-
-//const { check, validationResult } = require('express-validator');
+const { inserirNoInventario, inserirCapacidade } = require('../criarAlimentoModule');
 
 const router = Router();
 router.use(fileUpload());
@@ -57,15 +55,39 @@ router.post('/registarUser', checkAuthenticated, registarSchema, validateRequest
 });
 
 router.get('/tabelaUsers', checkAuthenticated, async (req, res) => {
-    var sql = 'SELECT nome, email, tipo FROM users';
+    const data = await db.promise().query('SELECT nome, email, tipo FROM users');
 
-    const data = await db.promise().query(sql);
-    res.render('tabelaUsers.ejs', { listaUsers: data[0] });
+    if (Object.keys(req.query).length === 0) {
+        res.render('tabelaUsers.ejs', { listaUsers: data[0] });
+    } else {
+        res.render('tabelaUsers.ejs', { 
+            listaUsers: data[0],
+            sucesso: req.query.sucesso,
+            message: req.query.message });
+    }
 });
 
 router.get('/delete/user/:email', checkAuthenticated, async (req, res) => {
-    await db.promise().query(`DELETE FROM users WHERE email = '${req.params.email}';`);
-    res.redirect('/admin/tabelaUsers');
+    const user = req.session.passport.user;
+    if (user === req.params.email) {
+        res.redirect(url.format({
+            pathname: '/admin/tabelaUsers',
+            query: {
+                "sucesso": false,
+                "message": "Não é possível eliminar-se a si próprio"
+            }
+        }));
+    } else {
+        await db.promise().query(`DELETE FROM users WHERE email = '${req.params.email}';`);
+        res.redirect(url.format({
+            pathname: '/admin/tabelaUsers',
+            query: {
+                "sucesso": true,
+                "message": "Utilizador apagado com sucesso"
+            }
+        }));
+    }
+    
 });
 
 router.get('/consultarStock', checkAuthenticated, (req, res) => {
@@ -104,19 +126,23 @@ router.get('/criarAlimento', checkAuthenticated, (req, res) => {
 });
 
 router.post('/criarAlimento', checkAuthenticated, async (req, res) => {
-    console.log(req.body)
-    /*
+    const nome = req.body.nome;
+    const capacidade = req.body.capacidade;
+    const observacoes = req.body.observacoes;
     const file = req.files.imagem;
     const uploadPath = './public/imagens/Alimentos/' + file.name
+    var validade = "off";
+    if (req.body.validade != 'undefined') validade = req.body.validade;
+
+
+    inserirNoInventario(nome, file.name, observacoes, validade);
+    inserirCapacidade(nome, capacidade);
+
     file.mv(uploadPath, function (err) {
         if (err) return res.status(500).send(err);
-        res.send('200')
-    })*/
+    });
 
-    // inserir na tabela inventario
-    // inserir na tabela alimento
-    // inserir na tabela validade
-    // não deixar criar alimentos caso ja existam
+    res.redirect('/admin/outros')
 })
 
 module.exports = router;

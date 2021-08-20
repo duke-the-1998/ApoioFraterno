@@ -9,7 +9,6 @@ const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const { checkNotAuthenticated } = require('./middleware/checkAuthenticated');
-const modules = require('./module');
 
 const voluntariosRoute = require('./routers/voluntarios');
 const adminRoute = require('./routers/admin');
