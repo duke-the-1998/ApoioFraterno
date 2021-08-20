@@ -84,3 +84,13 @@ a:hover, a:active {
   align-items: center;
   margin-top: 20%;
 }
+
+input.largerCheckbox {
+  width: 20px;
+  height: 20px;
+}
+
+#abc{
+  color: black;
+}
+
