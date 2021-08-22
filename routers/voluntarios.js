@@ -23,27 +23,22 @@ router.get('/inventario', modules.authenticated, async (req, res) => {
     });
 });
 
-router.get('/alimento', modules.authenticated, async (req, res) => {
-    const id = req.query.id;
+router.get('/alimento/:id', modules.authenticated, async (req, res) => {
+    const id = req.params.id;
     const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${id}'`);
     const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
     const novaListaCapacidades = modules.capacidades(listaCapacidades[0]);
 
-    const body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, true);
+    var body;
+    if (Object.keys(req.query).length === 0) {
+        body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, false);
+    } else {
+        body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, true);
+    }
     res.render('alimento.ejs', body);
 });
 
 router.post('/alimento', modules.authenticated, async (req, res) => {
-    const id = req.body.id;
-    const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${id}'`);
-    const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
-    const novaListaCapacidades = modules.capacidades(listaCapacidades[0]);
-
-    const body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, false);
-    res.render('alimento.ejs', body);
-});
-
-router.post('/concluir', modules.authenticated, async (req, res) => {
     const body = req.body;
     const validade = body.validade + "-01";
     const alimento = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID = '${body.id}' AND CAPACIDADE= '${body.peso}'`);
@@ -55,10 +50,11 @@ router.post('/concluir', modules.authenticated, async (req, res) => {
         modules.doar(row[0], alimento[0][0].id, validade, body.quantidade);
     }
 
+    const link = "/voluntarios/alimento/" + body.id;
     res.redirect(url.format({
-        pathname:"/voluntarios/alimento",
+        pathname: link,
         query: {
-           "id": body.id,
+           "message": true
         }
     }));
 });
@@ -80,6 +76,7 @@ router.post('/outros', modules.authenticated, async (req, res) => {
     const validade = body.validade + "-01";
     const quantidade = body.quantidade;
     const observacoes = body.observacoes;
+
     if (body.add) {
         await db.promise().query(`INSERT INTO OUTROS (produto, capacidade, data, quantidade, observacoes)
          VALUES ('${produto}', '${capacidade}', '${validade}', '${quantidade}', '${observacoes}')`);
@@ -94,7 +91,6 @@ router.post('/outros', modules.authenticated, async (req, res) => {
            "message": "Operação feita com sucesso"
         }
     }));
-    
 });
 
 
