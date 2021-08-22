@@ -26,7 +26,7 @@
                 <div class="col-sm">
                     <form action='/voluntarios/alimento/<%= alimentos[i].id %>' method='GET'>
                         <button type="submit" class="btn">
-                            <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].imagem + ".jpg" %>>
+                            <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].imagem %>>
                             <h5 class="card-title">
                                 <%= alimentos[i].alimento %>
                             </h5>
@@ -37,7 +37,7 @@
                     <div class="col-sm">
                         <form action='/voluntarios/alimento/<%= alimentos[i+1].id %>' method="GET">
                             <button type="submit" class="btn">
-                                <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].imagem + ".jpg" %>>
+                                <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].imagem %>>
                                 <h5 class="card-title">
                                     <%= alimentos[i+1].alimento %>
                                 </h5>
@@ -66,6 +66,8 @@
                             <h5 class="card-title">Outros</h5>
                         </button>
                     </form>
+                </div>
+                <div class="col-sm">
                 </div>
             </div>
         <% } %>     

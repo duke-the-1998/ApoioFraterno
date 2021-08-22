@@ -8,7 +8,7 @@ const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
-const modules = require('./module');
+const { checkNotAuthenticated } = require('./middleware/checkAuthenticated');
 
 const voluntariosRoute = require('./routers/voluntarios');
 const adminRoute = require('./routers/admin');
@@ -39,11 +39,11 @@ app.get('/', async (req, res) => {
     res.redirect('/login');
 });
 
-app.get('/login', modules.notAuthenticated, (req, res) => {
+app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login.ejs')
 });
 
-app.post('/login', modules.notAuthenticated, passport.authenticate('local', {
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/voluntarios/menuPrincipal',
     failureRedirect: '/login',
     failureFlash: true

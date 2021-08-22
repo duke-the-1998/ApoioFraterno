@@ -12,7 +12,7 @@
   <!--Fontawesome CDN-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link href="/css/register.css" rel="stylesheet" type="text/css">
+  <link href="/css/registarUser.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
   <title>Registar</title>
 </head>
@@ -30,40 +30,54 @@
           </div>
         </div>
         <div class="card-body">
-          <form action="/admin/register" method="POST">
+          <form action="/admin/registarUser" method="POST">
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
               </div>
-              <input type="text" id="nome" class="form-control" cname="nome" placeholder="Nome do utilizador" name="username" required>
+              <input type="text" id="nome" class="form-control" cname="nome" placeholder="Nome do utilizador"
+                name="username" required>
             </div>
+
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+              </div>
+              <input type="text" id="email" class="form-control" cname="email" placeholder="Email" name="email"
+                required>
+            </div>
+
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-key"></i></span>
               </div>
               <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
             </div>
+
+            <div class="input-group form-group radio">
+              <label for="inputState">
+                <input type="checkbox" name="admin" class="largerCheckbox"> Administrador
+              </label>
+            </div>
+
             <button type="submit" value="register" id="registerbtn" class="btn float-right login_btn">Registar</button>
-            <a href="/admin/gerirVoluntarios" id="registerbtn" class="btn float-right login_btn"><i
+            <a href="/admin/gerirUtilizadores" id="registerbtn" class="btn float-right login_btn"><i
                 class="fa fa-arrow-left"></i> Voltar</a>
           </form>
-          
+
         </div>
-        <% if (typeof message != 'undefined' ) { %>
-          <% if (message === 'sucesso') { %>
+        <% if (typeof message !='undefined' ) { %>
+          <% if (message==='sucesso' ) { %>
             <div class="alert alert-success">
-              <strong>Success!</strong> Voluntário adicionado com sucesso.
+              <strong>Success!</strong> Utilizador adicionado com sucesso.
             </div>
-          <% } else if (message === 'username') { %>
-            <div class="alert alert-warning">
-              <strong>Aviso!</strong> Já existe um voluntário com esse nome, por favor escolha outro nome.
-            </div>
-          <% } else { %>
-            <div class="alert alert-danger">
-              <strong>Erro!</strong> Não foi possível registar o voluntário.
-            </div>
-          <% } %>
-        <% } %>
+            <% } else { %>
+              <div class="alert alert-danger">
+                <strong>Erro!</strong>
+                <%= message %>
+              </div>
+              <% } %>
+                <% } %>
       </div>
     </div>
   </div>
