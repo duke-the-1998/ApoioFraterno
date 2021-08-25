@@ -1,4 +1,4 @@
-const db = require('./database');
+const db = require('../database');
 
 async function inserirNoInventario(nome, imagem, observacoes, validade) {
     // O que fazer caso já exista?

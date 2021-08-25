@@ -72,4 +72,6 @@ INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES (
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Açucar", "Açucar.jpg", "Dicas sobre os alimentos", 0, 1);
 
 INSERT INTO alimento (inventario_id, capacidade) VALUES (1, "1kg");
+INSERT INTO alimento (inventario_id, capacidade) VALUES (2, "1kg");
+INSERT INTO alimento (inventario_id, capacidade) VALUES (2, "500g");
 INSERT INTO alimento (inventario_id, capacidade) VALUES (17, "1kg");

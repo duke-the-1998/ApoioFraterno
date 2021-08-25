@@ -2,7 +2,10 @@ const { Router } = require('express');
 const url = require('url');
 const db = require('../database');
 const { checkAuthenticated, checkNotAuthenticated } = require('../middleware/checkAuthenticated');
-const modules = require('../module');
+const { validateChangePasswordSchema } = require('../middleware/validateRequestSchema');
+const { passwordSchema } = require('../schema/changePasswordSchema.js');
+const modules = require('../modules/module');
+const { mudarPassword } = require('../modules/mudarPasswordModule.js');
 
 //const { check, validationResult } = require('express-validator');
 
@@ -92,6 +95,30 @@ router.post('/outros', checkAuthenticated, async (req, res) => {
            "message": "Operação feita com sucesso"
         }
     }));
+});
+
+router.get("/gestaoConta", checkAuthenticated, (req, res) => {
+    res.render("gestaoConta.ejs");
+});
+
+router.get("/mudarPassword", checkAuthenticated, (req, res) => {
+    res.render("mudarPassword.ejs");
+});
+
+router.post("/mudarPassword", checkAuthenticated, passwordSchema, validateChangePasswordSchema, (req, res) => {
+    const email = req.session.passport.user;
+    const oldPassword =  req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+    const confirmPassword = req.body.confirmPassword;
+
+    if (newPassword !== confirmPassword) {
+        return res.render('mudarPassword.ejs', { 
+            message: "Erro",
+            listaErros: ['As novas passwords não combinam'] 
+        });
+    }
+
+    mudarPassword(email, oldPassword, newPassword, res);
 });
 
 module.exports = router;
