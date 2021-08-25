@@ -15,8 +15,10 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/menuPrincipal', checkAuthenticated, (req, res) => {
-    return res.render('menuPrincipal.ejs');
+router.get('/menuPrincipal', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
+    return res.render('menuPrincipal.ejs', {tipo: row[0][0].tipo});
 });
 
 router.get('/inventario', checkAuthenticated, async (req, res) => {

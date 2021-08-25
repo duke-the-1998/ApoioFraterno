@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const fileUpload = require('express-fileupload');
 const db = require('../database');
 const { checkAuthenticated } = require('../middleware/checkAuthenticated');
+const { checkAdmin } = require('../middleware/checkAdmin');
 const { validateRegisterSchema } = require('../middleware/validateRequestSchema');
 const { registarSchema } = require('../schema/registarSchema');
 const { inserirNoInventario, inserirCapacidade } = require('../modules/criarAlimentoModule');
@@ -15,19 +16,19 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/menu', checkAuthenticated, (req, res) => {
+router.get('/menu', checkAuthenticated, checkAdmin, (req, res) => {
     return res.render('menuAdmin.ejs');
 });
 
-router.get('/gerirUtilizadores', checkAuthenticated, (req, res) => {
+router.get('/gerirUtilizadores', checkAuthenticated, checkAdmin, (req, res) => {
     res.render('gerirUtilizadores.ejs');
 });
 
-router.get('/registarUser', checkAuthenticated, (req, res) => {
+router.get('/registarUser', checkAuthenticated, checkAdmin, (req, res) => {
     res.render('registarUser.ejs');
 });
 
-router.post('/registarUser', checkAuthenticated, registarSchema, validateRegisterSchema, async (req, res) => {
+router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, validateRegisterSchema, async (req, res) => {
     try {
         const username = req.body.username;
         const email = req.body.email;
@@ -54,7 +55,7 @@ router.post('/registarUser', checkAuthenticated, registarSchema, validateRegiste
     }
 });
 
-router.get('/tabelaUsers', checkAuthenticated, async (req, res) => {
+router.get('/tabelaUsers', checkAuthenticated, checkAdmin, async (req, res) => {
     const data = await db.promise().query('SELECT nome, email, tipo FROM users');
 
     if (Object.keys(req.query).length === 0) {
@@ -67,7 +68,7 @@ router.get('/tabelaUsers', checkAuthenticated, async (req, res) => {
     }
 });
 
-router.get('/delete/user/:email', checkAuthenticated, async (req, res) => {
+router.get('/delete/user/:email', checkAuthenticated, checkAdmin, async (req, res) => {
     const user = req.session.passport.user;
     if (user === req.params.email) {
         res.redirect(url.format({
@@ -90,11 +91,11 @@ router.get('/delete/user/:email', checkAuthenticated, async (req, res) => {
     
 });
 
-router.get('/consultarStock', checkAuthenticated, (req, res) => {
+router.get('/consultarStock', checkAuthenticated, checkAdmin, (req, res) => {
     res.render('consultarStock.ejs');
 });
 
-router.get('/outros', checkAuthenticated, async (req, res) => {
+router.get('/outros', checkAuthenticated, checkAdmin, async (req, res) => {
     var sql = 'SELECT id, produto, capacidade,' +
             'MONTH(data) AS mes, YEAR(data) AS ano, ' + 
             'quantidade, observacoes FROM outros';
@@ -111,7 +112,7 @@ router.get('/outros', checkAuthenticated, async (req, res) => {
     } 
 });
 
-router.get('/delete/outros/:id', checkAuthenticated, async (req, res) => {
+router.get('/delete/outros/:id', checkAuthenticated, checkAdmin, async (req, res) => {
     await db.promise().query(`DELETE FROM outros WHERE id = '${req.params.id}';`);
     res.redirect(url.format({
         pathname: '/admin/outros',
@@ -121,11 +122,11 @@ router.get('/delete/outros/:id', checkAuthenticated, async (req, res) => {
     }));
 });
 
-router.get('/criarAlimento', checkAuthenticated, (req, res) => {
+router.get('/criarAlimento', checkAuthenticated, checkAdmin, (req, res) => {
     res.render('criarAlimento.ejs');
 });
 
-router.post('/criarAlimento', checkAuthenticated, async (req, res) => {
+router.post('/criarAlimento', checkAuthenticated, checkAdmin, async (req, res) => {
     const nome = req.body.nome;
     const capacidade = req.body.capacidade;
     const observacoes = req.body.observacoes;
