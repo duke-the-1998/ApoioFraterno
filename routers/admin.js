@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt');
 const fileUpload = require('express-fileupload');
 const db = require('../database');
 const { checkAuthenticated } = require('../middleware/checkAuthenticated');
-const { validateRequestSchema } = require('../middleware/validateRequestSchema');
+const { validateRegisterSchema } = require('../middleware/validateRequestSchema');
 const { registarSchema } = require('../schema/registarSchema');
-const { inserirNoInventario, inserirCapacidade } = require('../criarAlimentoModule');
+const { inserirNoInventario, inserirCapacidade } = require('../modules/criarAlimentoModule');
 
 const router = Router();
 router.use(fileUpload());
@@ -27,7 +27,7 @@ router.get('/registarUser', checkAuthenticated, (req, res) => {
     res.render('registarUser.ejs');
 });
 
-router.post('/registarUser', checkAuthenticated, registarSchema, validateRequestSchema, async (req, res) => {
+router.post('/registarUser', checkAuthenticated, registarSchema, validateRegisterSchema, async (req, res) => {
     try {
         const username = req.body.username;
         const email = req.body.email;

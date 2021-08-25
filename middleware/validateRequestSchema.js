@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator'); 
 
-function validateRequestSchema (req, res, next) {
+function validateRegisterSchema (req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()){
         var string = "";
@@ -12,4 +12,21 @@ function validateRequestSchema (req, res, next) {
     next();
 }
 
-exports.validateRequestSchema = validateRequestSchema;
+function validateChangePasswordSchema (req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()){
+        var listaErros = new Array();
+        for (var e of errors.array()) {
+            listaErros.push(e.msg);
+        }
+        
+        return res.render('mudarPassword.ejs', { 
+            message: "Erro",
+            listaErros: listaErros 
+        });
+    }
+    next();
+}
+
+exports.validateRegisterSchema = validateRegisterSchema;
+exports.validateChangePasswordSchema = validateChangePasswordSchema;

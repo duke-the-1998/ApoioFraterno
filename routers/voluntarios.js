@@ -2,7 +2,10 @@ const { Router } = require('express');
 const url = require('url');
 const db = require('../database');
 const { checkAuthenticated, checkNotAuthenticated } = require('../middleware/checkAuthenticated');
-const modules = require('../module');
+const { validateChangePasswordSchema } = require('../middleware/validateRequestSchema');
+const { passwordSchema } = require('../schema/changePasswordSchema.js');
+const modules = require('../modules/module');
+const { mudarPassword } = require('../modules/mudarPasswordModule.js');
 
 //const { check, validationResult } = require('express-validator');
 
@@ -93,7 +96,6 @@ router.post('/outros', checkAuthenticated, async (req, res) => {
         }
     }));
 });
-
 
 
 module.exports = router;
