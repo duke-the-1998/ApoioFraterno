@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,body{
+  font-family: 'Numans', sans-serif;
+  }
+
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -25,10 +32,13 @@ li a:hover {
 }
 
 table {
-    border: #111;
+    border: 2px #111;
     border-style: solid;
     width: 100%;
+   
 }
+
+
 
 th, td {
     text-align: left;
