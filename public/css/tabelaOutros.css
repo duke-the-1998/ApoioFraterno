@@ -29,6 +29,7 @@ li a {
 li a:hover {
     background-color: #111;
     color: white;
+    text-decoration: none;
 }
 
 table {
@@ -37,8 +38,6 @@ table {
     width: 100%;
    
 }
-
-
 
 th, td {
     text-align: left;
@@ -54,6 +53,7 @@ th {
     color: white;
 }
 
+
 .overlay {
     height: 100%;
     width: 0;
@@ -61,8 +61,8 @@ th {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0, 0.9);
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.8);
     overflow-x: hidden;
     transition: 0.5s;
   }
@@ -79,11 +79,16 @@ th {
     padding: 8px;
     text-decoration: none;
     font-size: 36px;
-    color: #818181;
+    color: #aaa9a9;
     display: block;
     transition: 0.3s;
   }
   
+li span:hover{
+  background-color: #111;
+    color: white;
+}
+
   .overlay a:hover, .overlay a:focus {
     color: #f1f1f1;
   }
@@ -102,4 +107,53 @@ th {
     top: 15px;
     right: 35px;
     }
+  }
+
+  .btn{
+    background-color: rgb(22, 145, 228);
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+    margin-left: 15px;
+  }
+  
+  .btn:hover, .btn:active {
+    background-color: rgb(11, 119, 190);
+  }
+
+  .card {
+    text-align: center;
+    width: 540px;
+    margin: 0 auto; 
+    float: none; 
+    margin-bottom: 10px;
+    background-color: rgba(0,0,0,0.5) !important;
+    border-radius: 25px;
+    margin-top: 10px;
+  }
+  .card-img-top{
+    border-radius: 25px; 
+  }
+  
+  .card-body {
+    color: white;
+    font-size: 20px;
+  }
+  
+  .card-title{
+    font-size: 30px;
+  }
+  
+  .col-md{
+    text-align: left;
+    font-size: 25px;
+    font-weight: bold;
+  }
+  
+  .col-md-6{
+    font-size: 25px;
+    font-weight: bold;
   }
