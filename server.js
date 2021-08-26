@@ -12,7 +12,7 @@ const { checkNotAuthenticated } = require('./middleware/checkAuthenticated');
 
 const voluntariosRoute = require('./routers/voluntarios');
 const adminRoute = require('./routers/admin');
-//const authRoute = require('./routers/auth');
+const authRoute = require('./routers/auth');
 
 const initializePassport = require('./passport-config');
 initializePassport(passport);
@@ -36,29 +36,14 @@ app.use((req, res, next) => {
 })
 
 app.get('/', async (req, res) => {
-    res.redirect('/login');
-});
-
-app.get('/login', checkNotAuthenticated, (req, res) => {
-    res.render('login.ejs')
-});
-
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/voluntarios/menuPrincipal',
-    failureRedirect: '/login',
-    failureFlash: true
-}));
-
-app.delete('/logout', (req, res) => {
-    req.logOut();
-    res.redirect('/exitPage');
-});
+    res.redirect('/auth/login');
+}); 
 
 app.get('/exitPage', (req, res) => {
     res.render('exitPage.ejs');
 });
 
-//app.use('/auth', authRoute);
+app.use('/auth', authRoute);
 app.use('/voluntarios', voluntariosRoute);
 app.use('/admin', adminRoute);
 
