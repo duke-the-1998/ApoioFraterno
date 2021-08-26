@@ -120,7 +120,7 @@ router.get('/delete/outros/:id', checkAuthenticated, async (req, res) => {
         }
     }));
 });
-router.get('/tabela', modules.authenticated, async (req, res) => {
+router.get('/tabela', checkAuthenticated, async (req, res) => {
     const alimentoInventario = await db.promise().query(`SELECT * 
     FROM INVENTARIO i 
     LEFT JOIN Alimento ON Alimento.inventario_id = i.id
