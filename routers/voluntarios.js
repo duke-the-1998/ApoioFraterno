@@ -15,8 +15,10 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/menuPrincipal', checkAuthenticated, (req, res) => {
-    return res.render('menuPrincipal.ejs');
+router.get('/menuPrincipal', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
+    return res.render('menuPrincipal.ejs', {tipo: row[0][0].tipo});
 });
 
 router.get('/inventario', checkAuthenticated, async (req, res) => {
@@ -43,15 +45,18 @@ router.get('/alimento/:id', checkAuthenticated, async (req, res) => {
 });
 
 router.post('/alimento', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const nome = await db.promise().query(`SELECT nome FROM users WHERE email = '${user}'`)
     const body = req.body;
     const validade = body.validade + "-01";
+    const produto = await db.promise().query(`SELECT produto FROM INVENTARIO WHERE id = '${body.id}'`);
     const alimento = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID = '${body.id}' AND CAPACIDADE= '${body.peso}'`);
     const row = await db.promise().query(`SELECT * FROM VALIDADE WHERE ALIMENTO_ID = '${alimento[0][0].id}' AND DATA = '${validade}'`);
 
     if(body.add) {
-        modules.darEntradaProduto(row[0], alimento[0][0].id, validade, body.quantidade);
+        modules.darEntradaProduto(row[0], nome[0][0].nome, produto[0][0].produto, alimento[0][0].id, validade, body.peso, body.quantidade);
     } else {    
-        modules.darSaidaProduto(row[0], alimento[0][0].id, validade, body.quantidade);
+        modules.darSaidaProduto(row[0], nome[0][0].nome, produto[0][0].produto, alimento[0][0].id, validade, body.peso, body.quantidade);
     }
 
     const link = "/voluntarios/alimento/" + body.id;
