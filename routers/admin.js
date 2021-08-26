@@ -5,7 +5,7 @@ const fileUpload = require('express-fileupload');
 const db = require('../database');
 const { checkAuthenticated } = require('../middleware/checkAuthenticated');
 const { checkAdmin } = require('../middleware/checkAdmin');
-const { validateRegisterSchema } = require('../middleware/validateRequestSchema');
+const { validateRegistarSchema } = require('../middleware/validateRequestSchema');
 const { registarSchema } = require('../schema/registarSchema');
 const { inserirNoInventario, inserirCapacidade } = require('../modules/criarAlimentoModule');
 
@@ -28,16 +28,22 @@ router.get('/registarUser', checkAuthenticated, checkAdmin, (req, res) => {
     res.render('registarUser.ejs');
 });
 
-router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, validateRegisterSchema, async (req, res) => {
+router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, validateRegistarSchema, async (req, res) => {
     try {
         const username = req.body.username;
         const email = req.body.email;
         const row = await db.promise().query(`SELECT nome, email FROM USERS WHERE nome = '${username}' OR email = '${email}'`);
         if (row[0].length !== 0) {
             if (row[0][0].nome === username) {
-                res.render('registarUser.ejs', { message: 'Já existe um utilizador com este nome registado'});
+                res.render('registarUser.ejs', { 
+                    message: "Erro",
+                    listaErros: ['Já existe um utilizador com este nome registado'] 
+                });
             } else if (row[0][0].email === email) {
-                res.render('registarUser.ejs', { message: 'Já existe um utilizador com este email registado'});
+                res.render('registarUser.ejs', { 
+                    message: "Erro",
+                    listaErros: ['Já existe um utilizador com este email registado'] 
+                });
             }
         } else {
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -51,7 +57,10 @@ router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, val
             res.render('registarUser.ejs', { message: 'sucesso'});
         }
     } catch {
-        res.render('registarUser.ejs', { message: 'O servidor não conseguiu concluir o registo por algum motivo'});
+        res.render('registarUser.ejs', { 
+            message: "Erro",
+            listaErros: ['O servidor não conseguiu concluir o registo por algum motivo']
+        });
     }
 });
 

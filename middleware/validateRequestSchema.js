@@ -1,13 +1,17 @@
 const { validationResult } = require('express-validator'); 
 
-function validateRegisterSchema (req, res, next) {
+function validateRegistarSchema (req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()){
-        var string = "";
+        var listaErros = new Array();
         for (var e of errors.array()) {
-            string += e.param + " inválido;";
+            listaErros.push(e.msg);
         }
-        return res.render('registarUser.ejs', { message: string});
+        
+        return res.render('registarUser.ejs', { 
+            message: "Erro",
+            listaErros: listaErros 
+        });
     }
     next();
 }
@@ -28,5 +32,5 @@ function validateChangePasswordSchema (req, res, next) {
     next();
 }
 
-exports.validateRegisterSchema = validateRegisterSchema;
+exports.validateRegistarSchema = validateRegistarSchema;
 exports.validateChangePasswordSchema = validateChangePasswordSchema;
