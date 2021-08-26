@@ -144,6 +144,16 @@ router.post('/criarAlimento', checkAuthenticated, checkAdmin, async (req, res) =
     });
 
     res.redirect('/admin/outros')
-})
+});
+
+router.get("/relatorio", checkAuthenticated, async (req, res) => {
+    const historico = await db.promise().query(`SELECT DATE_FORMAT(data, '%d-%m-%Y') dataonly, 
+                                                DATE_FORMAT(data,'%H:%i:%s') timeonly, nome, acao FROM historico
+                                                ORDER BY dataonly DESC, timeonly DESC`);
+
+    return res.render('tabelaHistoricoPessoal.ejs', { 
+        historico: historico[0]
+    });
+});
 
 module.exports = router;
