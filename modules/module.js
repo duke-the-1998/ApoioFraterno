@@ -27,22 +27,30 @@ function construirListaCapacidades(lista) {
     return capacidades;
 }
 
-async function darEntradaProduto(row, alimento_id, validade, quantidade) {
+async function darEntradaProduto(row, nome, produto, alimento_id, validade, peso, quantidade) {
+    const acao = "Entrada " + quantidade+ " " + produto + " " + peso + " " + validade;
+
     if (row.length === 0) {
-        db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}', '${quantidade}')`)
+        await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}', '${quantidade}')`);
+        await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${nome}', '${acao}')`);
         return
     } else {
-        db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE+'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`)
+        await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE+'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`);
+        await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${nome}', '${acao}')`);
         return
     }
 }
 
-async function darSaidaProduto(row, alimento_id, validade, quantidade) {
+async function darSaidaProduto(row, nome, produto, alimento_id, validade, peso, quantidade) {
+    const acao = "Saída " + quantidade+ " " + produto + " " + peso + " " + validade;
+
     if (row.length === 0) {
-        db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}','${- quantidade}')`)
+        await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}','${- quantidade}')`);
+        await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${nome}', '${acao}')`);
         return
     } else {
-        db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`)
+        await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`);
+        await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${nome}', '${acao}')`);
         return
     }
 }

@@ -50,6 +50,14 @@ CREATE TABLE outros (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE historico (
+    id int NOT NULL AUTO_INCREMENT,
+    data DATETIME NOT NULL,
+    nome varchar(255) NOT NULL,
+    acao varchar(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 INSERT INTO users (nome, email, password, tipo) VALUES ("admin", "admin@admin.pt", "$2a$10$ohUHjwo1Nc9dNkM20Na3nu.fLItq3MaObXuvMrOz9GAJ4Uqfn0fGi", "admin");
 INSERT INTO users (nome, email, password, tipo) VALUES ("Grupo 1", "grupo1@gmail.com", "$2a$10$7SoIHtKRdAV3F39mq9BFn.HUkGYrwL7dz6HTYFHVfQR1I66CNKkNa", "voluntario");
 
