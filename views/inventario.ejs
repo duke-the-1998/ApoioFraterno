@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="/css/inventario.css" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
+    <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
     <title>Inventário</title>
 </head>
 
@@ -28,7 +28,7 @@
                 <div class="col-sm">
                     <form action='/voluntarios/alimento/<%= alimentos[i].id %>' method='GET'>
                         <button type="submit" class="btn">
-                            <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i].imagem %>>
+                            <img class="card-img-top" src=<%="/images/Alimentos/" + alimentos[i].imagem %>>
                             <h5 class="card-title">
                                 <%= alimentos[i].alimento %>
                             </h5>
@@ -39,7 +39,7 @@
                     <div class="col-sm">
                         <form action='/voluntarios/alimento/<%= alimentos[i+1].id %>' method="GET">
                             <button type="submit" class="btn">
-                                <img class="card-img-top" src=<%="/imagens/Alimentos/" + alimentos[i+1].imagem %>>
+                                <img class="card-img-top" src=<%="/images/Alimentos/" + alimentos[i+1].imagem %>>
                                 <h5 class="card-title">
                                     <%= alimentos[i+1].alimento %>
                                 </h5>
@@ -53,7 +53,7 @@
                 <div class="col-sm">
                     <form action='/voluntarios/outros' method="GET">
                         <button type="submit" class="btn">
-                            <img class="card-img-top" src="/imagens/outros1.jpg" >
+                            <img class="card-img-top" src="/images/outros.jpg" >
                             <h5 class="card-title">Outros</h5>
                         </button>
                     </form>
@@ -64,7 +64,7 @@
                 <div class="col-sm">
                     <form action='/voluntarios/outros' method="GET">
                         <button type="submit" class="btn">
-                            <img class="card-img-top" src="/imagens/bg3.jpg">
+                            <img class="card-img-top" src="/images/outros.jpg">
                             <h5 class="card-title">Outros</h5>
                         </button>
                     </form>

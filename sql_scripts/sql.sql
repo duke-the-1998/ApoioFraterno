@@ -42,7 +42,7 @@ CREATE TABLE validade (
 
 CREATE TABLE outros (
     id int NOT NULL AUTO_INCREMENT,
-    produto varchar(50) UNIQUE NOT NULL,
+    produto varchar(50) NOT NULL,
     capacidade varchar(50) NOT NULL,
     data date,
     quantidade int NOT NULL,

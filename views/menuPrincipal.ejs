@@ -12,7 +12,7 @@
   <!--Fontawesome CDN-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
+  <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
   <link href="/css/menuPrincipal.css" rel="stylesheet" type="text/css">
 
   <title>Menu Principal</title>
@@ -26,31 +26,31 @@
           <h3>Menu Principal</h3>
           <!-- linhas para teste-->
           <div class="d-flex justify-content-end social_icon">
-            <span><img src="/imagens/apoioFratlogo.png" width="100" height="100"></i></span>
+            <span><img src="/images/apoioFratlogo.png" width="100" height="100"></i></span>
           </div>
 
         </div>
 
         <div class="card-body">
           <form action="/voluntarios/inventario" method="GET">
-            <img src="/imagens/gerirStock.png" width="60" height="60"></i>
+            <img src="/images/gerirStock.png" width="60" height="60"></i>
             <button type="submit" id="logoutbtn">Gerir Stock</button>
           </form>
 
           <% if (tipo === "admin") { %>            
             <form action="/admin/menu" method="GET">
-              <img src="/imagens/admin.png" width="60" height="60"></i>
+              <img src="/images/admin.png" width="60" height="60"></i>
               <button type="submit" id="logoutbtn">Administradores</button>
             </form>
           <% } %>
 
           <form action="/voluntarios/gestaoConta" method="GET">
-            <img src="/imagens/opcoes.png" width="60" height="60"></i>
+            <img src="/images/opcoes.png" width="60" height="60"></i>
             <button type="submit" id="logoutbtn">Gestão de Conta</button>
           </form>
 
           <form action="/logout?_method=DELETE" method="POST">
-            <img src="/imagens/logout.png" width="60" height="60"></i>
+            <img src="/images/logout.png" width="60" height="60"></i>
             <button type="submit" id="logoutbtn">Log Out</button>
           </form>
         </div>
