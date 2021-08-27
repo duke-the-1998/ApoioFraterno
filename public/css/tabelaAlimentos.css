@@ -7,3 +7,7 @@ html, body {
   background-attachment: fixed;
   font-family: 'Numans', sans-serif;
 }
+.tabela{
+  overflow: scroll;
+
+}

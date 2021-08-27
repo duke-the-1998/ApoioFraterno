@@ -100,20 +100,6 @@ function bodyAlimento(id, alimento, imagem, observacoes, capacidades, validade, 
         }
     }
 
-}
-function construirAlimentoInventario(lista) {
-    var alimento = new Array();
-
-    for (var n of lista) {
-        const obj = {
-            produto: n.produto,
-            inventario_id: n.inventario_id,
-            id: n.id,
-            capacidade:n.capacidade
-        }
-        alimento.push(obj);
-    }
-    return alimento;
 };
 
 exports.construirInventario = construirInventario;
@@ -121,4 +107,3 @@ exports.construirListaCapacidades = construirListaCapacidades;
 exports.darEntradaProduto = darEntradaProduto;
 exports.darSaidaProduto = darSaidaProduto;
 exports.bodyAlimento = bodyAlimento;
-exports.construirAlimentoInventario = construirAlimentoInventario;

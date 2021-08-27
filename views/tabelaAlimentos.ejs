@@ -18,35 +18,89 @@
 </head>
 
 <body>
-    <div class="container">
+    <ul>
+        <!--            <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
+                        <li><a href="/admin/menu">Menu Administrador</a></li>
+                        <li><a href="/admin/criarAlimento">Criar Alimento</a></li> -->
+    </ul>
 
-    <table class="table table-striped">
-        <thread>
-            <tr>
-                <th>
-                    Nome
-                </th>
-                <th>
-                    Capacidade
-                </th>
-            </tr>
-        </thread>
-        <tbody>
-            <% for (var i=0; i < alimentoInventario.length; i +=1) { %>
-
+    <div class="table-data">
+            <h2>Tabela Outros</h2>
+            <table border="1">
                 <tr>
-                    <td>
-                        <%= alimentoInventario[i].produto %>
-                    </td>
-                    <td>
-                        <%= alimentoInventario[i].capacidade %>
-                    </td>
-                </tr>
+                    <th>Produto</th>
+                    <th>Capacidade</th>
+                    <th></th>
+                    <% for(var i=0 ; i <= rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
+                    <th colspan="12">
+                            <%= rangeAnosValidade[0].minimo + i %>
+                    </th>
+                    <% } %>
 
-                <% } %>
-        </tbody>
-    </table>
+                </tr> 
+                    <tr>
+                    <% var meses =["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"]; %>
+
+                    <td></td>
+                    <td></td>
+                    <td>Total</td>
+                    <% for(var i=0 ; i <= rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
+
+
+                    <% for(var j=0 ; j < meses.length; j++ ){ %>
+                    <td>
+                        <%= meses[j] %>
+                    </td>
+                    <% } %>
+                    <% } %>
+                </tr>
+                    <!-- loop de produtos inicio -->
+                    <% for(var p=0 ; p < alimentoInventario.length ; p++ ){ %>
+                        <% console.log( 'produto', alimentoInventario[p] )%>
+                    <tr>
+                        <td>
+                    <%= alimentoInventario[p].produto %>
+                        </td>
+                        <td>
+                        <%= alimentoInventario[p].capacidade %>
+                        </td>
+                    <td>
+                        <% if ( !(alimentoInventario[p].total == null) ) { %>
+                            <%= alimentoInventario[p].total %>
+                        <% }%>
+
+                    </td>
+                    <!-- loop de anos -->
+                        <% for(var a=0 ; a <= rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; a++ ){ %>
+
+                    <!-- loop de meses -->
+                            <% for(var m=1 ; m <= 12 ; m++ ){ %>
+                                <% var contador = 0; %>
+                                <td>
+                                <% for(var c=0 ; c < alimentoInventario[p].data.length ; c++ ){ %>
+                                
+                                    <% if ( !(alimentoInventario[p].data[c] == null) && alimentoInventario[p].data[c].getFullYear() == rangeAnosValidade[0].minimo+a && alimentoInventario[p].data[c].getMonth()+1 == m  ) { %>
+                                        <% contador = contador + alimentoInventario[p].quantidade[c]; %>
+                                    <% }%> 
+                        <!-- loop de contagem para mes especifico -->
+                                <% }%>
+                                <% if (contador >0 ){ %>
+                                    <%= contador %>
+                                <% }%>
+                            </td>
+
+                        <!-- fim de loop de meses -->
+                            <% }%>
+                    <!-- fim de loop de anos -->
+                        <% }%>
+
+                    </tr>
+                    <% }%>
+                    <!-- fim de loop produtos-->
+
+            </table>
     </div>
+    <script src="/scripts/modules.js"></script>
 </body>
 
-concat( ( cast(YEAR (data) AS varchar)) (cast ( MONTH (data) AS varchar) ) )
+</html>
