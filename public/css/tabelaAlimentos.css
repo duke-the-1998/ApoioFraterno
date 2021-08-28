@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html, body {
+  background-image: url('/imagens/bg10.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Numans', sans-serif;
+}
+.tabela{
+  overflow: scroll;
+
+}

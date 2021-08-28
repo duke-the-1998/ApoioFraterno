@@ -80,6 +80,12 @@ INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES (
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ("Açucar", "Açucar.jpg", "Dicas sobre os alimentos", 0, 1);
 
 INSERT INTO alimento (inventario_id, capacidade) VALUES (1, "1kg");
-INSERT INTO alimento (inventario_id, capacidade) VALUES (2, "1kg");
-INSERT INTO alimento (inventario_id, capacidade) VALUES (2, "500g");
+INSERT INTO alimento (inventario_id, capacidade) VALUES (1, "500g");
+INSERT INTO alimento (inventario_id, capacidade) VALUES (5, "1kg");
+INSERT INTO alimento (inventario_id, capacidade) VALUES (5, "2kg");
 INSERT INTO alimento (inventario_id, capacidade) VALUES (17, "1kg");
+
+INSERT INTO validade (alimento_id, data,quantidade) VALUES (1, "2020-01-01",5);
+INSERT INTO validade (alimento_id, data,quantidade) VALUES (1, "2020-01-20",2);
+INSERT INTO validade (alimento_id, data,quantidade) VALUES (2, "2020-01-12",1);
+INSERT INTO validade (alimento_id, data,quantidade) VALUES (2, "2025-04-11",15);

@@ -3,11 +3,12 @@ const url = require('url');
 const bcrypt = require('bcrypt');
 const fileUpload = require('express-fileupload');
 const db = require('../database');
-const { checkAuthenticated } = require('../middleware/checkAuthenticated');
+const { checkAuthenticated,checkNotAuthenticated } = require('../middleware/checkAuthenticated');
 const { checkAdmin } = require('../middleware/checkAdmin');
 const { validateRegistarSchema } = require('../middleware/validateRequestSchema');
 const { registarSchema } = require('../schema/registarSchema');
 const { inserirNoInventario, inserirCapacidade } = require('../modules/criarAlimentoModule');
+const { construirAlimentoInventario, construirMinMax } = require ('../modules/tabelaAlimentosModule');
 
 const router = Router();
 router.use(fileUpload());
@@ -132,6 +133,18 @@ router.get('/delete/outros/:id', checkAuthenticated, checkAdmin, async (req, res
             "message": "Alimento apagado com sucesso"
         }
     }));
+});
+router.get('/tabela', checkAuthenticated, async (req, res) => {
+    var sql = 'SELECT i.produto as produto , a.capacidade as capacidade, v.data as data, v.quantidade as quantidade, i.observacoes as observacoes, i.estado as estado FROM inventario i LEFT JOIN alimento a ON i.id = a.inventario_id LEFT JOIN validade v ON a.id = v.alimento_id ORDER BY i.produto ASC , a.capacidade ASC';
+
+    var alimentoInventario = await db.promise().query(sql);
+    var rangeAnosValidade = await db.promise().query('SELECT MIN(YEAR (v.data)) as minimo, MAX(YEAR (v.data)) as maximo FROM validade v');
+    var novoAlimentoInventario = construirAlimentoInventario(alimentoInventario[0]);
+    var novorangeAnosValidade = construirMinMax(rangeAnosValidade[0]);
+    res.render('tabelaAlimentos.ejs', { 
+        alimentoInventario: novoAlimentoInventario,
+        rangeAnosValidade: novorangeAnosValidade
+    });
 });
 
 router.get('/criarAlimento', checkAuthenticated, checkAdmin, (req, res) => {
