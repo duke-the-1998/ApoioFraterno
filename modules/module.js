@@ -114,9 +114,6 @@ exports.construirInventario = construirInventario;
 exports.construirListaCapacidades = construirListaCapacidades;
 exports.darEntradaProduto = darEntradaProduto;
 exports.darSaidaProduto = darSaidaProduto;
-<<<<<<< HEAD
 exports.formatValidade = formatValidade;
 exports.bodyAlimento = bodyAlimento;
-=======
-exports.bodyAlimento = bodyAlimento;
->>>>>>> 0bf12ff5ab936d577ee4474012756e6ca8081b20
+
