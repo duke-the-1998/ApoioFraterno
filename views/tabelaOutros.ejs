@@ -14,128 +14,127 @@
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
     <link href="/css/tabelaOutros.css" rel="stylesheet" type="text/css">
+    <link href="/css/alertas.css" rel="stylesheet" type="text/css">
 
     <title>Tabela Outros</title>
 
 </head>
 
-<% if (typeof message !='undefined' ) { %>
+<body>
+    <ul>
+        <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
+        <li><a href="/admin/menu">Menu Administrador</a></li>
+        <li><a style="color:white;cursor:pointer" onclick="openNav()">Criar alimento</a></li>
+    </ul>
 
-    <body onload="showMessage()">
+    <% if (typeof message != 'undefined') { %>
+        <% if (sucesso == 'true') { %>
+            <div class="success">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <strong>Sucesso!</strong> <%= message %>
+            </div>
         <% } else { %>
+            <div class="error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <strong>Erro!</strong> <%= message %>
+            </div>
+        <% } %>
+    <% } %>
 
-            <body>
-                <% } %>
-                    <ul>
-                        <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
-                        <li><a href="/admin/menu">Menu Administrador</a></li>
-                        <li> <a><span style="color:white;cursor:pointer" onclick="openNav()">Criar alimento</a> </span>
-
-                            <div id="myNav" class="overlay">
-                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                                <div class="overlay-content">
-                                    <form action="/admin/criarAlimento" method="POST" enctype="multipart/form-data">
-                                        <div class="form-row">
-                                            <div class="form-group col-md">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="container text-center vertical-center">
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md">
-                                                                    <label for="inputState">Nome do alimento</label>
-                                                                    <input type="text" class="form-control" name="nome" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md">
-                                                                    <label for="inputState">Capacidade</label>
-                                                                    <input type="text" class="form-control" name="capacidade" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md">
-                                                                    <label for="inputState">Observações</label>
-                                                                    <input type="text" class="form-control" name="observacoes">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md">
-                                                                    
-                                                                    <label for="inputState">Imagem</label>
-                                                                   
-                                                                    <input type="file" name="imagem" accept="image/*" id="abc" required>
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md radio">
-                                                                    <label for="inputState">Validade</label>
-                                                                    <input type="checkbox" name="validade" class="largerCheckbox">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+    <div id="myNav" class="overlay">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="overlay-content">
+            <form action="/admin/criarAlimento" method="POST" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="form-group col-md">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="container text-center vertical-center">
+                                    <div class="form-row">
+                                        <div class="form-group col-md">
+                                            <label for="inputState">Nome do alimento</label>
+                                            <input type="text" class="form-control" name="nome" required>
                                         </div>
-                                        <div class="btn-submit"> 
-                                            <input type="submit" onclick='return btnClick();' class="btn" value="Criar">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md">
+                                            <label for="inputState">Capacidade</label>
+                                            <input type="text" class="form-control" name="capacidade" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md">
+                                            <label for="inputState">Observações</label>
+                                            <input type="text" class="form-control" name="observacoes">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md">
+                                            
+                                            <label for="inputState">Imagem</label>
+                                            
+                                            <input type="file" name="imagem" accept="image/*" id="abc" required>
                                             
                                         </div>
-                                    </form>
-                                    <script src="/scripts/modules.js" ></script>
-                            <script>
-                                function openNav() {
-                                    document.getElementById("myNav").style.width = "100%";
-                                }
-
-                                function closeNav() {
-                                    document.getElementById("myNav").style.width = "0%";
-                                }
-                            </script>
-                        </li>
-                    </ul>
-
-                    <div class="table-data">
-                        <h2>Tabela Outros</h2>
-                        <table border="1">
-                            <tr>
-                                <th>Produto</th>
-                                <th>Capacidade</th>
-                                <th>Data</th>
-                                <th>Quantidade</th>
-                                <th>Observações</th>
-                                <th>Apagar</th>
-                            </tr>
-
-                            <% if(listaOutros.length !=0){ listaOutros.forEach(function(l){ %>
-                                <tr>
-                                    <td>
-                                        <%=l.produto; %>
-                                    </td>
-                                    <td>
-                                        <%=l.capacidade %>
-                                    </td>
-                                    <td>
-                                        <%=l.mes + " de " + l.ano%>
-                                    </td>
-                                    <td>
-                                        <%=l.quantidade %>
-                                    </td>
-                                    <td>
-                                        <%=l.observacoes %>
-                                    </td>
-                                    <td><a href="/admin/delete/outros/<%=l.id%>">Apagar</a></td>
-                                </tr>
-                                <% }) %>
-                                    <% } else { %>
-                                        <tr>
-                                            <td colspan="7">Não existe nenhum alimento</td>
-                                        </tr>
-                                        <% } %>
-                        </table>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md radio">
+                                            <label for="inputState">Validade</label>
+                                            <input type="checkbox" name="validade" class="largerCheckbox">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <script src="/scripts/modules.js"></script>
-            </body>
+                </div>
+                <div class="btn-submit"> 
+                    <input type="submit" onclick='return btnCriar();' class="btn" value="Criar">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-data">
+        <h2>Tabela Outros</h2>
+        <table border="1">
+            <tr>
+                <th>Produto</th>
+                <th>Capacidade</th>
+                <th>Data</th>
+                <th>Quantidade</th>
+                <th>Observações</th>
+                <th>Apagar</th>
+            </tr>
+
+            <% if(listaOutros.length !=0){ listaOutros.forEach(function(l){ %>
+                <tr>
+                    <td>
+                        <%=l.produto; %>
+                    </td>
+                    <td>
+                        <%=l.capacidade %>
+                    </td>
+                    <td>
+                        <%=l.mes + " de " + l.ano%>
+                    </td>
+                    <td>
+                        <%=l.quantidade %>
+                    </td>
+                    <td>
+                        <%=l.observacoes %>
+                    </td>
+                    <td><a href="/admin/delete/outros/<%=l.id%>">Apagar</a></td>
+                </tr>
+                <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7">Não existe nenhum alimento</td>
+                    </tr>
+                <% } %>
+        </table>
+    </div>
+    <script src="/javascript/modules.js"></script>
+</body>
 
 </html>

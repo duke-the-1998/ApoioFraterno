@@ -7,8 +7,6 @@ const app = express();
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
-const methodOverride = require('method-override');
-const { checkNotAuthenticated } = require('./middleware/checkAuthenticated');
 
 const voluntariosRoute = require('./routers/voluntarios');
 const adminRoute = require('./routers/admin');
@@ -29,7 +27,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(methodOverride('_method'));
 
 app.use((req, res, next) => {
     next();

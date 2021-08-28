@@ -35,14 +35,14 @@ router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, val
         const row = await db.promise().query(`SELECT nome, email FROM USERS WHERE nome = '${username}' OR email = '${email}'`);
         if (row[0].length !== 0) {
             if (row[0][0].nome === username) {
-                res.render('registarUser.ejs', { 
+                res.render('registarUser.ejs', {
                     message: "Erro",
-                    listaErros: ['Já existe um utilizador com este nome registado'] 
+                    listaErros: ['Já existe um utilizador com este nome registado']
                 });
             } else if (row[0][0].email === email) {
-                res.render('registarUser.ejs', { 
+                res.render('registarUser.ejs', {
                     message: "Erro",
-                    listaErros: ['Já existe um utilizador com este email registado'] 
+                    listaErros: ['Já existe um utilizador com este email registado']
                 });
             }
         } else {
@@ -54,10 +54,10 @@ router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, val
                 tipo = "voluntario";
             }
             await db.promise().query(`INSERT INTO USERS (nome, email, password, tipo) VALUES ('${username}', '${req.body.email}', '${hashedPassword}', '${tipo}')`);
-            res.render('registarUser.ejs', { message: 'sucesso'});
+            res.render('registarUser.ejs', { message: 'sucesso' });
         }
     } catch {
-        res.render('registarUser.ejs', { 
+        res.render('registarUser.ejs', {
             message: "Erro",
             listaErros: ['O servidor não conseguiu concluir o registo por algum motivo']
         });
@@ -70,34 +70,35 @@ router.get('/tabelaUsers', checkAuthenticated, checkAdmin, async (req, res) => {
     if (Object.keys(req.query).length === 0) {
         res.render('tabelaUsers.ejs', { listaUsers: data[0] });
     } else {
-        res.render('tabelaUsers.ejs', { 
+        res.render('tabelaUsers.ejs', {
             listaUsers: data[0],
             sucesso: req.query.sucesso,
-            message: req.query.message });
+            message: req.query.message
+        });
     }
 });
 
 router.get('/delete/user/:email', checkAuthenticated, checkAdmin, async (req, res) => {
     const user = req.session.passport.user;
     if (user === req.params.email) {
-        res.redirect(url.format({
+        return res.redirect(url.format({
             pathname: '/admin/tabelaUsers',
             query: {
                 "sucesso": false,
                 "message": "Não é possível eliminar-se a si próprio"
             }
         }));
-    } else {
-        await db.promise().query(`DELETE FROM users WHERE email = '${req.params.email}';`);
-        res.redirect(url.format({
-            pathname: '/admin/tabelaUsers',
-            query: {
-                "sucesso": true,
-                "message": "Utilizador apagado com sucesso"
-            }
-        }));
     }
-    
+    await db.promise().query(`DELETE FROM users WHERE email = '${req.params.email}';`);
+    res.redirect(url.format({
+        pathname: '/admin/tabelaUsers',
+        query: {
+            "sucesso": true,
+            "message": "Utilizador apagado com sucesso"
+        }
+    }));
+
+
 });
 
 router.get('/consultarStock', checkAuthenticated, checkAdmin, (req, res) => {
@@ -106,19 +107,20 @@ router.get('/consultarStock', checkAuthenticated, checkAdmin, (req, res) => {
 
 router.get('/outros', checkAuthenticated, checkAdmin, async (req, res) => {
     var sql = 'SELECT id, produto, capacidade,' +
-            'MONTH(data) AS mes, YEAR(data) AS ano, ' + 
-            'quantidade, observacoes FROM outros';
+        'MONTH(data) AS mes, YEAR(data) AS ano, ' +
+        'quantidade, observacoes FROM outros';
 
     const data = await db.promise().query(sql);
-    
+
     if (Object.keys(req.query).length === 0) {
         res.render('tabelaOutros.ejs', { listaOutros: data[0] });
     } else {
-        res.render('tabelaOutros.ejs', { 
+        res.render('tabelaOutros.ejs', {
             listaOutros: data[0],
-            message: "Alimento apagado com sucesso"
+            sucesso: req.query.sucesso,
+            message: req.query.message
         });
-    } 
+    }
 });
 
 router.get('/delete/outros/:id', checkAuthenticated, checkAdmin, async (req, res) => {
@@ -126,7 +128,8 @@ router.get('/delete/outros/:id', checkAuthenticated, checkAdmin, async (req, res
     res.redirect(url.format({
         pathname: '/admin/outros',
         query: {
-           "message": true
+            "sucesso": true,
+            "message": "Alimento apagado com sucesso"
         }
     }));
 });
@@ -140,19 +143,35 @@ router.post('/criarAlimento', checkAuthenticated, checkAdmin, async (req, res) =
     const capacidade = req.body.capacidade;
     const observacoes = req.body.observacoes;
     const file = req.files.imagem;
-    const uploadPath = './public/imagens/Alimentos/' + file.name
+    const uploadPath = './public/images/Alimentos/' + file.name
     var validade = "off";
     if (req.body.validade != 'undefined') validade = req.body.validade;
 
 
-    inserirNoInventario(nome, file.name, observacoes, validade);
-    inserirCapacidade(nome, capacidade);
+    const error = await inserirNoInventario(nome, file.name, observacoes, validade);
+    if (error === "ER_DUP_ENTRY") {
+        return res.redirect(url.format({
+            pathname: '/admin/outros',
+            query: {
+                "sucesso": false,
+                "message": "Já existe um produto com este nome"
+            }
+        }));
+    }
 
+    inserirCapacidade(nome, capacidade);
     file.mv(uploadPath, function (err) {
         if (err) return res.status(500).send(err);
     });
 
-    res.redirect('/admin/outros')
+    res.redirect(url.format({
+        pathname: '/admin/outros',
+        query: {
+            "sucesso": true,
+            "message": "Alimento adicionado com sucesso"
+        }
+    }));
+
 });
 
 router.get("/relatorio", checkAuthenticated, async (req, res) => {
@@ -160,7 +179,7 @@ router.get("/relatorio", checkAuthenticated, async (req, res) => {
                                                 DATE_FORMAT(data,'%H:%i:%s') timeonly, nome, acao FROM historico
                                                 ORDER BY dataonly DESC, timeonly DESC`);
 
-    return res.render('tabelaHistoricoPessoal.ejs', { 
+    return res.render('tabelaHistoricoPessoal.ejs', {
         historico: historico[0]
     });
 });
