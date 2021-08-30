@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="/css/tabelaAlimentos.css" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="/imagens/apoioFratlogo.png" />
+    <link rel="shortcut icon" href="/public/images/apoioFratlogo.png" />
     <title>Tabela</title>
 </head>
 
@@ -32,6 +32,7 @@
                 <th class="prod">Produto</th>
                 <th>Capacidade</th>
                 <th></th>
+                <th></th>
                 <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
                     <th colspan="12">
                         <%= rangeAnosValidade[0].minimo + i %>
@@ -44,6 +45,7 @@
 
                     <td></td>
                     <td></td>
+                    <td>Estado</td>
                     <td>Total</td>
                     <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
 
@@ -57,6 +59,10 @@
             </tr>
             <!-- loop de produtos inicio -->
             <% for(var p=0 ; p < alimentoInventario.length ; p++ ){ %>
+<<<<<<< HEAD
+=======
+               <!-- <% console.log( 'produto' , alimentoInventario[p] )%> -->
+>>>>>>> df4f1fbe1fc1ba62038d8726bf1d39ae7a403e15
                     <tr>
                         <td class="prod">
                             <%= alimentoInventario[p].produto %>
@@ -64,6 +70,13 @@
                         <td>
                             <%= alimentoInventario[p].capacidade %>
                         </td>
+                        <td>
+                            <% if ( alimentoInventario[p].estado == 1){ %>
+                                <a href="/admin/estado/desativar/<%=alimentoInventario[p].id_inven%>">Desativar</a>
+                            <% }else{ %>
+                                <a href="/admin/estado/ativar/<%=alimentoInventario[p].id_inven%>">Ativar</a>
+                                <% } %>
+                            </td>
                         <td>
                             <% if ( !(alimentoInventario[p].total==null) ) { %>
                                 <%= alimentoInventario[p].total %>
@@ -99,10 +112,8 @@
                     </tr>
                     <% }%>
                         <!-- fim de loop produtos-->
-
         </table>
     </div>
-    <script src="/scripts/modules.js"></script>
 </body>
 
 </html>
