@@ -10,6 +10,7 @@ html,body{
 
 .tabela{
     overflow: scroll;
+    
   }
 
 ul {
@@ -40,13 +41,14 @@ li a:hover {
 }
 
 table {
-    border: 2px #111;
-    border-style: solid;
+   
+   border: 1px solid black;
     width: 100%;
    
 }
 
 th, td {
+  border: 1px solid black;
     text-align: left;
     padding: 8px;
 }
@@ -56,7 +58,7 @@ tr:nth-child(even) {
 }
 
 th {
-    background-color: #04AA6D;
+    background-color: #2b92f0;
     color: white;
 }
 
