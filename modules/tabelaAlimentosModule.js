@@ -4,13 +4,14 @@ function construirAlimentoInventario(lista) {
 
     for (var n of lista) {
         var obj = {
+            id_inven: n.id_inven,
             produto: n.produto,
             capacidade:n.capacidade,
             data:[n.data],
             quantidade:[n.quantidade],
             observacoes:n.observacoes,
             estado:n.estado,
-            total:n.quantidade
+            total:n.quantidade,
         }
         ali=obj;
         var temp = alimento.findIndex(aux);
@@ -20,12 +21,17 @@ function construirAlimentoInventario(lista) {
             alimento[temp].total+=obj.total;
 
         }else{
+            console.log("obj",obj);
+            console.log("alimento",alimento);
+            console.log(alimento.map(elm,testeMap));
         alimento.push(obj);
         }
     }
     return alimento;
 }
-
+function testeMap(obj){
+    return (obj.produto==ali.produto);
+}
 function aux(obj){
     return (obj.produto == ali.produto && obj.capacidade == ali.capacidade);
 }
