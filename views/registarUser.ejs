@@ -68,16 +68,18 @@
         </div>
         <% if (typeof message !='undefined' ) { %>
           <% if (message==='sucesso' ) { %>
-            <div class="alert alert-success">
-              <strong>Success!</strong> Utilizador adicionado com sucesso.
-            </div>
-            <% } else { %>
-              <div class="alert alert-danger">
-                <strong>Erro!</strong>
-                <%= message %>
+              <div class="alert alert-success">
+                  <strong>Success!</strong> Password alterada com sucesso.
               </div>
+          <% } else { %>
+              <% for (const e of listaErros) { %>
+                  <div class="alert alert-danger">
+                      <strong>Erro!</strong>
+                      <%= e %>
+                  </div>
               <% } %>
-                <% } %>
+          <% } %>
+      <% } %>
       </div>
     </div>
   </div>

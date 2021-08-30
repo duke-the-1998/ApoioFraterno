@@ -18,62 +18,60 @@
 </head>
 
 <% if (typeof message !='undefined' ) { %>
-
     <body onload="showMessage()">
-        <% } else { %>
+<% } else { %>
+    <body>
+<% } %>
+    <form action="/admin/criarAlimento" method="POST" enctype="multipart/form-data">
+        <div class="form-row">
+            <div class="form-group col-md">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="container text-center vertical-center">
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Nome do alimento</label>
+                                    <input type="text" class="form-control" name="nome" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Capacidade</label>
+                                    <input type="text" class="form-control" name="capacidade" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Observações</label>
+                                    <input type="text" class="form-control" name="observacoes">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
 
-            <body>
-                <% } %>
-                    <form action="/admin/criarAlimento" method="POST" enctype="multipart/form-data">
-                        <div class="form-row">
-                            <div class="form-group col-md">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="container text-center vertical-center">
-                                            <div class="form-row">
-                                                <div class="form-group col-md">
-                                                    <label for="inputState">Nome do alimento</label>
-                                                    <input type="text" class="form-control" name="nome" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-md">
-                                                    <label for="inputState">Capacidade</label>
-                                                    <input type="text" class="form-control" name="capacidade" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-md">
-                                                    <label for="inputState">Observações</label>
-                                                    <input type="text" class="form-control" name="observacoes">
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-md">
+                                    <label for="inputState">Imagem</label>
 
-                                                    <label for="inputState">Imagem</label>
+                                    <input type="file" name="imagem" accept="image/*" id="abc" required>
 
-                                                    <input type="file" name="imagem" accept="image/*" id="abc" required>
-
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-md radio">
-                                                    <label for="inputState">Validade</label>
-                                                    <input type="checkbox" name="validade" class="largerCheckbox">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md radio">
+                                    <label for="inputState">Validade</label>
+                                    <input type="checkbox" name="validade" class="largerCheckbox">
                                 </div>
                             </div>
                         </div>
-                        <div class="btn-submit">
-                            <input type="submit" onclick='return btnClick();' class="btn" value="Criar">
-                            <a href="/admin/outros"><i class="fa fa-arrow-left"></i> Voltar</a>
-                        </div>
-                    </form>
-                    <script src="/scripts/modules.js"></script>
-            </body>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-submit">
+            <input type="submit" onclick='return btnClick();' class="btn" value="Criar">
+            <a href="/admin/outros"><i class="fa fa-arrow-left"></i> Voltar</a>
+        </div>
+    </form>
+    <script src="/javascript/modules.js" ></script>
+</body>
 
 </html>

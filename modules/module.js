@@ -28,7 +28,9 @@ function construirListaCapacidades(lista) {
 }
 
 async function darEntradaProduto(row, nome, produto, alimento_id, validade, peso, quantidade) {
-    const acao = "Entrada " + quantidade+ " " + produto + " " + peso + " " + validade;
+    const split = validade.split("-");
+    const formatValidade = split[2] + "-" + split[1] + "-" + split[0];;
+    const acao = "Entrada " + quantidade+ " " + produto + " " + peso + " " + formatValidade;
 
     if (row.length === 0) {
         await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}', '${quantidade}')`);
@@ -42,7 +44,9 @@ async function darEntradaProduto(row, nome, produto, alimento_id, validade, peso
 }
 
 async function darSaidaProduto(row, nome, produto, alimento_id, validade, peso, quantidade) {
-    const acao = "Saída " + quantidade+ " " + produto + " " + peso + " " + validade;
+    const split = validade.split("-");
+    const formatValidade = split[2] + "-" + split[1] + "-" + split[0];;
+    const acao = "Saída " + quantidade+ " " + produto + " " + peso + " " + formatValidade;
 
     if (row.length === 0) {
         await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}','${- quantidade}')`);
@@ -102,8 +106,14 @@ function bodyAlimento(id, alimento, imagem, observacoes, capacidades, validade, 
 
 };
 
+function formatValidade(validade) {
+    return 
+}
+
 exports.construirInventario = construirInventario;
 exports.construirListaCapacidades = construirListaCapacidades;
 exports.darEntradaProduto = darEntradaProduto;
 exports.darSaidaProduto = darSaidaProduto;
+exports.formatValidade = formatValidade;
 exports.bodyAlimento = bodyAlimento;
+

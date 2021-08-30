@@ -1,9 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
+<<<<<<< HEAD
+=======
+
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+>>>>>>> df4f1fbe1fc1ba62038d8726bf1d39ae7a403e15
 html,body{
   font-family: 'Numans', sans-serif;
   }
 
+<<<<<<< HEAD
+=======
+.tabela{
+    overflow: scroll;
+  }
+>>>>>>> df4f1fbe1fc1ba62038d8726bf1d39ae7a403e15
 
 ul {
     list-style-type: none;
@@ -93,67 +106,13 @@ li span:hover{
     color: #f1f1f1;
   }
   
-  .overlay .closebtn {
-    position: absolute;
-    top: 20px;
-    right: 45px;
-    font-size: 60px;
-  }
-  
-  @media screen and (max-height: 450px) {
-    .overlay a {font-size: 20px}
-    .overlay .closebtn {
-    font-size: 40px;
-    top: 15px;
-    right: 35px;
-    }
-  }
 
-  .btn{
-    background-color: rgb(22, 145, 228);
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    border-radius: 20px;
-    margin-left: 15px;
-  }
-  
-  .btn:hover, .btn:active {
-    background-color: rgb(11, 119, 190);
-  }
+.prod{
+  white-space: nowrap;
+}
 
-  .card {
-    text-align: center;
-    width: 540px;
-    margin: 0 auto; 
-    float: none; 
-    margin-bottom: 10px;
-    background-color: rgba(0,0,0,0.5) !important;
-    border-radius: 25px;
-    margin-top: 10px;
-  }
-  .card-img-top{
-    border-radius: 25px; 
-  }
-  
-  .card-body {
-    color: white;
-    font-size: 20px;
-  }
-  
-  .card-title{
-    font-size: 30px;
-  }
-  
-  .col-md{
-    text-align: left;
-    font-size: 25px;
-    font-weight: bold;
-  }
-  
-  .col-md-6{
-    font-size: 25px;
-    font-weight: bold;
-  }
+.cap{
+  white-space: nowrap;
+}
+
+

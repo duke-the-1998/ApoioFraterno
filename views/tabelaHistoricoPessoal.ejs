@@ -1,0 +1,65 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=0.6">
+
+<head>
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
+    <link href="/css/tabelaOutros.css" rel="stylesheet" type="text/css">
+
+    <title>Tabela Outros</title>
+
+</head>
+
+<% if (typeof message !='undefined' ) { %>
+    <body onload="showMessage()">
+<% } else { %>
+    <body>
+<% } %>
+    <ul>
+        <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
+        <li><a href="/admin/menu">Menu Administrador</a></li>
+    </ul>
+
+    <div class="table-data">
+        <h2>Histórico</h2>
+        <table border="1">
+            <tr>
+                <th>Data</th>
+                <th>Nome</th>
+                <th>Ação</th>
+            </tr>
+
+            <% if(historico.length !=0){ 
+                historico.forEach(function(h){ %>
+                <tr>
+                    <td>
+                        <%= h.dataonly + " " + h.timeonly; %>
+                    </td>
+                    <td>
+                        <%= h.nome %>
+                    </td>
+                    <td>
+                        <%= h.acao %>
+                    </td>
+                </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="7">Sem histórico</td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
+    <script src="/scripts/modules.js"></script>
+</body>
+
+</html>

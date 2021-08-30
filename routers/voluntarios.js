@@ -102,5 +102,41 @@ router.post('/outros', checkAuthenticated, async (req, res) => {
     }));
 });
 
+router.get("/gestaoConta", checkAuthenticated, (req, res) => {
+    res.render("gestaoConta.ejs");
+});
+
+router.get("/mudarPassword", checkAuthenticated, (req, res) => {
+    res.render("mudarPassword.ejs");
+});
+
+router.post("/mudarPassword", checkAuthenticated, passwordSchema, validateChangePasswordSchema, (req, res) => {
+    const email = req.session.passport.user;
+    const oldPassword =  req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+    const confirmPassword = req.body.confirmPassword;
+
+    if (newPassword !== confirmPassword) {
+        return res.render('mudarPassword.ejs', { 
+            message: "Erro",
+            listaErros: ['As novas passwords não combinam'] 
+        });
+    }
+
+    mudarPassword(email, oldPassword, newPassword, res);
+});
+
+router.get("/historico", checkAuthenticated, async (req, res) => {
+    const email = req.session.passport.user;
+    const row = await db.promise().query(`SELECT nome FROM users WHERE email = '${email}'`);
+    const nome = row[0][0].nome;
+    const historico = await db.promise().query(`SELECT DATE_FORMAT(data, '%d-%m-%Y') dataonly, 
+                                                DATE_FORMAT(data,'%H:%i:%s') timeonly, nome, acao FROM historico WHERE nome = '${nome}'
+                                                ORDER BY dataonly DESC, timeonly DESC`);
+
+    return res.render('tabelaHistoricoPessoal.ejs', { 
+        historico: historico[0]
+    });
+});
 
 module.exports = router;
