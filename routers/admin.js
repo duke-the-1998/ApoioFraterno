@@ -98,8 +98,20 @@ router.get('/delete/user/:email', checkAuthenticated, checkAdmin, async (req, re
             "message": "Utilizador apagado com sucesso"
         }
     }));
+});
 
+router.get('/estado/desativar/:id', checkAuthenticated, checkAdmin, async (req, res) => {
+    await db.promise().query(`UPDATE inventario SET estado=0 WHERE id = '${req.params.id}';`);
+    res.redirect(url.format({
+        pathname: '/admin/tabela'
+    }));
+});
 
+router.get('/estado/ativar/:id', checkAuthenticated, checkAdmin, async (req, res) => {
+    await db.promise().query(`UPDATE inventario SET estado=1 WHERE id = '${req.params.id}';`);
+    res.redirect(url.format({
+        pathname: '/admin/tabela'
+    }));
 });
 
 router.get('/consultarStock', checkAuthenticated, checkAdmin, (req, res) => {
@@ -135,7 +147,7 @@ router.get('/delete/outros/:id', checkAuthenticated, checkAdmin, async (req, res
     }));
 });
 router.get('/tabela', checkAuthenticated, async (req, res) => {
-    var sql = 'SELECT i.produto as produto , a.capacidade as capacidade, v.data as data, v.quantidade as quantidade, i.observacoes as observacoes, i.estado as estado FROM inventario i LEFT JOIN alimento a ON i.id = a.inventario_id LEFT JOIN validade v ON a.id = v.alimento_id ORDER BY i.produto ASC , a.capacidade ASC';
+    var sql = 'SELECT i.id as id_inven, i.produto as produto , a.capacidade as capacidade, v.data as data, v.quantidade as quantidade, i.observacoes as observacoes, i.estado as estado FROM inventario i LEFT JOIN alimento a ON i.id = a.inventario_id LEFT JOIN validade v ON a.id = v.alimento_id ORDER BY i.produto ASC , a.capacidade ASC';
 
     var alimentoInventario = await db.promise().query(sql);
     var rangeAnosValidade = await db.promise().query('SELECT MIN(YEAR (v.data)) as minimo, MAX(YEAR (v.data)) as maximo FROM validade v');
