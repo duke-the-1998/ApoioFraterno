@@ -12,9 +12,9 @@
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
     <link href="/css/tabelaOutros.css" rel="stylesheet" type="text/css">
     <link href="/css/alertas.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
 
     <title>Tabela Outros</title>
 
@@ -27,16 +27,11 @@
         <li><a style="color:white;cursor:pointer" onclick="openNav()">Criar alimento</a></li>
     </ul>
 
-    <% if (typeof message != 'undefined') { %>
-        <% if (sucesso == 'true') { %>
-            <div class="success">
+    <% if (typeof type != 'undefined') { %>
+        <% for (var m of messages) { %>
+            <div class=<%= type %>>
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <strong>Sucesso!</strong> <%= message %>
-            </div>
-        <% } else { %>
-            <div class="error">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <strong>Erro!</strong> <%= message %>
+                <strong><%= intro %></strong> <%= m %>
             </div>
         <% } %>
     <% } %>

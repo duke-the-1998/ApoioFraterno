@@ -1,13 +1,10 @@
 const { Router } = require('express');
-const url = require('url');
 const db = require('../database');
 const { checkAuthenticated, checkNotAuthenticated } = require('../middleware/checkAuthenticated');
 const { validateChangePasswordSchema } = require('../middleware/validateRequestSchema');
-const { passwordSchema } = require('../schema/changePasswordSchema.js');
+const { passwordSchema } = require('../schema/mudarPasswordSchema.js');
 const modules = require('../modules/module');
 const { mudarPassword } = require('../modules/mudarPasswordModule.js');
-
-//const { check, validationResult } = require('express-validator');
 
 const router = Router();
 
@@ -24,7 +21,7 @@ router.get('/menuPrincipal', checkAuthenticated, async (req, res) => {
 router.get('/inventario', checkAuthenticated, async (req, res) => {
     const inventario = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
     const novoInventario = modules.construirInventario(inventario[0]);
-    res.render('inventario.ejs', { 
+    return res.render('inventario.ejs', { 
         alimentos: novoInventario
     });
 });
@@ -36,12 +33,13 @@ router.get('/alimento/:id', checkAuthenticated, async (req, res) => {
     const novaListaCapacidades = modules.construirListaCapacidades(listaCapacidades[0]);
 
     var body;
-    if (Object.keys(req.query).length === 0) {
+    const params = req.flash();
+    if (params.message) {
         body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, false);
     } else {
         body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, true);
     }
-    res.render('alimento.ejs', body);
+    return res.render('alimento.ejs', body);
 });
 
 router.post('/alimento', checkAuthenticated, async (req, res) => {
@@ -59,23 +57,21 @@ router.post('/alimento', checkAuthenticated, async (req, res) => {
         modules.darSaidaProduto(row[0], nome[0][0].nome, produto[0][0].produto, alimento[0][0].id, validade, body.peso, body.quantidade);
     }
 
-    const link = "/voluntarios/alimento/" + body.id;
-    res.redirect(url.format({
-        pathname: link,
-        query: {
-           "message": true
-        }
-    }));
+    req.flash('message', 'true')
+    res.redirect('/voluntarios/alimento/' + body.id)
 });
 
 router.get('/outros', checkAuthenticated, (req, res) => {
-    if (Object.keys(req.query).length !== 0) {
-        res.render('outros.ejs', { 
-            message: req.query.message
+    const params = req.flash();
+
+    if (params.message) {
+        return res.render('outros.ejs', { 
+            message: params.message
         });
-    } else {
-        res.render('outros.ejs');
     }
+
+    return res.render('outros.ejs');
+
 });
 
 router.post('/outros', checkAuthenticated, async (req, res) => {
@@ -94,20 +90,16 @@ router.post('/outros', checkAuthenticated, async (req, res) => {
          VALUES ('${produto}', '${capacidade}', '${validade}', '${-quantidade}', '${observacoes}')`);
     }
 
-    res.redirect(url.format({
-        pathname:"/voluntarios/outros",
-        query: {
-           "message": "Operação feita com sucesso"
-        }
-    }));
+    req.flash('message', 'Operação feita com sucesso');
+    res.redirect('/voluntarios/outros');
 });
 
 router.get("/gestaoConta", checkAuthenticated, (req, res) => {
-    res.render("gestaoConta.ejs");
+    return res.render("gestaoConta.ejs");
 });
 
 router.get("/mudarPassword", checkAuthenticated, (req, res) => {
-    res.render("mudarPassword.ejs");
+    return res.render("mudarPassword.ejs");
 });
 
 router.post("/mudarPassword", checkAuthenticated, passwordSchema, validateChangePasswordSchema, (req, res) => {
@@ -118,8 +110,9 @@ router.post("/mudarPassword", checkAuthenticated, passwordSchema, validateChange
 
     if (newPassword !== confirmPassword) {
         return res.render('mudarPassword.ejs', { 
-            message: "Erro",
-            listaErros: ['As novas passwords não combinam'] 
+            type: 'error',
+            intro: "Erro!",
+            messages: ['As novas passwords não combinam'] 
         });
     }
 
