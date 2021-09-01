@@ -25,42 +25,75 @@
         
     </ul>
 
+    <div id="myNav" class="overlay">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="overlay-content">
+            <form action="/admin/updateInventario" method="POST" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="form-group col-md">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="container text-center vertical-center">
+                                    <div class="form-row">
+                                        <div class="form-group col-md">
+                                            <input type="hidden" name="id" id="id">
+                                            <label for="inputState" id="nome"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md">
+                                            <label for="inputState">Capacidade</label>
+                                            <input type="text" class="form-control" name="capacidade" id="capacidade">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md">
+                                            <label for="inputState">Observações</label>
+                                            <input type="text" class="form-control" name="obs" id="observacoes">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md">                                           
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md radio">
+                                            <label for="inputState">Estado</label>
+                                            <input type="checkbox" name="estado" id="estado" class="largerCheckbox">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-submit"> 
+                    <input type="submit" onclick='return btnGuardar();' class="btn" value="Guardar">
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="table-data">
         <h2>Tabela Alimentos</h2>
         <table border="1">
             <tr>
                 <th class="prod">Produto</th>
-                <th>Capacidade</th>
                 <th></th>
+                <th>Capacidade</th>
                 <th></th>
                 <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
                     <th colspan="12">
                         <%= rangeAnosValidade[0].minimo + i %>
                     </th>
                     <% } %>
-
             </tr>
             <tr>
                 <% var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"]; %>
-
-                    <td></td>
                     <td></td>
                     <td>Estado</td>
+                    <td></td>
                     <td>Total</td>
                     <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
-
-
-<<<<<<< HEAD
-                    <% for(var j=0 ; j < meses.length; j++ ){ %>
-                    <td>
-                        <%= meses[j] %>
-                    </td>
-                    <% } %>
-                    <% } %>
-                </tr>
-                    <!-- loop de produtos inicio -->
-                    <% for(var p=0 ; p < alimentoInventario.length ; p++ ){ %>
-=======
                         <% for(var j=0 ; j < meses.length; j++ ){ %>
                             <td>
                                 <%= meses[j] %>
@@ -70,59 +103,54 @@
             </tr>
             <!-- loop de produtos inicio -->
             <% for(var p=0 ; p < alimentoInventario.length ; p++ ){ %>
-               <!-- <% console.log( 'produto' , alimentoInventario[p] )%> -->
->>>>>>> df4f1fbe1fc1ba62038d8726bf1d39ae7a403e15
+                <% var capacidade = 1; %>
                     <tr>
-                        <td class="prod">
+                        <% for ( var c=0; c < rangeCapacidades.length ; c++){ %>
+                            <%  if ( alimentoInventario[p].id_inven == rangeCapacidades[c].id_inventario  ) {  %>
+                                <% capacidade = rangeCapacidades[c].num_ocurrencias; } %>
+                        <% } %>
+                            <% if ( p==0 || ( p > 0 && !( alimentoInventario[p].id_inven == alimentoInventario[p-1].id_inven) ) ) { %>
+                        <td class="prod" rowspan= <%= capacidade %> >
                             <%= alimentoInventario[p].produto %>
                         </td>
+                        <td class="prod" rowspan= <%= capacidade %> >
+                            <a style="color:blue;cursor:pointer" onclick="openNavInventario( <%= alimentoInventario[p].id_inven %> , ' <%= String(alimentoInventario[p].produto) %> ' , ' <%= String(alimentoInventario[p].observacoes) %> ' ,  <%= String(alimentoInventario[p].estado) %> )">Editar</a>
+                        <!-- <a href="/admin/estado/desativar/<%=alimentoInventario[p].id_inven%>">Editar</a> -->
+                        </td>
+                        <% } %>
                         <td>
                             <%= alimentoInventario[p].capacidade %>
                         </td>
                         <td>
-                            <% if ( alimentoInventario[p].estado == 1){ %>
-                                <a href="/admin/estado/desativar/<%=alimentoInventario[p].id_inven%>">Desativar</a>
-                            <% }else{ %>
-                                <a href="/admin/estado/ativar/<%=alimentoInventario[p].id_inven%>">Ativar</a>
-                                <% } %>
-                            </td>
-                        <td>
                             <% if ( !(alimentoInventario[p].total==null) ) { %>
                                 <%= alimentoInventario[p].total %>
-                                    <% }%>
-
+                            <% }%>
                         </td>
                         <!-- loop de anos -->
                         <% for(var a=0 ; a <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; a++ ){ %>
-
                             <!-- loop de meses -->
                             <% for(var m=1 ; m <=12 ; m++ ){ %>
                                 <% var contador=0; %>
-                                    <td>
-                                        <% for(var c=0 ; c < alimentoInventario[p].data.length ; c++ ){ %>
-
-                                            <% if ( !(alimentoInventario[p].data[c]==null) &&
-                                                alimentoInventario[p].data[c].getFullYear()==rangeAnosValidade[0].minimo+a
-                                                && alimentoInventario[p].data[c].getMonth()+1==m ) { %>
-                                                <% contador=contador + alimentoInventario[p].quantidade[c]; %>
-                                                    <% }%>
-                                                        <!-- loop de contagem para mes especifico -->
-                                                        <% }%>
-                                                            <% if (contador>0 ){ %>
-                                                                <%= contador %>
-                                                                    <% }%>
-                                    </td>
-
-                                    <!-- fim de loop de meses -->
-                                    <% }%>
-                                        <!-- fim de loop de anos -->
+                                <td>
+                                    <% for(var c=0 ; c < alimentoInventario[p].data.length ; c++ ){ %>
+                                        <% if ( !(alimentoInventario[p].data[c]==null) && alimentoInventario[p].data[c].getFullYear()==rangeAnosValidade[0].minimo+a && alimentoInventario[p].data[c].getMonth()+1==m ) { %>
+                                            <% contador=contador + alimentoInventario[p].quantidade[c]; %>
                                         <% }%>
-
+                                        <!-- loop de contagem para mes especifico -->
+                                    <% }%>
+                                    <% if (contador>0 ){ %>
+                                        <%= contador %>
+                                    <% }%>
+                                </td>
+                                <!-- fim de loop de meses -->
+                            <% }%>
+                        <!-- fim de loop de anos -->
+                        <% }%>
                     </tr>
-                    <% }%>
-                        <!-- fim de loop produtos-->
+            <% }%>
+            <!-- fim de loop produtos-->
         </table>
     </div>
-</body>
-
+    <script src="/javascript/modules.js"></script>
+    </body>
 </html>

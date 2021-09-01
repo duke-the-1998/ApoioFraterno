@@ -1,22 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
-<<<<<<< HEAD
-=======
 
 
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
->>>>>>> df4f1fbe1fc1ba62038d8726bf1d39ae7a403e15
 html,body{
   font-family: 'Numans', sans-serif;
   }
 
-<<<<<<< HEAD
-=======
 .tabela{
     overflow: scroll;
   }
->>>>>>> df4f1fbe1fc1ba62038d8726bf1d39ae7a403e15
 
 ul {
     list-style-type: none;
