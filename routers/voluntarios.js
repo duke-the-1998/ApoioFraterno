@@ -3,7 +3,7 @@ const db = require('../database');
 const { checkAuthenticated, checkNotAuthenticated } = require('../middleware/checkAuthenticated');
 const { validateChangePasswordSchema } = require('../middleware/validateRequestSchema');
 const { passwordSchema } = require('../schema/mudarPasswordSchema.js');
-const modules = require('../modules/module');
+const gerirSotck = require('../modules/gerirStockModule.js');
 const { mudarPassword } = require('../modules/mudarPasswordModule.js');
 
 const router = Router();
@@ -18,47 +18,72 @@ router.get('/menuPrincipal', checkAuthenticated, async (req, res) => {
     return res.render('menuPrincipal.ejs', {tipo: row[0][0].tipo});
 });
 
-router.get('/inventario', checkAuthenticated, async (req, res) => {
+router.get('/gerirStock', checkAuthenticated, async (req, res) => {
+    return res.render('gerirStock.ejs');
+});
+
+router.get('/inventario/:acao', checkAuthenticated, async (req, res) => {
+    const acao = req.params.acao;
     const inventario = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
-    const novoInventario = modules.construirInventario(inventario[0]);
+    const novoInventario = gerirSotck.construirInventario(inventario[0]);
     return res.render('inventario.ejs', { 
-        alimentos: novoInventario
+        alimentos: novoInventario,
+        acao: acao
     });
 });
 
-router.get('/alimento/:id', checkAuthenticated, async (req, res) => {
+router.get('/alimento/add/:id', checkAuthenticated, async (req, res) => {
     const id = req.params.id;
     const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${id}'`);
     const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
-    const novaListaCapacidades = modules.construirListaCapacidades(listaCapacidades[0]);
+    const novaListaCapacidades = gerirSotck.construirListaCapacidades(listaCapacidades[0]);
 
     var body;
     const params = req.flash();
-    if (params.message) {
-        body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, false);
+    if (params.type) {
+        body = gerirSotck.bodyAlimento("add", id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, params);
     } else {
-        body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, true);
+        body = gerirSotck.bodyAlimento("add", id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, null);
+    }
+    return res.render('alimento.ejs', body);
+});
+
+router.get('/alimento/sub/:id', checkAuthenticated, async (req, res) => {
+    const id = req.params.id;
+    const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${id}'`);
+    const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
+    const novaListaCapacidades = gerirSotck.construirListaCapacidades(listaCapacidades[0]);
+
+    var body;
+    const params = req.flash();
+    if (params.type) {
+        body = gerirSotck.bodyAlimento("sub", id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, params);
+    } else {
+        body = gerirSotck.bodyAlimento("sub", id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, null);
     }
     return res.render('alimento.ejs', body);
 });
 
 router.post('/alimento', checkAuthenticated, async (req, res) => {
     const user = req.session.passport.user;
-    const nome = await db.promise().query(`SELECT nome FROM users WHERE email = '${user}'`)
+    const username = await db.promise().query(`SELECT nome FROM users WHERE email = '${user}'`)
     const body = req.body;
     const validade = body.validade + "-01";
-    const produto = await db.promise().query(`SELECT produto FROM INVENTARIO WHERE id = '${body.id}'`);
     const alimento = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID = '${body.id}' AND CAPACIDADE= '${body.peso}'`);
     const row = await db.promise().query(`SELECT * FROM VALIDADE WHERE ALIMENTO_ID = '${alimento[0][0].id}' AND DATA = '${validade}'`);
 
     if(body.add) {
-        modules.darEntradaProduto(row[0], nome[0][0].nome, produto[0][0].produto, alimento[0][0].id, validade, body.peso, body.quantidade);
+        gerirSotck.darEntradaProduto(row[0], username[0][0].nome, body.alimento, alimento[0][0].id, validade, body.peso, body.quantidade);
+        req.flash('messages', ['Entrada do produto realizada com sucesso']);
     } else {    
-        modules.darSaidaProduto(row[0], nome[0][0].nome, produto[0][0].produto, alimento[0][0].id, validade, body.peso, body.quantidade);
+        gerirSotck.darSaidaProduto(row[0], username[0][0].nome, body.alimento, alimento[0][0].id, validade, body.peso, body.quantidade);
+        req.flash('messages', ['Saída do produto realizada com sucesso']);
     }
 
-    req.flash('message', 'true')
-    res.redirect('/voluntarios/alimento/' + body.id)
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+    
+    res.redirect('/voluntarios/alimento/add/' + body.id)
 });
 
 router.get('/outros', checkAuthenticated, (req, res) => {

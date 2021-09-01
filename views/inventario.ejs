@@ -24,23 +24,25 @@
         <% for (var i = 0; i < alimentos.length; i += 2) { %>
             <div class="row">
                 <div class="col-sm">
-                    <form action='/voluntarios/alimento/<%= alimentos[i].id %>' method='GET'>
+                    <form action='/voluntarios/alimento/<%= acao %>/<%= alimentos[i].id %>' method='GET'>
                         <button type="submit" class="btn">
                             <img class="card-img-top" src=<%="/images/Alimentos/" + alimentos[i].imagem %>>
                             <h5 class="card-title">
                                 <%= alimentos[i].alimento %>
                             </h5>
+                            <input type="hidden" name="acao" value=<%= acao %>>
                         </button>
                     </form>
                 </div>
                 <% if (i+1 < alimentos.length) { %>
                     <div class="col-sm">
-                        <form action='/voluntarios/alimento/<%= alimentos[i+1].id %>' method="GET">
+                        <form action='/voluntarios/alimento/<%= acao %>/<%= alimentos[i+1].id %>' method='GET'>
                             <button type="submit" class="btn">
                                 <img class="card-img-top" src=<%="/images/Alimentos/" + alimentos[i+1].imagem %>>
                                 <h5 class="card-title">
                                     <%= alimentos[i+1].alimento %>
                                 </h5>
+                                <input type="hidden" name="acao" value=<%= acao %>>
                             </button>
                         </form>
                     </div>
@@ -53,6 +55,7 @@
                         <button type="submit" class="btn">
                             <img class="card-img-top" src="/images/outros.jpg" >
                             <h5 class="card-title">Outros</h5>
+                            <input type="hidden" name="acao" value=<%= acao %>>
                         </button>
                     </form>
                 </div>
@@ -64,6 +67,7 @@
                         <button type="submit" class="btn">
                             <img class="card-img-top" src="/images/outros.jpg">
                             <h5 class="card-title">Outros</h5>
+                            <input type="hidden" name="acao" value=<%= acao %>>
                         </button>
                     </form>
                 </div>
