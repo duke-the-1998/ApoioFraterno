@@ -7,7 +7,7 @@ const { checkAdmin } = require('../middleware/checkAdmin');
 const { validateRegistarSchema } = require('../middleware/validateRequestSchema');
 const { registarSchema } = require('../schema/registarSchema');
 const { inserirNoInventario, inserirCapacidade } = require('../modules/criarAlimentoModule');
-const { construirAlimentoInventario, construirMinMax } = require('../modules/tabelaAlimentosModule');
+const { construirAlimentoInventario, construirMinMax, construirRangeCapacidades , updateInventario} = require ('../modules/tabelaAlimentosModule');
 
 const router = Router();
 router.use(fileUpload());
@@ -101,16 +101,6 @@ router.get('/delete/user/:email', checkAuthenticated, checkAdmin, async (req, re
     return res.redirect('/admin/tabelaUsers');
 });
 
-router.get('/estado/desativar/:id', checkAuthenticated, checkAdmin, async (req, res) => {
-    await db.promise().query(`UPDATE inventario SET estado=0 WHERE id = '${req.params.id}';`);
-    return res.redirect('/admin/tabela');
-});
-
-router.get('/estado/ativar/:id', checkAuthenticated, checkAdmin, async (req, res) => {
-    await db.promise().query(`UPDATE inventario SET estado=1 WHERE id = '${req.params.id}';`);
-    return res.redirect('/admin/tabela');
-});
-
 router.get('/consultarStock', checkAuthenticated, checkAdmin, (req, res) => {
     return res.render('consultarStock.ejs');
 });
@@ -144,15 +134,17 @@ router.get('/delete/outros/:id', checkAuthenticated, checkAdmin, async (req, res
     req.flash('messages', ['Alimento apagado com sucesso']);
     return res.redirect('/admin/outros');
 });
-
-router.get('/tabela', checkAuthenticated, async (req, res) => {
+router.get('/tabelaAlimento', checkAuthenticated, async (req, res) => {
     var sql = 'SELECT i.id as id_inven, i.produto as produto , a.capacidade as capacidade, v.data as data, v.quantidade as quantidade, i.observacoes as observacoes, i.estado as estado FROM inventario i LEFT JOIN alimento a ON i.id = a.inventario_id LEFT JOIN validade v ON a.id = v.alimento_id ORDER BY i.produto ASC , a.capacidade ASC';
 
     var alimentoInventario = await db.promise().query(sql);
     var rangeAnosValidade = await db.promise().query('SELECT MIN(YEAR (v.data)) as minimo, MAX(YEAR (v.data)) as maximo FROM validade v');
+    var rangeCapacidades = await db.promise().query('SELECT a.inventario_id as id_inventario , COUNT(a.inventario_id) as num_ocurrencias FROM alimento a GROUP BY a.inventario_id') ;
     var novoAlimentoInventario = construirAlimentoInventario(alimentoInventario[0]);
     var novorangeAnosValidade = construirMinMax(rangeAnosValidade[0]);
-    return res.render('tabelaAlimentos.ejs', {
+    var novoRangeCapacidades = construirRangeCapacidades(rangeCapacidades[0]);
+    res.render('tabelaAlimentos.ejs', { 
+        rangeCapacidades: novoRangeCapacidades,
         alimentoInventario: novoAlimentoInventario,
         rangeAnosValidade: novorangeAnosValidade
     });
@@ -189,6 +181,17 @@ router.post('/criarAlimento', checkAuthenticated, checkAdmin, async (req, res) =
     req.flash('messages', ['Alimento adicionado com sucesso']);
     return res.redirect('/admin/outros');
 
+});
+
+router.post('/updateInventario', checkAuthenticated, checkAdmin, async (req, res) => {
+    const observacoes = req.body.obs;
+    const id = req.body.id;
+    var estado = req.body.estado || "off";
+    var capacidade = req.body.capacidade;
+    const error = await updateInventario(id, observacoes, estado,capacidade);
+    req.flash('erro nigga',error);
+    res.redirect("/admin/tabelaAlimento");
+    
 });
 
 router.get("/relatorio", checkAuthenticated, async (req, res) => {
