@@ -114,7 +114,7 @@
                             <%= alimentoInventario[p].produto %>
                         </td>
                         <td class="prod" rowspan= <%= capacidade %> >
-                            <a style="color:blue;cursor:pointer" onclick="openNavInventario( <%= alimentoInventario[p].id_inven %> , ' <%= String(alimentoInventario[p].produto) %> ' , ' <%= String(alimentoInventario[p].observacoes) %> ' ,  <%= String(alimentoInventario[p].estado) %> )">Editar</a>
+                            <a style="color:blue;cursor:pointer" onclick="openNavInventario( ' <%= String(alimentoInventario[p].id_inven) %> ', ' <%= String(alimentoInventario[p].produto) %> ' , ' <%= String(alimentoInventario[p].observacoes) %> ' ,  <%= String(alimentoInventario[p].estado) %> )">Editar</a>
                         <!-- <a href="/admin/estado/desativar/<%=alimentoInventario[p].id_inven%>">Editar</a> -->
                         </td>
                         <% } %>
