@@ -8,12 +8,6 @@ html, body {
   font-family: 'Numans', sans-serif;
 }
 
-.inventario {
-  height: 100%;
-  margin-top: 20px;
-  align-content: center;
-}
-
 .card {
   text-align: center;
   width: 340px;
@@ -28,7 +22,7 @@ html, body {
   border-radius: 25px; 
 }
 
-.card-body {
+.card-body {  
   color: white;
   font-size: 20px;
 }
@@ -43,9 +37,11 @@ html, body {
   font-weight: bold;
 }
 
-.col-md-6{
-  font-size: 25px;
-  font-weight: bold;
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20%;
 }
 
 .btn{
@@ -76,11 +72,4 @@ a:link, a:visited {
 
 a:hover, a:active {
   background-color: red;
-}
-
-.btn-submit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20%;
 }

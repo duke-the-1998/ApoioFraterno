@@ -199,7 +199,7 @@ router.get("/relatorio", checkAuthenticated, async (req, res) => {
                                                 DATE_FORMAT(data,'%H:%i:%s') timeonly, nome, acao FROM historico
                                                 ORDER BY dataonly DESC, timeonly DESC`);
 
-    return res.render('tabelaHistoricoPessoal.ejs', {
+    return res.render('tabelaHistoricoGeral.ejs', {
         historico: historico[0]
     });
 });

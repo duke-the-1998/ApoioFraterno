@@ -19,8 +19,12 @@
 
 
 <body>
+    <ul>
+        <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
+        <li><a href="/admin/menu">Menu Administrador</a></li>
+        <li><a style="color:white;cursor:pointer" onclick="openNav()">Criar alimento</a></li>
+    </ul>
     <div class="inventario">
-
         <% for (var i = 0; i < alimentos.length; i += 2) { %>
             <div class="row">
                 <div class="col-sm">
@@ -30,7 +34,6 @@
                             <h5 class="card-title">
                                 <%= alimentos[i].alimento %>
                             </h5>
-                            <input type="hidden" name="acao" value=<%= acao %>>
                         </button>
                     </form>
                 </div>
@@ -42,7 +45,6 @@
                                 <h5 class="card-title">
                                     <%= alimentos[i+1].alimento %>
                                 </h5>
-                                <input type="hidden" name="acao" value=<%= acao %>>
                             </button>
                         </form>
                     </div>
@@ -55,7 +57,6 @@
                         <button type="submit" class="btn">
                             <img class="card-img-top" src="/images/outros.jpg" >
                             <h5 class="card-title">Outros</h5>
-                            <input type="hidden" name="acao" value=<%= acao %>>
                         </button>
                     </form>
                 </div>
@@ -67,7 +68,6 @@
                         <button type="submit" class="btn">
                             <img class="card-img-top" src="/images/outros.jpg">
                             <h5 class="card-title">Outros</h5>
-                            <input type="hidden" name="acao" value=<%= acao %>>
                         </button>
                     </form>
                 </div>
@@ -75,10 +75,6 @@
                 </div>
             </div>
         <% } %>     
-    </div>
-    <div class="navbar">
-        <a href="/voluntarios/menuPrincipal"><i class="fa fa-arrow-left"></i> Voltar</a>
-        <!--Fazer backend da barra de pesquisa-->
     </div>
 </body>
 

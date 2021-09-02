@@ -13,15 +13,16 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="/css/tabelaAlimentos.css" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="/public/images/apoioFratlogo.png" />
-    <title>Tabela</title>
+    <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
+    
+    <title>Tabela Alimentos</title>
 </head>
 
 <body>
     <ul>
         <li><a href="/admin/consultarStock">Voltar</a></li>
-        <li><a href="/admin/menu">Menu Administrador</a></li>
         <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
+        <li><a href="/admin/menu">Menu Administrador</a></li>
         
     </ul>
 
@@ -29,39 +30,35 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="overlay-content">
             <form action="/admin/updateInventario" method="POST" enctype="multipart/form-data">
-                <div class="form-row">
-                    <div class="form-group col-md">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="container text-center vertical-center">
-                                    <div class="form-row">
-                                        <div class="form-group col-md">
-                                            <input type="hidden" name="id" id="id">
-                                            <label for="inputState" id="nome"></label>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md">
-                                            <label for="inputState">Capacidade</label>
-                                            <input type="text" class="form-control" name="capacidade" id="capacidade">
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md">
-                                            <label for="inputState">Observações</label>
-                                            <input type="text" class="form-control" name="obs" id="observacoes">
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md">                                           
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md radio">
-                                            <label for="inputState">Estado</label>
-                                            <input type="checkbox" name="estado" id="estado" class="largerCheckbox">
-                                        </div>
-                                    </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="container text-center vertical-center">
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <input type="hidden" name="id" id="id">
+                                    <label for="inputState" id="nome"></label>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Capacidade</label>
+                                    <input type="text" class="form-control" name="capacidade" id="capacidade">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Observações</label>
+                                    <input type="text" class="form-control" name="obs" id="observacoes">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">                                           
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md">
+                                    <label for="inputState">Estado</label>
+                                    <input type="checkbox" name="estado" id="estado" class="largerCheckbox">
                                 </div>
                             </div>
                         </div>
@@ -85,72 +82,74 @@
                     <th colspan="12">
                         <%= rangeAnosValidade[0].minimo + i %>
                     </th>
-                    <% } %>
+                <% } %>
             </tr>
             <tr>
                 <% var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"]; %>
-                    <td></td>
-                    <td>Estado</td>
-                    <td></td>
-                    <td>Total</td>
-                    <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
-                        <% for(var j=0 ; j < meses.length; j++ ){ %>
-                            <td>
-                                <%= meses[j] %>
-                            </td>
-                            <% } %>
-                                <% } %>
+                <td></td>
+                <td>Estado</td>
+                <td></td>
+                <td>Total</td>
+                <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
+                    <% for(var j=0 ; j < meses.length; j++ ){ %>
+                        <td>
+                            <%= meses[j] %>
+                        </td>
+                    <% } %>
+                <% } %>
             </tr>
             <!-- loop de produtos inicio -->
             <% for(var p=0 ; p < alimentoInventario.length ; p++ ){ %>
                 <% var capacidade = 1; %>
-                    <tr>
-                        <% for ( var c=0; c < rangeCapacidades.length ; c++){ %>
-                            <%  if ( alimentoInventario[p].id_inven == rangeCapacidades[c].id_inventario  ) {  %>
-                                <% capacidade = rangeCapacidades[c].num_ocurrencias; } %>
+                <tr>
+                    <% for ( var c=0; c < rangeCapacidades.length ; c++){ %>
+                        <%  if ( alimentoInventario[p].id_inven == rangeCapacidades[c].id_inventario  ) {  %>
+                            <% capacidade = rangeCapacidades[c].num_ocurrencias; %>
                         <% } %>
-                            <% if ( p==0 || ( p > 0 && !( alimentoInventario[p].id_inven == alimentoInventario[p-1].id_inven) ) ) { %>
+                    <% } %>
+                    <% if ( p==0 || ( p > 0 && !( alimentoInventario[p].id_inven == alimentoInventario[p-1].id_inven) ) ) { %>
                         <td class="prod" rowspan= <%= capacidade %> >
                             <%= alimentoInventario[p].produto %>
                         </td>
                         <td class="prod" rowspan= <%= capacidade %> >
-                            <a style="color:blue;cursor:pointer" onclick="openNavInventario( ' <%= String(alimentoInventario[p].id_inven) %> ', ' <%= String(alimentoInventario[p].produto) %> ' , ' <%= String(alimentoInventario[p].observacoes) %> ' ,  <%= String(alimentoInventario[p].estado) %> )">Editar</a>
+                            <a style="color:blue;cursor:pointer" onclick="openNavInventario( ' <%= String(alimentoInventario[p].id_inven) %> ', ' <%= String(alimentoInventario[p].produto) %> ' , ' <%= String(alimentoInventario[p].observacoes) %> ' ,  '<%= String(alimentoInventario[p].estado) %>' )">Editar</a>
                         <!-- <a href="/admin/estado/desativar/<%=alimentoInventario[p].id_inven%>">Editar</a> -->
                         </td>
-                        <% } %>
-                        <td>
-                            <%= alimentoInventario[p].capacidade %>
-                        </td>
-                        <td>
-                            <% if ( !(alimentoInventario[p].total==null) ) { %>
-                                <%= alimentoInventario[p].total %>
-                            <% }%>
-                        </td>
-                        <!-- loop de anos -->
-                        <% for(var a=0 ; a <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; a++ ){ %>
-                            <!-- loop de meses -->
-                            <% for(var m=1 ; m <=12 ; m++ ){ %>
-                                <% var contador=0; %>
-                                <td>
-                                    <% for(var c=0 ; c < alimentoInventario[p].data.length ; c++ ){ %>
-                                        <% if ( !(alimentoInventario[p].data[c]==null) && alimentoInventario[p].data[c].getFullYear()==rangeAnosValidade[0].minimo+a && alimentoInventario[p].data[c].getMonth()+1==m ) { %>
-                                            <% contador=contador + alimentoInventario[p].quantidade[c]; %>
-                                        <% }%>
-                                        <!-- loop de contagem para mes especifico -->
-                                    <% }%>
-                                    <% if (contador>0 ){ %>
-                                        <%= contador %>
-                                    <% }%>
-                                </td>
-                                <!-- fim de loop de meses -->
-                            <% }%>
-                        <!-- fim de loop de anos -->
+                    <% } %>
+                    <td>
+                        <%= alimentoInventario[p].capacidade %>
+                    </td>
+                    <td>
+                        <% if ( !(alimentoInventario[p].total==null) ) { %>
+                            <%= alimentoInventario[p].total %>
                         <% }%>
-                    </tr>
+                    </td>
+                    <!-- loop de anos -->
+                    <% for(var a=0 ; a <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; a++ ){ %>
+                        <!-- loop de meses -->
+                        <% for(var m=1 ; m <=12 ; m++ ){ %>
+                            <% var contador=0; %>
+                            <td>
+                                <% for(var c=0 ; c < alimentoInventario[p].data.length ; c++ ){ %>
+                                    <% if ( !(alimentoInventario[p].data[c]==null) && alimentoInventario[p].data[c].getFullYear()==rangeAnosValidade[0].minimo+a && alimentoInventario[p].data[c].getMonth()+1==m ) { %>
+                                        <% contador=contador + alimentoInventario[p].quantidade[c]; %>
+                                    <% }%>
+                                    <!-- loop de contagem para mes especifico -->
+                                <% }%>
+                                <% if (contador>0 ){ %>
+                                    <%= contador %>
+                                <% }%>
+                            </td>
+                            <!-- fim de loop de meses -->
+                        <% }%>
+                    <!-- fim de loop de anos -->
+                    <% }%>
+                </tr>
             <% }%>
             <!-- fim de loop produtos-->
         </table>
     </div>
     <script src="/javascript/modules.js"></script>
-    </body>
+</body>
+
 </html>

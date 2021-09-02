@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
+
 html, body {
     background-image: url('/images/bg2.jpg');
     background-position: center;
@@ -43,19 +44,11 @@ input:focus {
     box-shadow: 0 0 0 0 !important;
 }
 
-.links {
-    color: white;
-}
-
-.links a {
-    margin-left: 4px;
-}
-
 .card-body {
     margin: 20px;
 }
 
-#registerbtn {
+#btn {
     color: black;
     background-color: #FFC312;
     width: 150px;
@@ -64,14 +57,10 @@ input:focus {
     margin-right: 9px;
 }
 
-#registerbtn:hover {
+#btn:hover {
     color: black;
     background-color: white;
     border-color: white;
-}
-
-#p {
-    color: white;
 }
 
 .radio {
@@ -81,7 +70,7 @@ input:focus {
     margin-top: -5px;
 }
 
-input.largerCheckbox {
+.largerCheckbox {
     width: 20px;
     height: 20px;
 }
