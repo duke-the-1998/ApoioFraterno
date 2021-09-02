@@ -39,8 +39,6 @@ li a:hover {
 }
 
 .inventario {
-  height: 100%;
-  margin-top: 40px;
   align-content: center;
 }
 
@@ -51,6 +49,7 @@ li a:hover {
 
 .col-sm {
   text-align: center;
+  position: inherit;
 }
 
 .card-img-top{
