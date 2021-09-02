@@ -12,7 +12,7 @@
   <!--Fontawesome CDN-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link href="/css/registarUser.css" rel="stylesheet" type="text/css">
+  <link href="/css/login_registar.css" rel="stylesheet" type="text/css">
   <link href="/css/alertas.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
   <title>Registar</title>
@@ -24,10 +24,7 @@
     <% for (var m of messages) { %>
       <div class=<%=type %>>
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong>
-          <%= intro %>
-        </strong>
-        <%= m %>
+        <strong><%= intro %></strong><%= m %>
       </div>
     <% } %>
   <% } %>
@@ -46,21 +43,24 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
               </div>
-              <input type="text" id="nome" class="form-control" placeholder="Nome do utilizador" name="username" autocomplete="off" required>
+              <input type="text" id="nome" class="form-control" placeholder="Nome do utilizador" name="username"
+                autocomplete="off" required>
             </div>
 
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-envelope"></i></span>
               </div>
-              <input type="text" id="email" class="form-control" placeholder="Email" name="email" autocomplete="off" required>
+              <input type="text" id="email" class="form-control" placeholder="Email" name="email"
+                autocomplete="off" required>
             </div>
 
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-key"></i></span>
               </div>
-              <input type="password" id="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                autocomplete="off" required>
             </div>
 
             <div class="input-group form-group radio">
@@ -69,10 +69,9 @@
               </label>
             </div>
 
-            <button type="submit" value="register" id="btn"
-              class="btn float-right login_btn">Registar</button>
-            <a href="/admin/gerirUtilizadores" id="btn" class="btn float-right login_btn"><i
-                class="fa fa-arrow-left"></i> Voltar</a>
+            <button type="submit" value="register" id="btn" class="btn float-right">Registar</button>
+            <a href="/admin/gerirUtilizadores" id="btn" class="btn float-right"><i class="fa fa-arrow-left"></i>
+              Voltar</a>
           </form>
 
         </div>

@@ -9,15 +9,13 @@ html, body {
 }
 
 ul {
-  position: fixed; /* Set the navbar to fixed position */
+  position: fixed;
   top: 0;
   width: 100%;
   list-style-type: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background-color: #333;
-  opacity: 0.85;
 }
 
 li {
@@ -33,15 +31,14 @@ li a {
 }
 
 li a:hover {
-  background-color: #111;
-  color: white;
+  background: #ddd;
+  color: black;
   text-decoration: none;
 }
 
 .inventario {
   height: 100%;
-  margin-top: 40px;
-  align-content: center;
+  margin-top: 100px;
 }
 
 .card-title{
@@ -50,6 +47,7 @@ li a:hover {
 }
 
 .col-sm {
+  position: inherit;
   text-align: center;
 }
 

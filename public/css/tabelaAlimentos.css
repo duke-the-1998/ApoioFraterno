@@ -33,10 +33,6 @@ li a:hover {
   text-decoration: none;
 }
 
-.tabela{
-  overflow: scroll;
-}
-
 .table-data {
   margin-top: 60px;
 }
@@ -60,7 +56,6 @@ th {
   background-color: #2b92f0;
   color: white;
 }
-
 
 .overlay {
   height: 100%;

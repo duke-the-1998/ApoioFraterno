@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
-html,body {
+html, body {
     background-image: url('/images/bg2.jpg');
     background-position: center;
     background-size: 850px;
@@ -8,7 +8,6 @@ html,body {
     height: 100%;
     font-family: 'Numans', sans-serif;
 }
-
 
 .container {
     height: 100%;
@@ -20,15 +19,11 @@ html,body {
     margin-top: auto;
     margin-bottom: auto;
     width: 400px;
-    background-color: rgba(0,0,0,0.5) !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .card-header h3 {
     color: white;
-}
-
-.card-body {
-    margin: 20px;
 }
 
 .social_icon {
@@ -41,21 +36,41 @@ html,body {
     width: 50px;
     background-color: #FFC312;
     color: black;
-    border:0 !important;
+    border: 0 !important;
 }
 
 input:focus {
-    outline: 0 0 0 0  !important;
+    outline: 0 0 0 0 !important;
     box-shadow: 0 0 0 0 !important;
 }
 
-.login_btn {
+.card-body {
+    margin: 20px;
+}
+
+#btn {
     color: black;
     background-color: #FFC312;
     width: 150px;
+    border-radius: 15px;
+    border-color: #FFC312;
+    margin-right: 9px;
 }
 
-.login_btn:hover {
+#btn:hover {
     color: black;
     background-color: white;
+    border-color: white;
+}
+
+.radio {
+    color: white;
+    font-size: 25px;
+    margin-bottom: 5px;
+    margin-top: -5px;
+}
+
+.largerCheckbox {
+    width: 20px;
+    height: 20px;
 }

@@ -86,16 +86,21 @@ router.post('/alimento', checkAuthenticated, async (req, res) => {
     res.redirect('/voluntarios/alimento/add/' + body.id)
 });
 
-router.get('/outros', checkAuthenticated, (req, res) => {
+router.get('/outros/:acao', checkAuthenticated, (req, res) => {
     const params = req.flash();
 
-    if (params.message) {
-        return res.render('outros.ejs', { 
-            message: params.message
+    if (params.type) {
+        return res.render('outros.ejs', {
+            acao: req.params.acao,
+            type: params.type,
+            intro: params.intro,
+            messages: params.messages
         });
     }
 
-    return res.render('outros.ejs');
+    return res.render('outros.ejs', {
+        acao: req.params.acao
+    });
 
 });
 
@@ -106,17 +111,22 @@ router.post('/outros', checkAuthenticated, async (req, res) => {
     const validade = body.validade + "-01";
     const quantidade = body.quantidade;
     const observacoes = body.observacoes;
+    const acao = body.acao;
 
-    if (body.add) {
+    if (acao === "add") {
         await db.promise().query(`INSERT INTO OUTROS (produto, capacidade, data, quantidade, observacoes)
          VALUES ('${produto}', '${capacidade}', '${validade}', '${quantidade}', '${observacoes}')`);
+         req.flash('messages', ['Entrada do produto realizada com sucesso']); 
     } else {
         await db.promise().query(`INSERT INTO OUTROS (produto, capacidade, data, quantidade, observacoes)
          VALUES ('${produto}', '${capacidade}', '${validade}', '${-quantidade}', '${observacoes}')`);
+        req.flash('messages', ['Saída do produto realizada com sucesso']);
     }
 
-    req.flash('message', 'Operação feita com sucesso');
-    res.redirect('/voluntarios/outros');
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+
+    res.redirect('/voluntarios/outros/' + acao);
 });
 
 router.get("/gestaoConta", checkAuthenticated, (req, res) => {
