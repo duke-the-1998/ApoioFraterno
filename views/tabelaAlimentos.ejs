@@ -41,7 +41,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md">
                                     <label for="inputState">Capacidade</label>
-                                    <input type="text" class="form-control" name="capacidade" id="capacidade">
+                                    <input type="text" class="form-control" name="capacidade" id="capacidade" placeholder="Preenchimento opcional">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -73,10 +73,11 @@
         <h2>Tabela Alimentos</h2>
         <table border="1">
             <tr>
-                <th class="prod">Produto</th>
-                <th></th>
+                <th>Produto</th>
+                <th>Estado</th>
                 <th>Capacidade</th>
-                <th></th>
+                <th>Total</th>
+                <!-- loop para construir o cabecalho da tabela Anos -->
                 <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
                     <th colspan="12">
                         <%= rangeAnosValidade[0].minimo + i %>
@@ -86,9 +87,10 @@
             <tr>
                 <% var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"]; %>
                 <td></td>
-                <td>Estado</td>
                 <td></td>
-                <td>Total</td>
+                <td></td>
+                <td></td>
+                <!-- loop para construir o cabecalho da tabela Meses -->
                 <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
                     <% for(var j=0 ; j < meses.length; j++ ){ %>
                         <td>
@@ -101,34 +103,38 @@
             <% for(var p=0 ; p < alimentoInventario.length ; p++ ){ %>
                 <% var capacidade = 1; %>
                 <tr>
+                    <!-- loop que procura se o nome de um produto tem mais que uma capacidade -->
                     <% for ( var c=0; c < rangeCapacidades.length ; c++){ %>
                         <%  if ( alimentoInventario[p].id_inven == rangeCapacidades[c].id_inventario  ) {  %>
                             <% capacidade = rangeCapacidades[c].num_ocurrencias; %>
                         <% } %>
                     <% } %>
+                    <!-- se for o primeiro valor da tabela ou se for o segundo para a frente e o id do produto for igual ao do anterior -->
                     <% if ( p==0 || ( p > 0 && !( alimentoInventario[p].id_inven == alimentoInventario[p-1].id_inven) ) ) { %>
                         <td class="prod" rowspan= <%= capacidade %> >
                             <%= alimentoInventario[p].produto %>
                         </td>
                         <td class="prod" rowspan= <%= capacidade %> >
                             <a style="color:blue;cursor:pointer" onclick="openNavInventario( ' <%= String(alimentoInventario[p].id_inven) %> ', ' <%= String(alimentoInventario[p].produto) %> ' , ' <%= String(alimentoInventario[p].observacoes) %> ' ,  '<%= String(alimentoInventario[p].estado) %>' )">Editar</a>
-                        <!-- <a href="/admin/estado/desativar/<%=alimentoInventario[p].id_inven%>">Editar</a> -->
                         </td>
                     <% } %>
                     <td>
                         <%= alimentoInventario[p].capacidade %>
                     </td>
                     <td>
+                        <!-- impede a tentativa de escrita de valores nulls -->
                         <% if ( !(alimentoInventario[p].total==null) ) { %>
                             <%= alimentoInventario[p].total %>
                         <% }%>
                     </td>
+                    <!-- logica da construicao da tabela -->
                     <!-- loop de anos -->
                     <% for(var a=0 ; a <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; a++ ){ %>
                         <!-- loop de meses -->
                         <% for(var m=1 ; m <=12 ; m++ ){ %>
                             <% var contador=0; %>
                             <td>
+                                <!-- dentro do alimento vai verificar todas as datas que este tem e apenas vai escrever as que correspondem ao ano e mes que esta a ser construido-->
                                 <% for(var c=0 ; c < alimentoInventario[p].data.length ; c++ ){ %>
                                     <% if ( !(alimentoInventario[p].data[c]==null) && alimentoInventario[p].data[c].getFullYear()==rangeAnosValidade[0].minimo+a && alimentoInventario[p].data[c].getMonth()+1==m ) { %>
                                         <% contador=contador + alimentoInventario[p].quantidade[c]; %>

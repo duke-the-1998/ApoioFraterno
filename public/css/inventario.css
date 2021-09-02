@@ -49,6 +49,7 @@ li a:hover {
 .col-sm {
   position: inherit;
   text-align: center;
+  position: inherit;
 }
 
 .card-img-top{

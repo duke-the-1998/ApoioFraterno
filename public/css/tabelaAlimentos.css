@@ -37,12 +37,6 @@ li a:hover {
   margin-top: 60px;
 }
 
-table {
-  border: 2px #111;
-  border-style: solid;
-  width: 100%;
-}
-
 th, td {
   text-align: left;
   padding: 8px;
@@ -92,6 +86,9 @@ th {
   top: 20px;
   right: 45px;
   font-size: 60px;
+}
+.teste{
+  position: fixed;
 }
   
 @media screen and (max-height: 450px) {
@@ -157,7 +154,9 @@ li span:hover{
 }
 
 .prod{
+  position:inherit;
   white-space: nowrap;
+  background-color: white;
 }
 
 .cap{

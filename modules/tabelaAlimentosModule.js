@@ -38,6 +38,7 @@ function construirRangeCapacidades(lista){
     }
     return capacidades;
 }
+/* funcao auxiliar para poder determinar se obj e ali sao o mesmo alimento */
 function aux(obj){
     return (obj.produto == ali.produto && obj.capacidade == ali.capacidade);
 }
