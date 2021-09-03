@@ -23,16 +23,23 @@ router.get('/gerirStock', checkAuthenticated, async (req, res) => {
 });
 
 router.get('/inventario/:acao', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
+
     const acao = req.params.acao;
     const inventario = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
     const novoInventario = gerirSotck.construirInventario(inventario[0]);
     return res.render('inventario.ejs', { 
         alimentos: novoInventario,
-        acao: acao
+        acao: acao,
+        tipo: row[0][0].tipo
     });
 });
 
 router.get('/alimento/add/:id', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
+
     const id = req.params.id;
     const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${id}'`);
     const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
@@ -41,9 +48,11 @@ router.get('/alimento/add/:id', checkAuthenticated, async (req, res) => {
     var body;
     const params = req.flash();
     if (params.type) {
-        body = gerirSotck.bodyAlimento("add", id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, params);
+        body = gerirSotck.bodyAlimento("add", row[0][0].tipo, id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, 
+            novaListaCapacidades, produto[0][0].validade, params);
     } else {
-        body = gerirSotck.bodyAlimento("add", id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, null);
+        body = gerirSotck.bodyAlimento("add", row[0][0].tipo, id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, 
+            novaListaCapacidades, produto[0][0].validade, null);
     }
     return res.render('alimento.ejs', body);
 });

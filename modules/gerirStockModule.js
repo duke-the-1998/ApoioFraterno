@@ -59,10 +59,11 @@ async function darSaidaProduto(row, username, alimento, alimento_id, validade, p
     }
 }
 
-function bodyAlimento(acao, id, alimento, imagem, observacoes, capacidades, validade, params) {
+function bodyAlimento(acao, tipo, id, alimento, imagem, observacoes, capacidades, validade, params) {
     if (params !== null) {
         if (validade === 1) {
             return {
+                tipo: tipo,
                 acao: acao,
                 id: id,
                 alimento: alimento,
@@ -76,6 +77,7 @@ function bodyAlimento(acao, id, alimento, imagem, observacoes, capacidades, vali
             };
         } else {
             return {
+                tipo: tipo,
                 acao: acao,
                 id: id,
                 alimento: alimento,
@@ -91,6 +93,7 @@ function bodyAlimento(acao, id, alimento, imagem, observacoes, capacidades, vali
     } else {
         if (validade === 1) {
             return {
+                tipo: tipo,
                 acao: acao,
                 id: id,
                 alimento: alimento,
@@ -101,6 +104,7 @@ function bodyAlimento(acao, id, alimento, imagem, observacoes, capacidades, vali
             };
         } else {
             return {
+                tipo: tipo,
                 acao: acao,
                 id: id,
                 alimento: alimento,

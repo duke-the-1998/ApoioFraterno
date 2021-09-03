@@ -1,5 +1,10 @@
 <ul>
-    <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
-    <li><a href="/admin/menu">Menu Administrador</a></li>
-    <li><a style="color:white;cursor:pointer" onclick="openCriarAlimento()">Criar alimento</a></li>
+    <div class="dropdown">
+        <button class="dropbtn">Menu Administrador</button>
+        <div class="dropdown-content">
+          <a href="/admin/gerirUtilizadores">Gerir Utilizadores</a>
+          <a href="/admin/consultarStock">Consultar Stock</a>
+          <a href="/admin/relatorio">Gerar Relatório</a>
+        </div>
+    </div>
 </ul>
