@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
-@import url('navbarAdmin.css');
+@import url('navbar.css');
 @import url('cortina.css');
 
 html,body{
@@ -7,7 +7,17 @@ html,body{
 }
 
 .table-data {
-  margin-top: 60px;
+  margin-top: 65px;
+}
+
+h2 {
+  margin-left: 0.5%;
+} 
+
+table {
+  border: 2px #111;
+  border-style: solid;
+  width: 100%;
 }
 
 th, td {
@@ -24,44 +34,12 @@ th {
   color: white;
 }
 
-.card {
-  text-align: center;
-  width: 540px;
-  margin: 0 auto; 
-  float: none; 
-  margin-bottom: 10px;
-  background-color: rgba(0,0,0,0.5) !important;
-  border-radius: 25px;
-  margin-top: 10px;
-}
-
-.card-body {
-  color: white;
-  font-size: 20px;
-}
-  
-@media screen and (max-height: 450px) {
-  .overlay a {font-size: 20px}
-  .overlay .closebtn {
-  font-size: 40px;
-  top: 15px;
-  right: 35px;
-  }
-}
-
 .col-md {
   text-align: left;
   font-size: 25px;
   font-weight: bold;
 }
 
-.largerCheckbox { 
-  margin-left: 5px;
-  width: 20px;
-  height: 20px;
-}
-
-  
 li span:hover{
   background-color: #111;
   color: white;
@@ -72,7 +50,7 @@ li span:hover{
 }
 
 .prod{
-  position:inherit;
+  position: inherit;
   white-space: nowrap;
   background-color: white;
 }

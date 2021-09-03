@@ -22,17 +22,8 @@
 
 <body>
     <%- include ('partials/navbarAdmin') %>
-
-    <% if (typeof type != 'undefined') { %>
-        <% for (var m of messages) { %>
-            <div class=<%= type %>>
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <strong><%= intro %></strong> <%= m %>
-            </div>
-        <% } %>
-    <% } %>
-
-    <%- include ('partials/criarAlimento.ejs') %>
+    <%- include ('partials/alertas') %>
+    <%- include ('partials/criarAlimento') %>
 
     <div class="table-data">
         <h2>Tabela Outros</h2>

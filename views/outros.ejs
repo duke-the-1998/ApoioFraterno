@@ -12,20 +12,19 @@
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link href="/css/outros.css" rel="stylesheet" type="text/css">
+    <link href="/css/alimento.css" rel="stylesheet" type="text/css">
     <link href="/css/alertas.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
     <title>Outros</title>
 </head>
 
-<% if (typeof type != 'undefined') { %>
-    <% for (var m of messages) { %>
-        <div class=<%= type %>>
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            <strong><%= intro %></strong> <%= m %>
-        </div>
+    <%- include ('partials/alertas') %>
+    <% if (tipo === "admin") { %>      
+        <%- include ('partials/navbarAdmin.ejs') %>      
+    <% } else { %> 
+        <%- include ('partials/navbar.ejs') %>
     <% } %>
-<% } %>
+
     <form action="/voluntarios/outros" method="POST">
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -78,7 +77,7 @@
         </div>
         <div class="btn-submit">
             <input type="submit" class="btn" name=<%= acao %> value="Concluir">
-            <a href="/voluntarios/inventario/<%= acao %>"><i class="fa fa-arrow-left"></i> Voltar</a>
+            <a href="/voluntarios/inventario/<%= acao %>" id="voltar"><i class="fa fa-arrow-left"></i> Voltar</a>
         </div>
     </form>
     <script src="/scripts/modules.js" ></script>

@@ -63,7 +63,7 @@
         <% } %>
         <% if (alimentos.length % 2 !== 0) { %>
                 <div class="col-sm">
-                    <form action='/voluntarios/outros' method="GET">
+                    <form action='/voluntarios/outros/<%= acao %>' method="GET">
                         <button type="submit" class="btn">
                             <img class="card-img-top" src="/images/outros.jpg" >
                             <h5 class="card-title">Outros</h5>
@@ -74,7 +74,7 @@
         <% } else { %>
             <div class="row">
                 <div class="col-sm">
-                    <form action='/voluntarios/outros' method="GET">
+                    <form action='/voluntarios/outros/<%= acao %>' method="GET">
                         <button type="submit" class="btn">
                             <img class="card-img-top" src="/images/outros.jpg">
                             <h5 class="card-title">Outros</h5>

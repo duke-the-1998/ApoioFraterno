@@ -58,6 +58,9 @@ router.get('/alimento/add/:id', checkAuthenticated, async (req, res) => {
 });
 
 router.get('/alimento/sub/:id', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
+
     const id = req.params.id;
     const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${id}'`);
     const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
@@ -66,9 +69,9 @@ router.get('/alimento/sub/:id', checkAuthenticated, async (req, res) => {
     var body;
     const params = req.flash();
     if (params.type) {
-        body = gerirSotck.bodyAlimento("sub", id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, params);
+        body = gerirSotck.bodyAlimento("sub", row[0][0].tipo, id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, params);
     } else {
-        body = gerirSotck.bodyAlimento("sub", id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, null);
+        body = gerirSotck.bodyAlimento("sub", row[0][0].tipo, id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, null);
     }
     return res.render('alimento.ejs', body);
 });
@@ -95,11 +98,14 @@ router.post('/alimento', checkAuthenticated, async (req, res) => {
     res.redirect('/voluntarios/alimento/add/' + body.id)
 });
 
-router.get('/outros/:acao', checkAuthenticated, (req, res) => {
-    const params = req.flash();
+router.get('/outros/:acao', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
 
+    const params = req.flash();
     if (params.type) {
         return res.render('outros.ejs', {
+            tipo: row[0][0].id,
             acao: req.params.acao,
             type: params.type,
             intro: params.intro,
@@ -108,6 +114,7 @@ router.get('/outros/:acao', checkAuthenticated, (req, res) => {
     }
 
     return res.render('outros.ejs', {
+        tipo: row[0][0].id,
         acao: req.params.acao
     });
 

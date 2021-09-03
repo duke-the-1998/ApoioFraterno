@@ -19,15 +19,8 @@
 </head>
 
 <body>
-    <% if (typeof type != 'undefined') { %>
-        <% for (var m of messages) { %>
-            <div class=<%= type %>>
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <strong><%= intro %></strong> <%= m %>
-            </div>
-        <% } %>
-    <% } %>
-
+    
+    <%- include ('partials/alertas') %>
     <% if (tipo === "admin") { %>      
         <%- include ('partials/navbarAdmin.ejs') %>      
     <% } else { %> 
