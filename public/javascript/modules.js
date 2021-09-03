@@ -40,4 +40,5 @@ function openNavInventario(id, nome, obs, estado) {
         document.getElementById("estado").checked = true;
     }
     document.getElementById("editarAlimento").style.width = "100%";
+    document.getElementById("delete").href="/admin/deleteAlimento/"+id;
 }

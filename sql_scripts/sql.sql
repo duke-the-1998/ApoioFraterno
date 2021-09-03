@@ -3,6 +3,7 @@ DROP TABLE alimento;
 DROP TABLE inventario;
 DROP TABLE users;
 DROP TABLE outros;
+DROP TABLE historico;
 
 CREATE TABLE users (
     id int NOT NULL AUTO_INCREMENT,

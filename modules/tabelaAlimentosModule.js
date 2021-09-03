@@ -65,6 +65,21 @@ async function updateInventario(id,obs,estado,capacidade){
         return errors.code;
     }
 }
+
+async function deleteInventario(id){
+    try{
+            var alimentoId = await db.promise().query(`SELECT id FROM alimento WHERE inventario_id ='${id}' `);
+            for (var n of alimentoId[0]) {
+                await db.promise().query(`DELETE FROM validade WHERE alimento_id = '${n.id}'`);
+            }
+                await db.promise().query(`DELETE FROM alimento WHERE inventario_id = '${id}'`);
+            await db.promise().query(`DELETE FROM inventario WHERE id = '${id}'`);
+    }catch (errors) {
+        console.log("erro");
+        return errors.code;
+    }
+}
+exports.deleteInventario=deleteInventario;
 exports.updateInventario = updateInventario;
 exports.construirMinMax = construirMinMax;
 exports.construirAlimentoInventario = construirAlimentoInventario;

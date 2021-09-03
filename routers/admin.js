@@ -7,7 +7,7 @@ const { checkAdmin } = require('../middleware/checkAdmin');
 const { validateRegistarSchema } = require('../middleware/validateRequestSchema');
 const { registarSchema } = require('../schema/registarSchema');
 const { inserirNoInventario, inserirCapacidade } = require('../modules/criarAlimentoModule');
-const { construirAlimentoInventario, construirMinMax, construirRangeCapacidades , updateInventario} = require ('../modules/tabelaAlimentosModule');
+const { construirAlimentoInventario, construirMinMax, construirRangeCapacidades , updateInventario, deleteInventario} = require ('../modules/tabelaAlimentosModule');
 
 const router = Router();
 router.use(fileUpload());
@@ -192,6 +192,14 @@ router.post('/updateInventario', checkAuthenticated, checkAdmin, async (req, res
     req.flash('erro nigga',error);
     res.redirect("/admin/tabelaAlimento");
     
+});
+
+router.get('/deleteAlimento/:id', checkAuthenticated, checkAdmin, async (req, res) => {
+    const id = req.params.id;
+    const error = await deleteInventario(id);
+    req.flash('erro nigga',error);
+    res.redirect("/admin/tabelaAlimento");
+
 });
 
 router.get("/relatorio", checkAuthenticated, async (req, res) => {
