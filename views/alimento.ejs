@@ -27,6 +27,13 @@
             </div>
         <% } %>
     <% } %>
+
+    <% if (tipo === "admin") { %>      
+        <%- include ('partials/navbarAdmin.ejs') %>      
+    <% } else { %> 
+        <%- include ('partials/navbar.ejs') %>
+    <% } %>
+
     <form action="/voluntarios/alimento" method="POST">
         <div class="form-row">
             <div class="form-group col-md">

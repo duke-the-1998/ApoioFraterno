@@ -19,56 +19,10 @@
 </head>
 
 <body>
-    <ul>
-        <li><a href="/admin/consultarStock">Voltar</a></li>
-        <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
-        <li><a href="/admin/menu">Menu Administrador</a></li>
-    </ul>
+    <%- include ('partials/navbarAdmin.ejs') %>
+    <%- include ('partials/criarAlimento.ejs') %>
+    <%- include ('partials/editarAlimento.ejs') %>
 
-    <div id="myNav" class="overlay">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <div class="overlay-content">
-            <form action="/admin/updateInventario" method="POST" enctype="multipart/form-data">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="container text-center vertical-center">
-                            <div class="form-row">
-                                <div class="form-group col-md">
-                                    <input type="hidden" name="id" id="id">
-                                    <label for="inputState" id="nome"></label>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md">
-                                    <label for="inputState">Capacidade</label>
-                                    <input type="text" class="form-control" name="capacidade" id="capacidade" placeholder="Preenchimento opcional">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md">
-                                    <label for="inputState">Observações</label>
-                                    <input type="text" class="form-control" name="obs" id="observacoes">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md">                                           
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md">
-                                    <label for="inputState">Estado</label>
-                                    <input type="checkbox" name="estado" id="estado" class="largerCheckbox">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="btn-submit"> 
-                    <input type="submit" onclick='return btnGuardar();' class="btn" value="Guardar">
-                </div>
-            </form>
-        </div>
-    </div>
     <div class="table-data">
         <h2>Tabela Alimentos</h2>
         <table border="1">
