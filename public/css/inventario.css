@@ -32,7 +32,7 @@ html, body {
   height: 370px;
 }
 
-.btn{
+.inventario .btn{
   border-radius: 30px;
   background-color: rgba(0,0,0,0.5) !important;
   border-color: rgba(0,0,0,0.5) !important;

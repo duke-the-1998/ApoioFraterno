@@ -44,7 +44,7 @@
     }
 }
 
-#criarAlimento .btn {
+.btn-submit .btn {
     background-color: rgb(22, 145, 228);
     color: white;
     padding: 14px 25px;
@@ -63,9 +63,7 @@
     flex: none;
 }
 
-#delete{
-    flex: none;
-}
+
 
 .card {
     text-align: center;
@@ -95,6 +93,12 @@
     height: 20px;
 }
 
+
+
+
+
+
+
 #editarAlimento .btn {
     background-color: rgb(22, 145, 228);
     color: white;
@@ -118,4 +122,8 @@
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
+}
+
+#delete{
+    flex: none;
 }

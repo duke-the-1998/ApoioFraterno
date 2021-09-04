@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 @import url('navbar.css');
+@import url('cortina.css');
 @import url('alertas.css');
 
 html, body {
@@ -10,7 +11,7 @@ html, body {
   font-family: 'Numans', sans-serif;
 }
 
-.card {
+.form-row .card {
   text-align: center;
   width: 340px;
   margin: 0 auto; 
@@ -24,7 +25,7 @@ html, body {
   border-radius: 25px; 
 }
 
-.card-body {  
+.form-row .card-body {  
   color: white;
   font-size: 20px;
 }
@@ -33,7 +34,7 @@ html, body {
   font-size: 30px;
 }
 
-.col-md{
+.form-row .col-md{
   text-align: left;
   font-size: 25px;
   font-weight: bold;
