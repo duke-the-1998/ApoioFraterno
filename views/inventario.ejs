@@ -20,6 +20,7 @@
 
 <body>
     <% if (tipo === "admin") { %>      
+        <%- include ('partials/criarAlimento') %>      
         <%- include ('partials/navbarAdmin') %>
     <% } else { %> 
         <%- include ('partials/navbar') %>
@@ -78,6 +79,7 @@
             </div>
         <% } %>     
     </div>
+    <script src="/javascript/modules.js"></script>
 </body>
 
 </html>

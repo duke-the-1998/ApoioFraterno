@@ -44,7 +44,7 @@
     }
 }
 
-.btn {
+#criarAlimento .btn {
     background-color: rgb(22, 145, 228);
     color: white;
     padding: 14px 25px;
@@ -53,25 +53,18 @@
     display: inline-block;
     border-radius: 20px;
     width: 156px;
-  }
+}
     
-.btn:hover, .btn:active {
+#criarAlimento .btn:hover,#criarAlimento .btn:active {
     background-color: rgb(11, 119, 190);
 }
 
-.btn-submit input{
+#criarAlimento .btn-submit input{
     flex: none;
 }
 
 #delete{
     flex: none;
-}
-
-.btn-submit{
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
 }
 
 .card {
@@ -100,4 +93,29 @@
     margin-left: 5px;
     width: 20px;
     height: 20px;
+}
+
+#editarAlimento .btn {
+    background-color: rgb(22, 145, 228);
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+    width: 156px;
+  }
+    
+#editarAlimento .btn:hover,#criarAlimento .btn:active {
+    background-color: rgb(11, 119, 190);
+}
+
+#editarAlimento .btn-submit input{
+    flex: none;
+}
+#editarAlimento .btn-submit{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
 }

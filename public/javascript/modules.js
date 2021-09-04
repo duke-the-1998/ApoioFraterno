@@ -3,7 +3,7 @@ function btnCriar() {
 }
 
 function openCriarAlimento() {
-    document.getElementById("criarAlimento").style.width = "100%";
+     document.getElementById("criarAlimento").style.width = "100%";
 }
 
 function openEditarAlimento() {
