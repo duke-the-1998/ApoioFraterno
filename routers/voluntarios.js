@@ -127,22 +127,25 @@ router.post('/outros', checkAuthenticated, async (req, res) => {
     const validade = body.validade + "-01";
     const quantidade = body.quantidade;
     const observacoes = body.observacoes;
-    const acao = body.acao;
+    var link;
 
-    if (acao === "add") {
+    if(body.add) {
         await db.promise().query(`INSERT INTO OUTROS (produto, capacidade, data, quantidade, observacoes)
          VALUES ('${produto}', '${capacidade}', '${validade}', '${quantidade}', '${observacoes}')`);
          req.flash('messages', ['Entrada do produto realizada com sucesso']); 
+         link = '/voluntarios/outros/add'
+
     } else {
         await db.promise().query(`INSERT INTO OUTROS (produto, capacidade, data, quantidade, observacoes)
          VALUES ('${produto}', '${capacidade}', '${validade}', '${-quantidade}', '${observacoes}')`);
         req.flash('messages', ['Saída do produto realizada com sucesso']);
+        link = '/voluntarios/outros/sub'
     }
 
     req.flash('type', 'success');
     req.flash('intro', 'Sucesso!');
 
-    res.redirect('/voluntarios/outros/' + acao);
+    res.redirect(link);
 });
 
 router.get("/gestaoConta", checkAuthenticated, (req, res) => {
@@ -172,14 +175,15 @@ router.post("/mudarPassword", checkAuthenticated, passwordSchema, validateChange
 
 router.get("/historico", checkAuthenticated, async (req, res) => {
     const email = req.session.passport.user;
-    const row = await db.promise().query(`SELECT nome FROM users WHERE email = '${email}'`);
+    const row = await db.promise().query(`SELECT nome, tipo FROM users WHERE email = '${email}'`);
     const nome = row[0][0].nome;
     const historico = await db.promise().query(`SELECT DATE_FORMAT(data, '%d-%m-%Y') dataonly, 
                                                 DATE_FORMAT(data,'%H:%i:%s') timeonly, nome, acao FROM historico WHERE nome = '${nome}'
                                                 ORDER BY dataonly DESC, timeonly DESC`);
 
     return res.render('tabelaHistoricoPessoal.ejs', { 
-        historico: historico[0]
+        historico: historico[0],
+        tipo: row[0][0].tipo
     });
 });
 

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 @import url('navbar.css');
+@import url('cortina.css');
 
 html, body {
   background-image: url('/images/bg10.jpg');

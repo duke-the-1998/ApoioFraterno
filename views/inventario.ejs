@@ -19,20 +19,12 @@
 
 
 <body>
-    <% if (typeof type != 'undefined') { %>
-        <% for (var m of messages) { %>
-            <div class=<%= type %>>
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <strong><%= intro %></strong> <%= m %>
-            </div>
-        <% } %>
-    <% } %>
-
     <% if (tipo === "admin") { %>      
-        <%- include ('partials/navbarAdmin.ejs') %>      
+        <%- include ('partials/navbarAdmin') %>
     <% } else { %> 
-        <%- include ('partials/navbar.ejs') %>
+        <%- include ('partials/navbar') %>
     <% } %>
+    <%- include ('partials/alertas') %>
     
     <div class="inventario">
         <% for (var i = 0; i < alimentos.length; i += 2) { %>

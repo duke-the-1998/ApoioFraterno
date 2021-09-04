@@ -20,14 +20,19 @@
 </head>
 
 <body>
-    <%- include ('partials/navbarAdmin.ejs') %>
+    <% if (tipo === "admin") { %>      
+        <%- include ('partials/navbarAdmin') %>   
+        <%- include ('partials/criarAlimento') %>
+    <% } else { %> 
+        <%- include ('partials/navbar') %>
+    <% } %>
     <div class="table-data">
         <h2>Histórico Pessoal</h2>
 
         <!--Construção da tabela histórico-->
         <%- include ('partials/tabelaHistorico.ejs') %>
     </div>
-    <script src="/scripts/modules.js"></script>
+    <script src="/javascript/modules.js"></script>
 </body>
 
 </html>

@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="/css/tabelaUsersHistorico.css" rel="stylesheet" type="text/css">
-    <link href="/css/alertas.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
 
     <title>Tabela Utilizadores</title>
@@ -21,18 +20,9 @@
 </head>
 
 <body>
-    <ul>
-        <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
-        <li><a href="/admin/menu">Menu Administrador</a></li>
-    </ul>
-    <% if (typeof type != 'undefined') { %>
-        <% for (var m of messages) { %>
-            <div class=<%= type %>>
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                <strong><%= intro %></strong> <%= m %>
-            </div>
-        <% } %>
-    <% } %>
+    <%- include ('partials/navbarAdmin') %>
+    <%- include ('partials/criarAlimento') %>
+    <%- include ('partials/alertas') %>
     <div class="table-data">
         <h2>Tabela Utilizador</h2>
         <table border="1">

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
+@import url('alertas.css');
 
 html, body {
     background-image: url('/images/bg2.jpg');
