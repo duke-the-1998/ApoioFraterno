@@ -7,8 +7,16 @@ html,body{
   font-family: 'Numans', sans-serif;
 }
 
-.table-data {
-  margin-top: 65px;
+@media screen and (max-width: 992px) {
+  .table-data {
+    margin-top: 80px;
+  }
+}
+
+@media screen and (min-width: 993px) {
+  .table-data {
+    margin-top: 65px;
+  }
 }
 
 h2 {

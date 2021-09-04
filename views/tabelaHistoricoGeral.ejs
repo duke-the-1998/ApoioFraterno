@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=0.6">
+<meta name="viewport" content="width=device-width, initial-scale=0.4">
 
 <head>
     <!--Bootsrap 4 CDN-->
@@ -21,13 +21,14 @@
 
 <body>
     <%- include ('partials/navbarAdmin.ejs') %>
+    <%- include ('partials/criarAlimento') %>
     <div class="table-data">
         <h2>Histórico Geral</h2>
 
         <!--Construção da tabela histórico-->
         <%- include ('partials/tabelaHistorico.ejs') %>
     </div>
-    <script src="/scripts/modules.js"></script>
+    <script src="/javascript/modules.js"></script>
 </body>
 
 </html>
