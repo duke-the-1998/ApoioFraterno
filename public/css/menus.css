@@ -10,29 +10,29 @@ html,body{
 }
 
 .container {
-height: 100%;
-align-content: center;
+    height: 100%;
+    align-content: center;
 }
 
 .card{
-height: 470px;
-margin-top: auto;
-margin-bottom: auto;
-width: 500px;
-background-color: rgba(0,0,0,0.5) !important;
+    height: 470px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 500px;
+    background-color: rgba(0,0,0,0.5) !important;
 }
-    
+
 .card-header h3 {
-color: white;
+    color: white;
 }
     
 .social_icon {
-position: absolute;
-right: 20px;
-top: -45px;
+    position: absolute;
+    right: 20px;
+    top: -45px;
 }
 
-#logoutbtn {
+#btn {
     color: black;
     background-color: #FFC312;
     width: 200px;
@@ -41,16 +41,15 @@ top: -45px;
     margin: 10px;
     height: 50px;
     font-size: 20px;
-   
-    }
+}
     
-#logoutbtn:hover {
+#btn:hover {
     color: black;
     background-color: rgb(255, 255, 255);
-    }
+    cursor:pointer;
+}
 
 .card-body{
     height: 100%;
     text-align: center;
-
 }

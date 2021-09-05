@@ -9,7 +9,7 @@ async function inserirNoInventario(nome, imagem, observacoes, validade) {
         }
         return
     } catch (errors) {
-        return errors.code
+        return errors.code;
     }
     
 }

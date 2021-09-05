@@ -13,18 +13,25 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="/css/alimento.css" rel="stylesheet" type="text/css">
+
     <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
     <title>Alimento</title>
 </head>
 
-<% if (typeof message !='undefined') { %>
-    <body onload="showMessage()">
-<% } else { %>
-    <body>
-<% } %>
+<body>
+    
+    <% if (tipo === "admin") { %>      
+        <%- include ('partials/navbarAdmin.ejs') %>
+        <%- include ('partials/criarAlimento.ejs') %>
+
+    <% } else { %> 
+        <%- include ('partials/navbar.ejs') %>
+    <% } %>
+    <%- include ('partials/alertas') %>
+
     <form action="/voluntarios/alimento" method="POST">
         <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md">
                 <div class="card">
                     <img class="card-img-top" src=<%="/images/Alimentos/" + imagem %>>
                     <div class="card-body">
@@ -33,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md">
                 <div class="card">
                     <div class="card-body">
                         <div class="container text-center vertical-center">
@@ -45,7 +52,7 @@
                                             <option>
                                                 <%= c.capacidade %>
                                             </option>
-                                            <% } %>
+                                        <% } %>
                                     </select>
                                 </div>
                             </div>
@@ -69,12 +76,13 @@
             </div>
         </div>
         <div class="btn-submit"> 
-            <input class="inputs" type="hidden" name="id" value=<%=id %>>
-            <input type="submit" onclick='return btnEntrada();' class="btn" name="add" value="Entrada de produto">
-            <input type="submit" onclick='return btnSaida   ();' class="btn" name="sub" value="Saída de produto">
-            <a href="/voluntarios/inventario"><i class="fa fa-arrow-left"></i> Voltar</a>
+            <input class="inputs" type="hidden" name="id" value=<%= id %>>
+            <input class="inputs" type="hidden" name="alimento" value=<%= alimento %>>
+            <input type="submit" class="btn" name=<%= acao %> value="Concluir">
+            <a href="/voluntarios/inventario/<%= acao %>" id="voltar"><i class="fa fa-arrow-left"></i> Voltar</a>
         </div>
     </form>
     <script src="/javascript/modules.js"></script>
+
 </body>
 </html>

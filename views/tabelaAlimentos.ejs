@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=0.6">
+<meta name="viewport" content="width=device-width, initial-scale=0.4">
 
 <head>
     <!--Bootsrap 4 CDN-->
@@ -13,104 +13,102 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="/css/tabelaAlimentos.css" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="/public/images/apoioFratlogo.png" />
-    <title>Tabela</title>
+    <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
+    
+    <title>Tabela Alimentos</title>
 </head>
 
 <body>
-    <ul>
-        <li><a href="/admin/consultarStock">Voltar</a></li>
-        <li><a href="/admin/menu">Menu Administrador</a></li>
-        <li><a href="/voluntarios/menuPrincipal">Menu Principal</a></li>
-        
-    </ul>
+    <%- include ('partials/navbarAdmin.ejs') %>
+    <%- include ('partials/criarAlimento.ejs') %>
+    <%- include ('partials/editarAlimento.ejs') %>
 
     <div class="table-data">
         <h2>Tabela Alimentos</h2>
         <table>
             <tr>
-                <th class="prod">Produto</th>
+                <th>Produto</th>
+                <th>Estado</th>
                 <th>Capacidade</th>
-                <th></th>
-                <th></th>
+                <th>Total</th>
+                <!-- loop para construir o cabecalho da tabela Anos -->
                 <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
                     <th colspan="12">
                         <%= rangeAnosValidade[0].minimo + i %>
                     </th>
-                    <% } %>
-
+                <% } %>
             </tr>
             <tr>
                 <% var meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"]; %>
-
-                    <td></td>
-                    <td></td>
-                    <td>Estado</td>
-                    <td>Total</td>
-                    <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
-
-
-                        <% for(var j=0 ; j < meses.length; j++ ){ %>
-                            <td>
-                                <%= meses[j] %>
-                            </td>
-                            <% } %>
-                                <% } %>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <!-- loop para construir o cabecalho da tabela Meses -->
+                <% for(var i=0 ; i <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; i++ ){ %>
+                    <% for(var j=0 ; j < meses.length; j++ ){ %>
+                        <td>
+                            <%= meses[j] %>
+                        </td>
+                    <% } %>
+                <% } %>
             </tr>
             <!-- loop de produtos inicio -->
             <% for(var p=0 ; p < alimentoInventario.length ; p++ ){ %>
-               <!-- <% console.log( 'produto' , alimentoInventario[p] )%> -->
-                    <tr>
-                        <td class="prod">
+                <% var capacidade = 1; %>
+                <tr>
+                    <!-- loop que procura se o nome de um produto tem mais que uma capacidade -->
+                    <% for ( var c=0; c < rangeCapacidades.length ; c++){ %>
+                        <%  if ( alimentoInventario[p].id_inven == rangeCapacidades[c].id_inventario  ) {  %>
+                            <% capacidade = rangeCapacidades[c].num_ocurrencias; %>
+                        <% } %>
+                    <% } %>
+                    <!-- se for o primeiro valor da tabela ou se for o segundo para a frente e o id do produto for igual ao do anterior -->
+                    <% if ( p==0 || ( p > 0 && !( alimentoInventario[p].id_inven == alimentoInventario[p-1].id_inven) ) ) { %>
+                        <td class="prod" rowspan= <%= capacidade %> >
                             <%= alimentoInventario[p].produto %>
                         </td>
-                        <td>
-                            <%= alimentoInventario[p].capacidade %>
+                        <td class="prod" rowspan= <%= capacidade %> >
+                            <a style="color:blue;cursor:pointer" onclick="openNavInventario( ' <%= String(alimentoInventario[p].id_inven) %> ', ' <%= String(alimentoInventario[p].produto) %> ' , ' <%= String(alimentoInventario[p].observacoes) %> ' ,  '<%= String(alimentoInventario[p].estado) %>' )">Editar</a>
                         </td>
-                        <td>
-                            <% if ( alimentoInventario[p].estado == 1){ %>
-                                <a href="/admin/estado/desativar/<%=alimentoInventario[p].id_inven%>">Desativar</a>
-                            <% }else{ %>
-                                <a href="/admin/estado/ativar/<%=alimentoInventario[p].id_inven%>">Ativar</a>
-                                <% } %>
+                    <% } %>
+                    <td>
+                        <%= alimentoInventario[p].capacidade %>
+                    </td>
+                    <td>
+                        <!-- impede a tentativa de escrita de valores nulls -->
+                        <% if ( !(alimentoInventario[p].total==null) ) { %>
+                            <%= alimentoInventario[p].total %>
+                        <% }%>
+                    </td>
+                    <!-- logica da construicao da tabela -->
+                    <!-- loop de anos -->
+                    <% for(var a=0 ; a <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; a++ ){ %>
+                        <!-- loop de meses -->
+                        <% for(var m=1 ; m <=12 ; m++ ){ %>
+                            <% var contador=0; %>
+                            <td>
+                                <!-- dentro do alimento vai verificar todas as datas que este tem e apenas vai escrever as que correspondem ao ano e mes que esta a ser construido-->
+                                <% for(var c=0 ; c < alimentoInventario[p].data.length ; c++ ){ %>
+                                    <% if ( !(alimentoInventario[p].data[c]==null) && alimentoInventario[p].data[c].getFullYear()==rangeAnosValidade[0].minimo+a && alimentoInventario[p].data[c].getMonth()+1==m ) { %>
+                                        <% contador=contador + alimentoInventario[p].quantidade[c]; %>
+                                    <% }%>
+                                    <!-- loop de contagem para mes especifico -->
+                                <% }%>
+                                <% if (contador>0 ){ %>
+                                    <%= contador %>
+                                <% }%>
                             </td>
-                        <td>
-                            <% if ( !(alimentoInventario[p].total==null) ) { %>
-                                <%= alimentoInventario[p].total %>
-                                    <% }%>
-
-                        </td>
-                        <!-- loop de anos -->
-                        <% for(var a=0 ; a <=rangeAnosValidade[0].maximo - rangeAnosValidade[0].minimo ; a++ ){ %>
-
-                            <!-- loop de meses -->
-                            <% for(var m=1 ; m <=12 ; m++ ){ %>
-                                <% var contador=0; %>
-                                    <td>
-                                        <% for(var c=0 ; c < alimentoInventario[p].data.length ; c++ ){ %>
-
-                                            <% if ( !(alimentoInventario[p].data[c]==null) &&
-                                                alimentoInventario[p].data[c].getFullYear()==rangeAnosValidade[0].minimo+a
-                                                && alimentoInventario[p].data[c].getMonth()+1==m ) { %>
-                                                <% contador=contador + alimentoInventario[p].quantidade[c]; %>
-                                                    <% }%>
-                                                        <!-- loop de contagem para mes especifico -->
-                                                        <% }%>
-                                                            <% if (contador>0 ){ %>
-                                                                <%= contador %>
-                                                                    <% }%>
-                                    </td>
-
-                                    <!-- fim de loop de meses -->
-                                    <% }%>
-                                        <!-- fim de loop de anos -->
-                                        <% }%>
-
-                    </tr>
+                            <!-- fim de loop de meses -->
+                        <% }%>
+                    <!-- fim de loop de anos -->
                     <% }%>
-                        <!-- fim de loop produtos-->
+                </tr>
+            <% }%>
+            <!-- fim de loop produtos-->
         </table>
     </div>
+    <script src="/javascript/modules.js"></script>
 </body>
 
 </html>

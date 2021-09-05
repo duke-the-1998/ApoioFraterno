@@ -6,16 +6,19 @@ async function mudarPassword(email, oldPassword, newPassword, res) {
     if (await bcrypt.compare(oldPassword, row[0][0].password)) {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         db.promise().query(`UPDATE users SET password = '${hashedPassword}' WHERE email = '${email}'`);
+        
         return res.render('mudarPassword.ejs', {
-            message: "sucesso",
+            type: 'success',
+            intro: "Sucesso!",
+            messages: ['As novas passwords não combinam']
         });
     }
+    
     return res.render('mudarPassword.ejs', {
-        message: "Erro",
-        listaErros: ['Password antiga incorreta']
+        type: 'error',
+        intro: "Erro!",
+        messages: ['Password antiga incorreta']
     });
-
-
 }
 
 exports.mudarPassword = mudarPassword;

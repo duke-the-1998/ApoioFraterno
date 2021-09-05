@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=0.6">
+<meta name="viewport" content="width=device-width, initial-scale=0.4">
 
 <head>
     <!--Bootsrap 4 CDN-->
@@ -12,25 +12,23 @@
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link href="/css/exitPage.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
-    <title>Obrigado</title>
+    <link href="/css/tabelaUsersHistorico.css" rel="stylesheet" type="text/css">
+
+    <title>Histórico Geral</title>
+
 </head>
 
 <body>
-    <div class="container">
-        <div class="d-flex justify-content-center h-100">
-            <div class="card">
-                <div class="card-header">
-                    <h1>Por favor deixa o espaço limpo e arrumado</h1>
+    <%- include ('partials/navbarAdmin.ejs') %>
+    <%- include ('partials/criarAlimento') %>
+    <div class="table-data">
+        <h2>Histórico Geral</h2>
 
-                </div>
-                <h1 id="h1">Obrigado pela tua ajuda! </h1>
-                <img src="/images/limpeza.jpg">
-                <a href="/auth/login" id="a"> OK </a>
-            </div>
-        </div>
+        <!--Construção da tabela histórico-->
+        <%- include ('partials/tabelaHistorico.ejs') %>
     </div>
+    <script src="/javascript/modules.js"></script>
 </body>
 
 </html>

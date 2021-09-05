@@ -1,0 +1,27 @@
+<table border="1">
+    <tr>
+        <th>Data</th>
+        <th>Nome</th>
+        <th>Ação-Quantidade-Alimento-Capacidade-Validade</th>
+    </tr>
+
+    <% if(historico.length !=0){ 
+        historico.forEach(function(h){ %>
+        <tr>
+            <td>
+                <%= h.dataonly + " " + h.timeonly; %>
+            </td>
+            <td>
+                <%= h.nome %>
+            </td>
+            <td>
+                <%= h.acao %>
+            </td>
+        </tr>
+        <% }) %>
+    <% } else { %>
+        <tr>
+            <td colspan="7">Sem histórico</td>
+        </tr>
+    <% } %>
+</table>

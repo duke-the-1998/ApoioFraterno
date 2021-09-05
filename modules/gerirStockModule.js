@@ -43,77 +43,84 @@ async function darEntradaProduto(row, nome, produto, alimento_id, validade, peso
     }
 }
 
-async function darSaidaProduto(row, nome, produto, alimento_id, validade, peso, quantidade) {
+async function darSaidaProduto(row, username, alimento, alimento_id, validade, peso, quantidade) {
     const split = validade.split("-");
     const formatValidade = split[2] + "-" + split[1] + "-" + split[0];;
-    const acao = "Saída " + quantidade+ " " + produto + " " + peso + " " + formatValidade;
+    const acao = "Saída " + quantidade+ " " + alimento + " " + peso + " " + formatValidade;
 
     if (row.length === 0) {
         await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}','${- quantidade}')`);
-        await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${nome}', '${acao}')`);
+        await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${username}', '${acao}')`);
         return
     } else {
         await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`);
-        await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${nome}', '${acao}')`);
+        await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${username}', '${acao}')`);
         return
     }
 }
 
-function bodyAlimento(id, alimento, imagem, observacoes, capacidades, validade, message) {
-    if (message === true) {
+function bodyAlimento(acao, tipo, id, alimento, imagem, observacoes, capacidades, validade, params) {
+    if (params !== null) {
         if (validade === 1) {
             return {
+                tipo: tipo,
+                acao: acao,
                 id: id,
                 alimento: alimento,
                 imagem: imagem,
                 observacoes: observacoes,
                 capacidades: capacidades,
                 validade: "on",
-                message: "on"
+                type: params.type,
+                intro: params.intro,
+                messages: params.messages
             };
         } else {
             return {
+                tipo: tipo,
+                acao: acao,
                 id: id,
                 alimento: alimento,
                 imagem: imagem,
                 observacoes: observacoes,
                 capacidades: capacidades,
                 validade: "off",
-                message: "on"
+                type: params.type,
+                intro: params.intro,
+                messages: params.messages
             };
         }
     } else {
         if (validade === 1) {
             return {
+                tipo: tipo,
+                acao: acao,
                 id: id,
                 alimento: alimento,
                 imagem: imagem,
                 observacoes: observacoes,
                 capacidades: capacidades,
-                validade: "on",
+                validade: "on"
             };
         } else {
             return {
+                tipo: tipo,
+                acao: acao,
                 id: id,
                 alimento: alimento,
                 imagem: imagem,
                 observacoes: observacoes,
                 capacidades: capacidades,
-                validade: "off",
+                validade: "off"
             };
         }
     }
 
 };
 
-function formatValidade(validade) {
-    return 
-}
-
 exports.construirInventario = construirInventario;
 exports.construirListaCapacidades = construirListaCapacidades;
 exports.darEntradaProduto = darEntradaProduto;
 exports.darSaidaProduto = darSaidaProduto;
-exports.formatValidade = formatValidade;
 exports.bodyAlimento = bodyAlimento;
 

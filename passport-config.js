@@ -6,14 +6,14 @@ function initialize(passport) {
   const authenticateUser = async (email, password, done) => {
     const user = await db.promise().query(`SELECT * FROM USERS WHERE EMAIL = '${email}'`);
     if (user[0].length === 0) {
-      return done(null, false, { message: 'No user with that username' });
+      return done(null, false, { message: 'Email ou password errados' });
     }
 
     try {
       if (await bcrypt.compare(password, user[0][0].password)) {
         return done(null, user[0][0]);
       } else {
-        return done(null, false, { message: 'Password incorrect' });
+        return done(null, false, { message: 'Email ou password errados' });
       }
     } catch (e) {
       return done(e);

@@ -12,19 +12,17 @@
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link href="/css/login.css" rel="stylesheet" type="text/css">
+    <link href="/css/login_registar.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/images/apoioFratlogo.png" />
     <title>Login</title>
 </head>
 
 <body>
-
     <div class="container">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
                     <h3>Login</h3>
-                    <!-- linhas para teste-->
                     <div class="d-flex justify-content-end social_icon">
                         <span><img src="/images/apoioFratlogo.png" width="100" height="100"></i></span>
                     </div>
@@ -36,7 +34,7 @@
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input type="text" class="form-control" placeholder="Email" id="email" name="email"
-                                required />
+                                autocomplete="off" required />
 
                         </div>
                         <div class="input-group form-group">
@@ -47,11 +45,14 @@
                                 name="password" 
                                 required />
                         </div>
-                        <div class="form-group">
-                            <input type="submit" value="login" class="btn float-right login_btn">
-                        </div>
+                        <button type="submit" value="login" id="btn" class="btn float-right">Login</button>
                     </form>
                 </div>
+                <% if (messages.error) { %>
+                    <div class="alert alert-danger">
+                        <strong>Erro! </strong><%= messages.error %>
+                    </div>
+                <% } %>
             </div>
         </div>
     </div>

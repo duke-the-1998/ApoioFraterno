@@ -1,14 +1,13 @@
 const { Router } = require('express');
-const url = require('url');
 const bcrypt = require('bcrypt');
 const fileUpload = require('express-fileupload');
 const db = require('../database');
-const { checkAuthenticated,checkNotAuthenticated } = require('../middleware/checkAuthenticated');
+const { checkAuthenticated } = require('../middleware/checkAuthenticated');
 const { checkAdmin } = require('../middleware/checkAdmin');
 const { validateRegistarSchema } = require('../middleware/validateRequestSchema');
 const { registarSchema } = require('../schema/registarSchema');
 const { inserirNoInventario, inserirCapacidade } = require('../modules/criarAlimentoModule');
-const { construirAlimentoInventario, construirMinMax } = require ('../modules/tabelaAlimentosModule');
+const { construirAlimentoInventario, construirMinMax, construirRangeCapacidades , updateInventario, deleteInventario} = require ('../modules/tabelaAlimentosModule');
 
 const router = Router();
 router.use(fileUpload());
@@ -22,11 +21,11 @@ router.get('/menu', checkAuthenticated, checkAdmin, (req, res) => {
 });
 
 router.get('/gerirUtilizadores', checkAuthenticated, checkAdmin, (req, res) => {
-    res.render('gerirUtilizadores.ejs');
+    return res.render('gerirUtilizadores.ejs');
 });
 
 router.get('/registarUser', checkAuthenticated, checkAdmin, (req, res) => {
-    res.render('registarUser.ejs');
+    return res.render('registarUser.ejs');
 });
 
 router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, validateRegistarSchema, async (req, res) => {
@@ -36,30 +35,36 @@ router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, val
         const row = await db.promise().query(`SELECT nome, email FROM USERS WHERE nome = '${username}' OR email = '${email}'`);
         if (row[0].length !== 0) {
             if (row[0][0].nome === username) {
-                res.render('registarUser.ejs', {
-                    message: "Erro",
-                    listaErros: ['Já existe um utilizador com este nome registado']
-                });
-            } else if (row[0][0].email === email) {
-                res.render('registarUser.ejs', {
-                    message: "Erro",
-                    listaErros: ['Já existe um utilizador com este email registado']
+                return res.render('registarUser.ejs', {
+                    type: 'error',
+                    intro: 'Erro!',
+                    messages: ['Já existe um utilizador com este nome registado']
                 });
             }
-        } else {
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            var tipo;
-            if (req.body.admin) {
-                tipo = "admin"
-            } else {
-                tipo = "voluntario";
-            }
-            await db.promise().query(`INSERT INTO USERS (nome, email, password, tipo) VALUES ('${username}', '${req.body.email}', '${hashedPassword}', '${tipo}')`);
-            res.render('registarUser.ejs', { message: 'sucesso' });
+            return res.render('registarUser.ejs', {
+                type: 'error',
+                intro: 'Erro!',
+                messages: ['Já existe um utilizador com este email registado']
+            });
         }
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        var tipo;
+        if (req.body.admin) {
+            tipo = "admin"
+        } else {
+            tipo = "voluntário"
+        }
+
+        await db.promise().query(`INSERT INTO USERS (nome, email, password, tipo) VALUES ('${username}', '${req.body.email}', '${hashedPassword}', '${tipo}')`);
+        return res.render('registarUser.ejs', { 
+            type: 'success',
+            intro: 'Sucesso!', 
+            messages: ['Utilizador registado com sucesso']
+        });
     } catch {
         res.render('registarUser.ejs', {
-            message: "Erro",
+            type: 'error',
+            intro: 'Erro!', 
             listaErros: ['O servidor não conseguiu concluir o registo por algum motivo']
         });
     }
@@ -67,14 +72,16 @@ router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, val
 
 router.get('/tabelaUsers', checkAuthenticated, checkAdmin, async (req, res) => {
     const data = await db.promise().query('SELECT nome, email, tipo FROM users');
+    const params = req.flash();
 
-    if (Object.keys(req.query).length === 0) {
+    if (!params.type) {
         res.render('tabelaUsers.ejs', { listaUsers: data[0] });
     } else {
         res.render('tabelaUsers.ejs', {
             listaUsers: data[0],
-            sucesso: req.query.sucesso,
-            message: req.query.message
+            type: params.type,
+            intro: params.intro, 
+            messages: params.messages
         });
     }
 });
@@ -82,40 +89,20 @@ router.get('/tabelaUsers', checkAuthenticated, checkAdmin, async (req, res) => {
 router.get('/delete/user/:email', checkAuthenticated, checkAdmin, async (req, res) => {
     const user = req.session.passport.user;
     if (user === req.params.email) {
-        return res.redirect(url.format({
-            pathname: '/admin/tabelaUsers',
-            query: {
-                "sucesso": false,
-                "message": "Não é possível eliminar-se a si próprio"
-            }
-        }));
+        req.flash('type', 'info');
+        req.flash('intro', 'Info!');
+        req.flash('messages', ['Não é possível eliminar-se a si próprio']);
+        return res.redirect('/admin/tabelaUsers');
     }
     await db.promise().query(`DELETE FROM users WHERE email = '${req.params.email}';`);
-    res.redirect(url.format({
-        pathname: '/admin/tabelaUsers',
-        query: {
-            "sucesso": true,
-            "message": "Utilizador apagado com sucesso"
-        }
-    }));
-});
-
-router.get('/estado/desativar/:id', checkAuthenticated, checkAdmin, async (req, res) => {
-    await db.promise().query(`UPDATE inventario SET estado=0 WHERE id = '${req.params.id}';`);
-    res.redirect(url.format({
-        pathname: '/admin/tabela'
-    }));
-});
-
-router.get('/estado/ativar/:id', checkAuthenticated, checkAdmin, async (req, res) => {
-    await db.promise().query(`UPDATE inventario SET estado=1 WHERE id = '${req.params.id}';`);
-    res.redirect(url.format({
-        pathname: '/admin/tabela'
-    }));
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+    req.flash('messages', ['Utilizador apagado com sucesso']);
+    return res.redirect('/admin/tabelaUsers');
 });
 
 router.get('/consultarStock', checkAuthenticated, checkAdmin, (req, res) => {
-    res.render('consultarStock.ejs');
+    return res.render('consultarStock.ejs');
 });
 
 router.get('/outros', checkAuthenticated, checkAdmin, async (req, res) => {
@@ -124,43 +111,47 @@ router.get('/outros', checkAuthenticated, checkAdmin, async (req, res) => {
         'quantidade, observacoes FROM outros';
 
     const data = await db.promise().query(sql);
+    const params = req.flash();
 
-    if (Object.keys(req.query).length === 0) {
-        res.render('tabelaOutros.ejs', { listaOutros: data[0] });
-    } else {
-        res.render('tabelaOutros.ejs', {
-            listaOutros: data[0],
-            sucesso: req.query.sucesso,
-            message: req.query.message
-        });
+    if (!params.type) {
+        return res.render('tabelaOutros.ejs', { listaOutros: data[0] });
     }
+
+    return res.render('tabelaOutros.ejs', {
+        listaOutros: data[0],
+        type: params.type,
+        intro: params.intro, 
+        messages: params.messages
+
+    });
 });
 
 router.get('/delete/outros/:id', checkAuthenticated, checkAdmin, async (req, res) => {
     await db.promise().query(`DELETE FROM outros WHERE id = '${req.params.id}';`);
-    res.redirect(url.format({
-        pathname: '/admin/outros',
-        query: {
-            "sucesso": true,
-            "message": "Alimento apagado com sucesso"
-        }
-    }));
+
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+    req.flash('messages', ['Alimento apagado com sucesso']);
+    return res.redirect('/admin/outros');
 });
-router.get('/tabela', checkAuthenticated, async (req, res) => {
+router.get('/tabelaAlimento', checkAuthenticated, async (req, res) => {
     var sql = 'SELECT i.id as id_inven, i.produto as produto , a.capacidade as capacidade, v.data as data, v.quantidade as quantidade, i.observacoes as observacoes, i.estado as estado FROM inventario i LEFT JOIN alimento a ON i.id = a.inventario_id LEFT JOIN validade v ON a.id = v.alimento_id ORDER BY i.produto ASC , a.capacidade ASC';
 
     var alimentoInventario = await db.promise().query(sql);
     var rangeAnosValidade = await db.promise().query('SELECT MIN(YEAR (v.data)) as minimo, MAX(YEAR (v.data)) as maximo FROM validade v');
+    var rangeCapacidades = await db.promise().query('SELECT a.inventario_id as id_inventario , COUNT(a.inventario_id) as num_ocurrencias FROM alimento a GROUP BY a.inventario_id') ;
     var novoAlimentoInventario = construirAlimentoInventario(alimentoInventario[0]);
     var novorangeAnosValidade = construirMinMax(rangeAnosValidade[0]);
+    var novoRangeCapacidades = construirRangeCapacidades(rangeCapacidades[0]);
     res.render('tabelaAlimentos.ejs', { 
+        rangeCapacidades: novoRangeCapacidades,
         alimentoInventario: novoAlimentoInventario,
         rangeAnosValidade: novorangeAnosValidade
     });
 });
 
 router.get('/criarAlimento', checkAuthenticated, checkAdmin, (req, res) => {
-    res.render('criarAlimento.ejs');
+    return res.render('criarAlimento.ejs');
 });
 
 router.post('/criarAlimento', checkAuthenticated, checkAdmin, async (req, res) => {
@@ -172,16 +163,12 @@ router.post('/criarAlimento', checkAuthenticated, checkAdmin, async (req, res) =
     var validade = "off";
     if (req.body.validade != 'undefined') validade = req.body.validade;
 
-
     const error = await inserirNoInventario(nome, file.name, observacoes, validade);
     if (error === "ER_DUP_ENTRY") {
-        return res.redirect(url.format({
-            pathname: '/admin/outros',
-            query: {
-                "sucesso": false,
-                "message": "Já existe um produto com este nome"
-            }
-        }));
+        req.flash('type', 'error');
+        req.flash('intro', 'Erro!');
+        req.flash('messages', ['Já existe um alimento com este nome']);
+        return res.redirect('/admin/outros')
     }
 
     inserirCapacidade(nome, capacidade);
@@ -189,13 +176,29 @@ router.post('/criarAlimento', checkAuthenticated, checkAdmin, async (req, res) =
         if (err) return res.status(500).send(err);
     });
 
-    res.redirect(url.format({
-        pathname: '/admin/outros',
-        query: {
-            "sucesso": true,
-            "message": "Alimento adicionado com sucesso"
-        }
-    }));
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+    req.flash('messages', ['Alimento adicionado com sucesso']);
+    return res.redirect('/admin/outros');
+
+});
+
+router.post('/updateInventario', checkAuthenticated, checkAdmin, async (req, res) => {
+    const observacoes = req.body.obs;
+    const id = req.body.id;
+    var estado = req.body.estado || "off";
+    var capacidade = req.body.capacidade;
+    const error = await updateInventario(id, observacoes, estado,capacidade);
+    req.flash('erro nigga',error);
+    res.redirect("/admin/tabelaAlimento");
+    
+});
+
+router.get('/deleteAlimento/:id', checkAuthenticated, checkAdmin, async (req, res) => {
+    const id = req.params.id;
+    const error = await deleteInventario(id);
+    req.flash('erro nigga',error);
+    res.redirect("/admin/tabelaAlimento");
 
 });
 
@@ -204,7 +207,7 @@ router.get("/relatorio", checkAuthenticated, async (req, res) => {
                                                 DATE_FORMAT(data,'%H:%i:%s') timeonly, nome, acao FROM historico
                                                 ORDER BY dataonly DESC, timeonly DESC`);
 
-    return res.render('tabelaHistoricoPessoal.ejs', {
+    return res.render('tabelaHistoricoGeral.ejs', {
         historico: historico[0]
     });
 });

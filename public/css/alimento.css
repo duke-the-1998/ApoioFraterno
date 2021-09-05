@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
+@import url('navbar.css');
+@import url('cortina.css');
+@import url('alertas.css');
 
 html, body {
   background-image: url('/images/bg10.jpg');
@@ -8,13 +11,7 @@ html, body {
   font-family: 'Numans', sans-serif;
 }
 
-.inventario {
-  height: 100%;
-  margin-top: 20px;
-  align-content: center;
-}
-
-.card {
+.form-row .card {
   text-align: center;
   width: 340px;
   margin: 0 auto; 
@@ -28,7 +25,7 @@ html, body {
   border-radius: 25px; 
 }
 
-.card-body {
+.form-row .card-body {  
   color: white;
   font-size: 20px;
 }
@@ -37,15 +34,18 @@ html, body {
   font-size: 30px;
 }
 
-.col-md{
+.form-row .col-md{
   text-align: left;
   font-size: 25px;
   font-weight: bold;
 }
 
-.col-md-6{
-  font-size: 25px;
-  font-weight: bold;
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3%;
+ 
 }
 
 .btn{
@@ -63,7 +63,7 @@ html, body {
   background-color: rgb(11, 119, 190);
 }
 
-a:link, a:visited {
+#voltar:link, #voltar:visited {
   background-color: #f44336;
   color: white;
   padding: 14px 25px;
@@ -74,13 +74,13 @@ a:link, a:visited {
   margin-left: 15px;
 }
 
-a:hover, a:active {
+#voltar:hover, #voltar:active {
   background-color: red;
 }
 
-.btn-submit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20%;
+body ul{
+  position:unset;
+  }
+form{
+  margin-top: 3%;
 }

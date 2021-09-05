@@ -1,13 +1,10 @@
 const { Router } = require('express');
-const url = require('url');
 const db = require('../database');
 const { checkAuthenticated, checkNotAuthenticated } = require('../middleware/checkAuthenticated');
 const { validateChangePasswordSchema } = require('../middleware/validateRequestSchema');
-const { passwordSchema } = require('../schema/changePasswordSchema.js');
-const modules = require('../modules/module');
+const { passwordSchema } = require('../schema/mudarPasswordSchema.js');
+const gerirSotck = require('../modules/gerirStockModule.js');
 const { mudarPassword } = require('../modules/mudarPasswordModule.js');
-
-//const { check, validationResult } = require('express-validator');
 
 const router = Router();
 
@@ -21,61 +18,106 @@ router.get('/menuPrincipal', checkAuthenticated, async (req, res) => {
     return res.render('menuPrincipal.ejs', {tipo: row[0][0].tipo});
 });
 
-router.get('/inventario', checkAuthenticated, async (req, res) => {
+router.get('/gerirStock', checkAuthenticated, async (req, res) => {
+    return res.render('gerirStock.ejs');
+});
+
+router.get('/inventario/:acao', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
+
+    const acao = req.params.acao;
     const inventario = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ESTADO = 1 ORDER BY produto`);
-    const novoInventario = modules.construirInventario(inventario[0]);
-    res.render('inventario.ejs', { 
-        alimentos: novoInventario
+    const novoInventario = gerirSotck.construirInventario(inventario[0]);
+    return res.render('inventario.ejs', { 
+        alimentos: novoInventario,
+        acao: acao,
+        tipo: row[0][0].tipo
     });
 });
 
-router.get('/alimento/:id', checkAuthenticated, async (req, res) => {
+router.get('/alimento/add/:id', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
+
     const id = req.params.id;
     const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${id}'`);
     const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
-    const novaListaCapacidades = modules.construirListaCapacidades(listaCapacidades[0]);
+    const novaListaCapacidades = gerirSotck.construirListaCapacidades(listaCapacidades[0]);
 
     var body;
-    if (Object.keys(req.query).length === 0) {
-        body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, false);
+    const params = req.flash();
+    if (params.type) {
+        body = gerirSotck.bodyAlimento("add", row[0][0].tipo, id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, 
+            novaListaCapacidades, produto[0][0].validade, params);
     } else {
-        body = modules.bodyAlimento(id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, true);
+        body = gerirSotck.bodyAlimento("add", row[0][0].tipo, id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, 
+            novaListaCapacidades, produto[0][0].validade, null);
     }
-    res.render('alimento.ejs', body);
+    return res.render('alimento.ejs', body);
+});
+
+router.get('/alimento/sub/:id', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
+
+    const id = req.params.id;
+    const produto = await db.promise().query(`SELECT * FROM INVENTARIO WHERE ID ='${id}'`);
+    const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
+    const novaListaCapacidades = gerirSotck.construirListaCapacidades(listaCapacidades[0]);
+
+    var body;
+    const params = req.flash();
+    if (params.type) {
+        body = gerirSotck.bodyAlimento("sub", row[0][0].tipo, id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, params);
+    } else {
+        body = gerirSotck.bodyAlimento("sub", row[0][0].tipo, id, produto[0][0].produto, produto[0][0].imagem, produto[0][0].observacoes, novaListaCapacidades, produto[0][0].validade, null);
+    }
+    return res.render('alimento.ejs', body);
 });
 
 router.post('/alimento', checkAuthenticated, async (req, res) => {
     const user = req.session.passport.user;
-    const nome = await db.promise().query(`SELECT nome FROM users WHERE email = '${user}'`)
+    const username = await db.promise().query(`SELECT nome FROM users WHERE email = '${user}'`)
     const body = req.body;
     const validade = body.validade + "-01";
-    const produto = await db.promise().query(`SELECT produto FROM INVENTARIO WHERE id = '${body.id}'`);
     const alimento = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID = '${body.id}' AND CAPACIDADE= '${body.peso}'`);
     const row = await db.promise().query(`SELECT * FROM VALIDADE WHERE ALIMENTO_ID = '${alimento[0][0].id}' AND DATA = '${validade}'`);
 
     if(body.add) {
-        modules.darEntradaProduto(row[0], nome[0][0].nome, produto[0][0].produto, alimento[0][0].id, validade, body.peso, body.quantidade);
+        gerirSotck.darEntradaProduto(row[0], username[0][0].nome, body.alimento, alimento[0][0].id, validade, body.peso, body.quantidade);
+        req.flash('messages', ['Entrada do produto realizada com sucesso']);
     } else {    
-        modules.darSaidaProduto(row[0], nome[0][0].nome, produto[0][0].produto, alimento[0][0].id, validade, body.peso, body.quantidade);
+        gerirSotck.darSaidaProduto(row[0], username[0][0].nome, body.alimento, alimento[0][0].id, validade, body.peso, body.quantidade);
+        req.flash('messages', ['Saída do produto realizada com sucesso']);
     }
 
-    const link = "/voluntarios/alimento/" + body.id;
-    res.redirect(url.format({
-        pathname: link,
-        query: {
-           "message": true
-        }
-    }));
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+    
+    res.redirect('/voluntarios/alimento/add/' + body.id)
 });
 
-router.get('/outros', checkAuthenticated, (req, res) => {
-    if (Object.keys(req.query).length !== 0) {
-        res.render('outros.ejs', { 
-            message: req.query.message
+router.get('/outros/:acao', checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
+
+    const params = req.flash();
+    if (params.type) {
+        return res.render('outros.ejs', {
+            tipo: row[0][0].id,
+            acao: req.params.acao,
+            type: params.type,
+            intro: params.intro,
+            messages: params.messages
         });
-    } else {
-        res.render('outros.ejs');
     }
+
+    return res.render('outros.ejs', {
+        tipo: row[0][0].id,
+        acao: req.params.acao
+    });
+
 });
 
 router.post('/outros', checkAuthenticated, async (req, res) => {
@@ -85,29 +127,33 @@ router.post('/outros', checkAuthenticated, async (req, res) => {
     const validade = body.validade + "-01";
     const quantidade = body.quantidade;
     const observacoes = body.observacoes;
+    var link;
 
-    if (body.add) {
+    if(body.add) {
         await db.promise().query(`INSERT INTO OUTROS (produto, capacidade, data, quantidade, observacoes)
          VALUES ('${produto}', '${capacidade}', '${validade}', '${quantidade}', '${observacoes}')`);
+         req.flash('messages', ['Entrada do produto realizada com sucesso']); 
+         link = '/voluntarios/outros/add'
+
     } else {
         await db.promise().query(`INSERT INTO OUTROS (produto, capacidade, data, quantidade, observacoes)
          VALUES ('${produto}', '${capacidade}', '${validade}', '${-quantidade}', '${observacoes}')`);
+        req.flash('messages', ['Saída do produto realizada com sucesso']);
+        link = '/voluntarios/outros/sub'
     }
 
-    res.redirect(url.format({
-        pathname:"/voluntarios/outros",
-        query: {
-           "message": "Operação feita com sucesso"
-        }
-    }));
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+
+    res.redirect(link);
 });
 
 router.get("/gestaoConta", checkAuthenticated, (req, res) => {
-    res.render("gestaoConta.ejs");
+    return res.render("gestaoConta.ejs");
 });
 
 router.get("/mudarPassword", checkAuthenticated, (req, res) => {
-    res.render("mudarPassword.ejs");
+    return res.render("mudarPassword.ejs");
 });
 
 router.post("/mudarPassword", checkAuthenticated, passwordSchema, validateChangePasswordSchema, (req, res) => {
@@ -118,8 +164,9 @@ router.post("/mudarPassword", checkAuthenticated, passwordSchema, validateChange
 
     if (newPassword !== confirmPassword) {
         return res.render('mudarPassword.ejs', { 
-            message: "Erro",
-            listaErros: ['As novas passwords não combinam'] 
+            type: 'error',
+            intro: "Erro!",
+            messages: ['As novas passwords não combinam'] 
         });
     }
 
@@ -128,14 +175,15 @@ router.post("/mudarPassword", checkAuthenticated, passwordSchema, validateChange
 
 router.get("/historico", checkAuthenticated, async (req, res) => {
     const email = req.session.passport.user;
-    const row = await db.promise().query(`SELECT nome FROM users WHERE email = '${email}'`);
+    const row = await db.promise().query(`SELECT nome, tipo FROM users WHERE email = '${email}'`);
     const nome = row[0][0].nome;
     const historico = await db.promise().query(`SELECT DATE_FORMAT(data, '%d-%m-%Y') dataonly, 
                                                 DATE_FORMAT(data,'%H:%i:%s') timeonly, nome, acao FROM historico WHERE nome = '${nome}'
                                                 ORDER BY dataonly DESC, timeonly DESC`);
 
     return res.render('tabelaHistoricoPessoal.ejs', { 
-        historico: historico[0]
+        historico: historico[0],
+        tipo: row[0][0].tipo
     });
 });
 

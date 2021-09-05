@@ -9,8 +9,9 @@ function validateRegistarSchema (req, res, next) {
         }
         
         return res.render('registarUser.ejs', { 
-            message: "Erro",
-            listaErros: listaErros 
+            type: 'error',
+            intro: "Erro!",
+            messages: listaErros 
         });
     }
     next();
@@ -25,8 +26,9 @@ function validateChangePasswordSchema (req, res, next) {
         }
         
         return res.render('mudarPassword.ejs', { 
-            message: "Erro",
-            listaErros: listaErros 
+            type: 'error',
+            intro: "Erro!",
+            messages: listaErros 
         });
     }
     next();

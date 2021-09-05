@@ -1,3 +1,4 @@
+const db = require('../database');
 var ali=null;
 function construirAlimentoInventario(lista) {
     var alimento = new Array();
@@ -21,17 +22,23 @@ function construirAlimentoInventario(lista) {
             alimento[temp].total+=obj.total;
 
         }else{
-            console.log("obj",obj);
-            console.log("alimento",alimento);
-            console.log(alimento.map(elm,testeMap));
         alimento.push(obj);
         }
     }
     return alimento;
 }
-function testeMap(obj){
-    return (obj.produto==ali.produto);
+function construirRangeCapacidades(lista){
+    var capacidades = new Array();
+    for (var n of lista) {
+        var obj = {
+            id_inventario: n.id_inventario,
+            num_ocurrencias: n.num_ocurrencias,
+        }
+        capacidades.push(obj);
+    }
+    return capacidades;
 }
+/* funcao auxiliar para poder determinar se obj e ali sao o mesmo alimento */
 function aux(obj){
     return (obj.produto == ali.produto && obj.capacidade == ali.capacidade);
 }
@@ -42,5 +49,38 @@ function construirMinMax(lista) {
         maximo: lista[0].maximo
     }];
 }
+
+async function updateInventario(id,obs,estado,capacidade){
+
+    try{
+        if(capacidade != ""){
+            await db.promise().query(`INSERT INTO alimento (inventario_id, capacidade) VALUES ('${id}', '${capacidade}')`);
+        }
+        if(estado == "on"){
+            await db.promise().query(`UPDATE inventario SET estado=1 , observacoes='${obs}' WHERE id ='${id}'`);
+        }else{
+            await db.promise().query(`UPDATE inventario SET estado=0 , observacoes='${obs}' WHERE id ='${id}'`);
+        }
+    }catch (errors) {
+        return errors.code;
+    }
+}
+
+async function deleteInventario(id){
+    try{
+            var alimentoId = await db.promise().query(`SELECT id FROM alimento WHERE inventario_id ='${id}' `);
+            for (var n of alimentoId[0]) {
+                await db.promise().query(`DELETE FROM validade WHERE alimento_id = '${n.id}'`);
+            }
+                await db.promise().query(`DELETE FROM alimento WHERE inventario_id = '${id}'`);
+            await db.promise().query(`DELETE FROM inventario WHERE id = '${id}'`);
+    }catch (errors) {
+        console.log("erro");
+        return errors.code;
+    }
+}
+exports.deleteInventario=deleteInventario;
+exports.updateInventario = updateInventario;
 exports.construirMinMax = construirMinMax;
 exports.construirAlimentoInventario = construirAlimentoInventario;
+exports.construirRangeCapacidades = construirRangeCapacidades ;

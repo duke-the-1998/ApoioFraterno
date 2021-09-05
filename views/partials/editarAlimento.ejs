@@ -1,0 +1,45 @@
+<div id="editarAlimento" class="overlay">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeEditarAlimento()">&times;</a>
+    <div class="overlay-content">
+        <form action="/admin/updateInventario" method="POST" enctype="multipart/form-data">
+            <div class="card">
+                <div class="card-body">
+                    <div class="container text-center vertical-center">
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                <input type="hidden" name="id" id="id">
+                                <label for="inputState" id="nome"></label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                <label for="inputState">Capacidade</label>
+                                <input type="text" class="form-control" name="capacidade" id="capacidade" placeholder="Preenchimento opcional">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                <label for="inputState">Observações</label>
+                                <input type="text" class="form-control" name="obs" id="observacoes">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md">                                           
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                <label for="inputState">Estado</label>
+                                <input type="checkbox" name="estado" id="estado" class="largerCheckbox">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-submit"> 
+                <a ><input type="submit" class="btn" value="Guardar"></a>
+                <a id="delete"><input type="button" class="btn" value="Exterminate"></a>
+            </div>
+        </form>
+    </div>
+</div>
