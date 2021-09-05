@@ -8,9 +8,13 @@ html,body{
   font-family: 'Numans', sans-serif;
   }
 
+  h2 {
+    margin-left: 15px;
+    margin-top: 10px;
+  }
+  
 .tabela{
-    overflow: scroll;
-    
+    overflow: scroll; 
   }
 
 ul {
