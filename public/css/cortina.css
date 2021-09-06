@@ -1,0 +1,121 @@
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #aaa9a9;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+
+.btn-submit .btn {
+    background-color: rgb(22, 145, 228);
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+    width: 156px;
+}
+    
+#criarAlimento .btn:hover,#criarAlimento .btn:active {
+    background-color: rgb(11, 119, 190);
+}
+
+#criarAlimento .btn-submit input{
+    flex: none;
+}
+
+.card {
+    text-align: center;
+    width: 540px;
+    margin: 0 auto; 
+    float: none; 
+    margin-bottom: 10px;
+    background-color: rgba(0,0,0,0.5) !important;
+    border-radius: 25px;
+    margin-top: 10px;
+}
+
+.card-body {
+    color: white;
+    font-size: 20px;
+}
+
+.col-md {
+    text-align: left;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.largerCheckbox { 
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+}
+
+#editarAlimento .btn {
+    background-color: rgb(22, 145, 228);
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+    width: 156px;
+  }
+    
+#editarAlimento .btn:hover,#criarAlimento .btn:active {
+    background-color: rgb(11, 119, 190);
+}
+
+#editarAlimento .btn-submit input{
+    flex: none;
+}
+#editarAlimento .btn-submit{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+#delete{
+    flex: none;
+}

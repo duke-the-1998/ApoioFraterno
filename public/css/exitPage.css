@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html, body {
+ 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Numans', sans-serif;
+}
+
+.inventario {
+  height: 100%;
+  margin-top: 20px;
+  align-content: center;
+}
+
+.card {
+  text-align: center;
+  width: 340px;
+  margin: 0 auto; 
+  float: none; 
+  margin-bottom: 10px;
+  background-color: rgba(0,0,0,0.3) !important;
+  border-radius: 25px;
+  margin-top: 10px;
+}
+
+.card-header {
+    color: white;
+    font-size: 20px;
+  }
+
+#h1{
+      color:white;
+  }
+
+  a:link, a:visited {
+    background-color: #f44336;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+   margin-top: 25px;
+  }
+  
+  a:hover, a:active {
+    background-color: red;
+  }

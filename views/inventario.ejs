@@ -24,9 +24,9 @@
     <% } else { %> 
         <%- include ('partials/navbar') %>
     <% } %>
-    <%- include ('partials/alertas') %>
     
     <div class="inventario">
+        <%- include ('partials/alertas') %>
         <% for (var i = 0; i < alimentos.length; i += 2) { %>
             <div class="row">
                 <div class="col-sm">
