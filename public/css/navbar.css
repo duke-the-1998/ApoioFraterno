@@ -16,6 +16,13 @@ ul {
     font-size: 30px;
     border: none;
   }
+  .Home a {
+    background-color: #333;;
+    color: white;
+    padding: 16px;
+    font-size: 30px;
+    border: none;
+  }
 
   .dropdown-content a {
     color: black;
@@ -37,6 +44,13 @@ ul {
 
 @media screen and (min-width: 993px) {
   .dropbtn {
+    background-color: #333;;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  .Home a {
     background-color: #333;;
     color: white;
     padding: 16px;
@@ -94,6 +108,23 @@ li {
 }
 
 li a:hover {
+  background-color: #111;
+  color: white;
+  text-decoration: none;
+}
+
+
+.Home a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  
+}
+.Home{
+  position: relative;
+  display: inline-block;
+}
+.Home a:hover {
   background-color: #111;
   color: white;
   text-decoration: none;

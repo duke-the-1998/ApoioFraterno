@@ -13,7 +13,7 @@
 
 .overlay-content {
     position: relative;
-    top: 25%;
+    top: 10%;
     width: 100%;
     text-align: center;
     margin-top: 30px;
@@ -63,8 +63,6 @@
     flex: none;
 }
 
-
-
 .card {
     text-align: center;
     width: 540px;
@@ -93,12 +91,6 @@
     height: 20px;
 }
 
-
-
-
-
-
-
 #editarAlimento .btn {
     background-color: rgb(22, 145, 228);
     color: white;
@@ -108,7 +100,7 @@
     display: inline-block;
     border-radius: 20px;
     width: 156px;
-  }
+}
     
 #editarAlimento .btn:hover,#criarAlimento .btn:active {
     background-color: rgb(11, 119, 190);
@@ -117,6 +109,7 @@
 #editarAlimento .btn-submit input{
     flex: none;
 }
+
 #editarAlimento .btn-submit{
     display: flex;
     margin-left: auto;
