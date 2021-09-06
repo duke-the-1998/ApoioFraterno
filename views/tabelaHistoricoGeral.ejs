@@ -20,15 +20,17 @@
 </head>
 
 <body>
-    <%- include ('partials/navbarAdmin.ejs') %>
-    <%- include ('partials/criarAlimento') %>
-    <div class="table-data">
-        <h2>Histórico Geral</h2>
-
-        <!--Construção da tabela histórico-->
-        <%- include ('partials/tabelaHistorico.ejs') %>
+    <%- include ('partials/navbarAdmin') %>
+    <div class="main" >
+        <%- include ('partials/alertas') %>
+        <div class="table-data">
+            <h2>Histórico Geral</h2>
+    
+            <!--Construção da tabela histórico-->
+            <%- include ('partials/tabelaHistorico.ejs') %>
+        </div>
     </div>
-    <script src="/javascript/modules.js"></script>
+    
 </body>
 
 </html>

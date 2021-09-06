@@ -71,7 +71,9 @@ router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, val
 });
 
 router.get('/tabelaUsers', checkAuthenticated, checkAdmin, async (req, res) => {
-    const data = await db.promise().query('SELECT nome, email, tipo FROM users');
+    const sql = `SELECT nome, email, tipo FROM users
+                    EXCEPT ( SELECT nome, email, tipo FROM users WHERE email = "sobreda@diocese.setubal.pt")`; 
+    const data = await db.promise().query(sql);
     const params = req.flash();
 
     if (!params.type) {
@@ -134,25 +136,6 @@ router.get('/delete/outros/:id', checkAuthenticated, checkAdmin, async (req, res
     req.flash('messages', ['Alimento apagado com sucesso']);
     return res.redirect('/admin/outros');
 });
-router.get('/tabelaAlimento', checkAuthenticated, async (req, res) => {
-    var sql = 'SELECT i.id as id_inven, i.produto as produto , a.capacidade as capacidade, v.data as data, v.quantidade as quantidade, i.observacoes as observacoes, i.estado as estado FROM inventario i LEFT JOIN alimento a ON i.id = a.inventario_id LEFT JOIN validade v ON a.id = v.alimento_id ORDER BY i.produto ASC , a.capacidade ASC';
-
-    var alimentoInventario = await db.promise().query(sql);
-    var rangeAnosValidade = await db.promise().query('SELECT MIN(YEAR (v.data)) as minimo, MAX(YEAR (v.data)) as maximo FROM validade v');
-    var rangeCapacidades = await db.promise().query('SELECT a.inventario_id as id_inventario , COUNT(a.inventario_id) as num_ocurrencias FROM alimento a GROUP BY a.inventario_id') ;
-    var novoAlimentoInventario = construirAlimentoInventario(alimentoInventario[0]);
-    var novorangeAnosValidade = construirMinMax(rangeAnosValidade[0]);
-    var novoRangeCapacidades = construirRangeCapacidades(rangeCapacidades[0]);
-    res.render('tabelaAlimentos.ejs', { 
-        rangeCapacidades: novoRangeCapacidades,
-        alimentoInventario: novoAlimentoInventario,
-        rangeAnosValidade: novorangeAnosValidade
-    });
-});
-
-router.get('/criarAlimento', checkAuthenticated, checkAdmin, (req, res) => {
-    return res.render('criarAlimento.ejs');
-});
 
 router.post('/criarAlimento', checkAuthenticated, checkAdmin, async (req, res) => {
     const nome = req.body.nome;
@@ -183,33 +166,88 @@ router.post('/criarAlimento', checkAuthenticated, checkAdmin, async (req, res) =
 
 });
 
+router.get('/tabelaAlimento', checkAuthenticated, async (req, res) => {
+    const sql = 'SELECT i.id as id_inven, i.produto as produto , a.capacidade as capacidade, v.data as data, v.quantidade as quantidade, i.observacoes as observacoes, i.estado as estado FROM inventario i LEFT JOIN alimento a ON i.id = a.inventario_id LEFT JOIN validade v ON a.id = v.alimento_id ORDER BY i.produto ASC , a.capacidade ASC';
+
+    const alimentoInventario = await db.promise().query(sql);
+    const rangeAnosValidade = await db.promise().query('SELECT MIN(YEAR (v.data)) as minimo, MAX(YEAR (v.data)) as maximo FROM validade v');
+    const rangeCapacidades = await db.promise().query('SELECT a.inventario_id as id_inventario , COUNT(a.inventario_id) as num_ocurrencias FROM alimento a GROUP BY a.inventario_id') ;
+    const novoAlimentoInventario = construirAlimentoInventario(alimentoInventario[0]);
+    const novorangeAnosValidade = construirMinMax(rangeAnosValidade[0]);
+    const novoRangeCapacidades = construirRangeCapacidades(rangeCapacidades[0]);
+
+    const params = req.flash();
+    res.render('tabelaAlimentos.ejs', { 
+        rangeCapacidades: novoRangeCapacidades,
+        alimentoInventario: novoAlimentoInventario,
+        rangeAnosValidade: novorangeAnosValidade,
+        type: params.type,
+        intro: params.intro, 
+        messages: params.messages
+    });
+});
+
 router.post('/updateInventario', checkAuthenticated, checkAdmin, async (req, res) => {
     const observacoes = req.body.obs;
     const id = req.body.id;
-    var estado = req.body.estado || "off";
-    var capacidade = req.body.capacidade;
-    const error = await updateInventario(id, observacoes, estado,capacidade);
-    req.flash('erro nigga',error);
+    const estado = req.body.estado || "off";
+    const capacidade = req.body.capacidade;
+    updateInventario(id, observacoes, estado, capacidade);
+    
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+    req.flash('messages', ['Alimento atualizado']);
     res.redirect("/admin/tabelaAlimento");
     
 });
 
 router.get('/deleteAlimento/:id', checkAuthenticated, checkAdmin, async (req, res) => {
     const id = req.params.id;
-    const error = await deleteInventario(id);
-    req.flash('erro nigga',error);
+    deleteInventario(id);
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+    req.flash('messages', ['Alimento atualizado']);
     res.redirect("/admin/tabelaAlimento");
 
 });
 
 router.get("/relatorio", checkAuthenticated, async (req, res) => {
+    const user = req.session.passport.user;
+    const row = await db.promise().query(`SELECT tipo FROM users WHERE email = '${user}'`);
     const historico = await db.promise().query(`SELECT DATE_FORMAT(data, '%d-%m-%Y') dataonly, 
-                                                DATE_FORMAT(data,'%H:%i:%s') timeonly, nome, acao FROM historico
+                                                DATE_FORMAT(data,'%H:%i:%s') timeonly, nome, acao, id FROM historico
                                                 ORDER BY dataonly DESC, timeonly DESC`);
 
+    const params = req.flash();
     return res.render('tabelaHistoricoGeral.ejs', {
-        historico: historico[0]
+        tipo: row[0][0].tipo,
+        historico: historico[0],
+        type: params.type,
+        intro: params.intro, 
+        messages: params.messages
     });
 });
+
+router.get('/delete/historico/:id', checkAuthenticated, checkAdmin, async (req, res) => {
+    const id = req.params.id;
+    db.promise().query(`DELETE FROM historico WHERE id = '${id}'`);
+    
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+    req.flash('messages', ['Uma linha do histórico foi eliminada']);
+    res.redirect("/admin/relatorio");
+
+});
+
+router.get('/delete/historicoAll', checkAuthenticated, checkAdmin, async (req, res) => {
+    db.promise().query(`TRUNCATE TABLE historico`);
+
+    req.flash('type', 'success');
+    req.flash('intro', 'Sucesso!');
+    req.flash('messages', ['Todo o histórico apagado']);
+    res.redirect("/admin/relatorio");
+
+});
+
 
 module.exports = router;

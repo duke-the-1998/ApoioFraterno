@@ -26,11 +26,14 @@
     <% } else { %> 
         <%- include ('partials/navbar') %>
     <% } %>
-    <div class="table-data">
-        <h2>Histórico Pessoal</h2>
-
-        <!--Construção da tabela histórico-->
-        <%- include ('partials/tabelaHistorico.ejs') %>
+    <div class="main" >
+        <%- include ('partials/alertas') %>
+        <div class="table-data">
+            <h2>Histórico Pessoal</h2>
+    
+            <!--Construção da tabela histórico-->
+            <%- include ('partials/tabelaHistorico.ejs') %>
+        </div>
     </div>
     <script src="/javascript/modules.js"></script>
 </body>

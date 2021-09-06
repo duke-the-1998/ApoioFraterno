@@ -95,8 +95,6 @@ ul {
   z-index: 1;
 }
 
-
-
 .dropdown-content a:hover {background-color: #ddd;}
 
 .dropdown:hover .dropdown-content {display: block;}

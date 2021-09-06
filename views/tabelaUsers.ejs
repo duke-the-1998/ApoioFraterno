@@ -21,40 +21,41 @@
 
 <body>
     <%- include ('partials/navbarAdmin') %>
-    <%- include ('partials/criarAlimento') %>
-    <%- include ('partials/alertas') %>
-    <div class="table-data">
-        <h2>Tabela Utilizador</h2>
-        <table border="1">
-            <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Tipo</th>
-                <th>Apagar</th>
-            </tr>
 
-            <% if(listaUsers.length !=0){ listaUsers.forEach(function(l){ %>
+    <div class="main" >
+        <%- include ('partials/alertas') %>
+        <div class="table-data">
+            <h2>Tabela Utilizador</h2>
+            <table border="1">
                 <tr>
-                    <td>
-                        <%=l.nome; %>
-                    </td>
-                    <td>
-                        <%=l.email %>
-                    </td>
-                    <td>
-                        <%=l.tipo %>
-                    </td>
-                    <td><a href="/admin/delete/user/<%=l.email%>">Apagar</a></td>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Tipo</th>
+                    <th>Apagar</th>
                 </tr>
-                <% }) %>
-            <% } else { %>
-                <tr>
-                    <td colspan="7">Não existe nenhum alimento</td>
-                </tr>
-            <% } %>
-        </table>
+    
+                <% if(listaUsers.length !=0){ listaUsers.forEach(function(l){ %>
+                    <tr>
+                        <td>
+                            <%=l.nome; %>
+                        </td>
+                        <td>
+                            <%=l.email %>
+                        </td>
+                        <td>
+                            <%=l.tipo %>
+                        </td>
+                        <td><a href="/admin/delete/user/<%=l.email%>">Apagar</a></td>
+                    </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7">Não existe nenhum alimento</td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
     </div>
-    <script src="/javascript/modules.js"></script>
 </body>
 
 </html>

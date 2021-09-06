@@ -3,6 +3,9 @@
         <th>Data</th>
         <th>Nome</th>
         <th>Ação-Quantidade-Alimento-Capacidade-Validade</th>
+        <% if (tipo === "admin") { %>      
+            <th>Apagar</th>
+        <% } %> 
     </tr>
 
     <% if(historico.length !=0){ 
@@ -17,6 +20,9 @@
             <td>
                 <%= h.acao %>
             </td>
+            <% if (tipo === "admin") { %>      
+                    <td><a href="/admin/delete/historico/<%=h.id%>">Apagar</a></td>
+            <% } %>
         </tr>
         <% }) %>
     <% } else { %>
