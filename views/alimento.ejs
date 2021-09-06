@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=0.6">
+<meta name="viewport" content="width=device-width, initial-scale=0.4">
 
 <head>
     <!--Bootsrap 4 CDN-->
@@ -22,8 +22,6 @@
     
     <% if (tipo === "admin") { %>      
         <%- include ('partials/navbarAdmin.ejs') %>
-        <%- include ('partials/criarAlimento.ejs') %>
-
     <% } else { %> 
         <%- include ('partials/navbar.ejs') %>
     <% } %>
@@ -59,8 +57,8 @@
                             <% if (validade === "on") { %>
                                 <div class="form-row">
                                     <div class="form-group col-md">
-                                        <label for="inputState">Data de validade</label><br>
-                                        <input type="month" class="form-control" name="validade" data-date-format="mm/yyyy" pattern="[0-9]{4}-[0-9]{2}" required>
+                                        <label for="inputState">Data de validade (aaaa/mm)</label>
+                                        <input type="month" class="form-control" name="validade" pattern="[0-9]{4}/[0-9]{2}" required>
                                     </div>
                                 </div>
                             <% } %>
@@ -82,7 +80,6 @@
             <a href="/voluntarios/inventario/<%= acao %>" id="voltar"><i class="fa fa-arrow-left"></i> Voltar</a>
         </div>
     </form>
-    <script src="/javascript/modules.js"></script>
 
 </body>
 </html>

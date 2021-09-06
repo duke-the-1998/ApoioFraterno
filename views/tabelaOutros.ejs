@@ -20,48 +20,50 @@
 </head>
 
 <body>
-    <%- include ('partials/navbarAdmin') %>
+    <%- include ('partials/navbarCriarAlimento') %>
     <%- include ('partials/criarAlimento') %>
-    <%- include ('partials/alertas') %>
 
-    <div class="table-data">
-        <h2>Tabela Outros</h2>
-        <table border="1">
-            <tr>
-                <th>Produto</th>
-                <th>Capacidade</th>
-                <th>Data</th>
-                <th>Quantidade</th>
-                <th>Observações</th>
-                <th>Apagar</th>
-            </tr>
-
-            <% if(listaOutros.length !=0){ listaOutros.forEach(function(l){ %>
+    <div class="main">
+        <%- include ('partials/alertas') %>
+        <div class="table-data">
+            <h2>Tabela Outros</h2>
+            <table border="1">
                 <tr>
-                    <td>
-                        <%=l.produto; %>
-                    </td>
-                    <td>
-                        <%=l.capacidade %>
-                    </td>
-                    <td>
-                        <%=l.mes + " de " + l.ano%>
-                    </td>
-                    <td>
-                        <%=l.quantidade %>
-                    </td>
-                    <td>
-                        <%=l.observacoes %>
-                    </td>
-                    <td><a href="/admin/delete/outros/<%=l.id%>">Apagar</a></td>
+                    <th>Produto</th>
+                    <th>Capacidade</th>
+                    <th>Data</th>
+                    <th>Quantidade</th>
+                    <th>Observações</th>
+                    <th>Apagar</th>
                 </tr>
-                <% }) %>
-                <% } else { %>
+    
+                <% if(listaOutros.length !=0){ listaOutros.forEach(function(l){ %>
                     <tr>
-                        <td colspan="7">Não existe nenhum alimento</td>
+                        <td>
+                            <%=l.produto; %>
+                        </td>
+                        <td>
+                            <%=l.capacidade %>
+                        </td>
+                        <td>
+                            <%=l.mes + " de " + l.ano%>
+                        </td>
+                        <td>
+                            <%=l.quantidade %>
+                        </td>
+                        <td>
+                            <%=l.observacoes %>
+                        </td>
+                        <td><a href="/admin/delete/outros/<%=l.id%>">Apagar</a></td>
                     </tr>
-                <% } %>
-        </table>
+                    <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="7">Não existe nenhum alimento</td>
+                        </tr>
+                    <% } %>
+            </table>
+        </div>
     </div>
     <script src="/javascript/modules.js"></script>
 </body>
