@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 @import url('navbar.css');
-@import url('cortina.css');
 @import url('alertas.css');
 
 html, body {
@@ -80,7 +79,8 @@ html, body {
 
 body ul{
   position:unset;
-  }
+}
+
 form{
   margin-top: 3%;
 }

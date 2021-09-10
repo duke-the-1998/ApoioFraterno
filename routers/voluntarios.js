@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const db = require('../database');
-const { checkAuthenticated, checkNotAuthenticated } = require('../middleware/checkAuthenticated');
+const { checkAuthenticated } = require('../middleware/checkAuthenticated');
 const { validateChangePasswordSchema } = require('../middleware/validateRequestSchema');
 const { passwordSchema } = require('../schema/mudarPasswordSchema.js');
 const gerirSotck = require('../modules/gerirStockModule.js');
@@ -105,7 +105,7 @@ router.get('/outros/:acao', checkAuthenticated, async (req, res) => {
     const params = req.flash();
     if (params.type) {
         return res.render('outros.ejs', {
-            tipo: row[0][0].id,
+            tipo: row[0][0].tipo,
             acao: req.params.acao,
             type: params.type,
             intro: params.intro,
@@ -114,7 +114,7 @@ router.get('/outros/:acao', checkAuthenticated, async (req, res) => {
     }
 
     return res.render('outros.ejs', {
-        tipo: row[0][0].id,
+        tipo: row[0][0].tipo,
         acao: req.params.acao
     });
 

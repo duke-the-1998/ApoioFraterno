@@ -3,24 +3,25 @@
 @import url('cortina.css');
 @import url('alertasAdmin.css');
 
-html,body{
+html, body {
   font-family: 'Numans', sans-serif;
 }
 
 @media screen and (max-width: 992px) {
-  .table-data {
-    margin-top: 80px;
+  .main {
+    margin-top: 76px;
   }
 }
 
 @media screen and (min-width: 993px) {
-  .table-data {
-    margin-top: 65px;
+  .main {
+    margin-top: 56px;
   }
 }
 
 h2 {
-  margin-left: 0.5%;
+  padding-top: 10px;
+  padding-left: 10px;
 } 
 
 table {
