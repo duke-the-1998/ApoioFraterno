@@ -7,7 +7,8 @@ const { checkAdmin } = require('../middleware/checkAdmin');
 const { validateRegistarSchema } = require('../middleware/validateRequestSchema');
 const { registarSchema } = require('../schema/registarSchema');
 const { inserirNoInventario, inserirCapacidade } = require('../modules/criarAlimentoModule');
-const { construirAlimentoInventario, construirMinMax, construirRangeCapacidades , updateInventario, deleteInventario} = require ('../modules/tabelaAlimentosModule');
+const { construirAlimentoInventario, construirMinMax, construirRangeCapacidades , 
+    updateInventario, deleteInventario, deleteImage} = require ('../modules/tabelaAlimentosModule');
 
 const router = Router();
 router.use(fileUpload());
@@ -204,6 +205,8 @@ router.post('/updateInventario', checkAuthenticated, checkAdmin, async (req, res
 router.get('/deleteAlimento/:id', checkAuthenticated, checkAdmin, async (req, res) => {
     const id = req.params.id;
     deleteInventario(id);
+    deleteImage(id);
+
     req.flash('type', 'success');
     req.flash('intro', 'Sucesso!');
     req.flash('messages', ['Alimento atualizado']);
@@ -234,20 +237,9 @@ router.get('/delete/historico/:id', checkAuthenticated, checkAdmin, async (req, 
     
     req.flash('type', 'success');
     req.flash('intro', 'Sucesso!');
-    req.flash('messages', ['Uma linha do histórico foi eliminada']);
+    req.flash('messages', ['Linha do histórico eliminada']);
     res.redirect("/admin/relatorio");
 
 });
-
-router.get('/delete/historicoAll', checkAuthenticated, checkAdmin, async (req, res) => {
-    db.promise().query(`TRUNCATE TABLE historico`);
-
-    req.flash('type', 'success');
-    req.flash('intro', 'Sucesso!');
-    req.flash('messages', ['Todo o histórico apagado']);
-    res.redirect("/admin/relatorio");
-
-});
-
 
 module.exports = router;

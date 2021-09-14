@@ -1,5 +1,7 @@
 const db = require('../database');
-var ali=null;
+const fs = require('fs');
+var ali = null;
+
 function construirAlimentoInventario(lista) {
     var alimento = new Array();
 
@@ -52,7 +54,7 @@ function construirMinMax(lista) {
 
 async function updateInventario(id,obs,estado,capacidade){
 
-    try{
+    try {
         if (capacidade != ""){
             await db.promise().query(`INSERT INTO alimento (inventario_id, capacidade) VALUES ('${id}', '${capacidade}')`);
         }
@@ -68,7 +70,7 @@ async function updateInventario(id,obs,estado,capacidade){
 
 async function deleteInventario(id){
     try{
-        var alimentoId = await db.promise().query(`SELECT id FROM alimento WHERE inventario_id ='${id}' `);
+        const alimentoId = await db.promise().query(`SELECT id FROM alimento WHERE inventario_id ='${id}' `);
         for (var n of alimentoId[0]) {
             await db.promise().query(`DELETE FROM validade WHERE alimento_id = '${n.id}'`);
         }
@@ -78,8 +80,21 @@ async function deleteInventario(id){
         return errors.code;
     }
 }
-exports.deleteInventario=deleteInventario;
+
+async function deleteImage(id) {
+    const row = await db.promise().query(`SELECT imagem FROM inventario WHERE id ='${id}'`);
+    console.log(__dirname);
+    const imagePath = './public/images/Alimentos/' + row[0][0].imagem;
+    fs.unlink(imagePath, (err) => {
+        if (err) {
+            throw err;
+        }
+    });
+}
+
 exports.updateInventario = updateInventario;
 exports.construirMinMax = construirMinMax;
 exports.construirAlimentoInventario = construirAlimentoInventario;
 exports.construirRangeCapacidades = construirRangeCapacidades ;
+exports.deleteInventario=deleteInventario;
+exports.deleteImage = deleteImage;
