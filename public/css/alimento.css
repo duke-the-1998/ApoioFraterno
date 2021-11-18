@@ -44,7 +44,7 @@ html, body {
   justify-content: center;
   align-items: center;
   padding-top: 3%;
- 
+  width: 100%;
 }
 
 .btn{
@@ -55,11 +55,24 @@ html, body {
   text-decoration: none;
   display: inline-block;
   border-radius: 20px;
-  margin-left: 15px;
+  margin: 10px;
+}
+
+.btn-submit div input{
+  width: 156px;
+}
+
+.btn-submit a{
+  width: 156px;
+}
+
+.btn-submit div{
+  padding: 8px;
+
 }
 
 .btn:hover, .btn:active {
-  background-color: rgb(11, 119, 190);
+  background-color: rgb(21, 98, 241);
 }
 
 #voltar:link, #voltar:visited {
@@ -70,7 +83,6 @@ html, body {
   text-decoration: none;
   display: inline-block;
   border-radius: 20px;
-  margin-left: 15px;
 }
 
 #voltar:hover, #voltar:active {

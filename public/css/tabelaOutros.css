@@ -9,7 +9,7 @@ html, body{
 
 @media screen and (max-width: 992px) {
   .main {
-    margin-top: 76px;
+    margin-top: 150px;
   }
 }
 
@@ -43,3 +43,4 @@ th {
   background-color: #04AA6D;
   color: white;
 }
+

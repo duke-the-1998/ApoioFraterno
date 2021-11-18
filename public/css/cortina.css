@@ -28,6 +28,10 @@
     transition: 0.3s;
 }
 
+.overlay a:hover {
+    color: white;
+}
+
 .overlay .closebtn {
     position: absolute;
     top: 20px;

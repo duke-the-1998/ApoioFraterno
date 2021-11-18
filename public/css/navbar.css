@@ -19,14 +19,14 @@ ul {
   .Home a {
     background-color: #333;;
     color: white;
-    padding: 16px;
+    padding: 22px;
     font-size: 30px;
     border: none;
   }
 
   .dropdown-content a {
     color: black;
-    padding: 16px 16px;
+    padding: 16px;
     font-size: 30px;
     text-decoration: none;
     display: block;
@@ -36,7 +36,7 @@ ul {
     display: block;
     color: white;
     text-align: center;
-    padding: 16px;
+    padding: 16px 16px;
     font-size: 30px;
     text-decoration: none;
   }
@@ -53,7 +53,7 @@ ul {
   .Home a {
     background-color: #333;;
     color: white;
-    padding: 16px;
+    padding: 19px;
     font-size: 16px;
     border: none;
   }
