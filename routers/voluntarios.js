@@ -95,7 +95,11 @@ router.post('/alimento', checkAuthenticated, async (req, res) => {
     req.flash('type', 'success');
     req.flash('intro', 'Sucesso!');
     
-    res.redirect('/voluntarios/alimento/add/' + body.id)
+    if(body.add) {
+        res.redirect('/voluntarios/alimento/add/' + body.id)
+    } else {
+        res.redirect('/voluntarios/alimento/sub/' + body.id)
+    }
 });
 
 router.get('/outros/:acao', checkAuthenticated, async (req, res) => {
