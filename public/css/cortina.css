@@ -122,5 +122,6 @@
 }
 
 #delete{
+    background-color: red !important;
     flex: none;
 }
