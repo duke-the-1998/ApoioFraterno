@@ -56,7 +56,7 @@ router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, val
             tipo = "voluntário"
         }
 
-        await db.promise().query(`INSERT INTO USERS (nome, email, password, tipo) VALUES ('${username}', '${req.body.email}', '${hashedPassword}', '${tipo}')`);
+        await db.promise().query(`INSERT INTO users (nome, email, password, tipo) VALUES ('${username}', '${req.body.email}', '${hashedPassword}', '${tipo}')`);
         return res.render('registarUser.ejs', { 
             type: 'success',
             intro: 'Sucesso!', 
