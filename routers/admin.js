@@ -33,7 +33,7 @@ router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, val
     try {
         const username = req.body.username;
         const email = req.body.email;
-        const row = await db.promise().query(`SELECT nome, email FROM USERS WHERE nome = '${username}' OR email = '${email}'`);
+        const row = await db.promise().query(`SELECT nome, email FROM users WHERE nome = '${username}' OR email = '${email}'`);
         if (row[0].length !== 0) {
             if (row[0][0].nome === username) {
                 return res.render('registarUser.ejs', {
@@ -72,8 +72,7 @@ router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, val
 });
 
 router.get('/tabelaUsers', checkAuthenticated, checkAdmin, async (req, res) => {
-    const sql = `SELECT nome, email, tipo FROM users
-                    EXCEPT ( SELECT nome, email, tipo FROM users WHERE email = "sobreda@diocese.setubal.pt")`; 
+    const sql = `SELECT nome, email, tipo FROM users WHERE email NOT IN (SELECT email FROM users WHERE email = "sobreda@diocese.setubal.pt")`; 
     const data = await db.promise().query(sql);
     const params = req.flash();
 
