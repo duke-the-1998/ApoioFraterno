@@ -42,7 +42,7 @@ router.get('/alimento/add/:id', checkAuthenticated, async (req, res) => {
 
     const id = req.params.id;
     const produto = await db.promise().query(`SELECT * FROM inventario WHERE id ='${id}'`);
-    const listaCapacidades = await db.promise().query(`SELECT * FROM alimento WHERE INVENTARIO_ID ='${id}'`);
+    const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
     const novaListaCapacidades = gerirSotck.construirListaCapacidades(listaCapacidades[0]);
 
     var body;
@@ -80,6 +80,7 @@ router.post('/alimento', checkAuthenticated, async (req, res) => {
     const user = req.session.passport.user;
     const username = await db.promise().query(`SELECT nome FROM users WHERE email = '${user}'`)
     const body = req.body;
+    console.log(body.validade);
     const validade = body.validade + "-01";
     const alimento = await db.promise().query(`SELECT * FROM alimento WHERE inventario_id = '${body.id}' AND CAPACIDADE= '${body.peso}'`);
     const row = await db.promise().query(`SELECT * FROM validade WHERE alimento_id = '${alimento[0][0].id}' AND DATA = '${validade}'`);
@@ -87,18 +88,15 @@ router.post('/alimento', checkAuthenticated, async (req, res) => {
     if(body.add) {
         gerirSotck.darEntradaProduto(row[0], username[0][0].nome, body.alimento, alimento[0][0].id, validade, body.peso, body.quantidade);
         req.flash('messages', ['Entrada do produto realizada com sucesso']);
+        req.flash('type', 'success');
+        req.flash('intro', 'Sucesso!');
+        res.redirect('/voluntarios/alimento/add/' + body.id);
     } else {    
         gerirSotck.darSaidaProduto(row[0], username[0][0].nome, body.alimento, alimento[0][0].id, validade, body.peso, body.quantidade);
         req.flash('messages', ['Saída do produto realizada com sucesso']);
-    }
-
-    req.flash('type', 'success');
-    req.flash('intro', 'Sucesso!');
-    
-    if(body.add) {
-        res.redirect('/voluntarios/alimento/add/' + body.id)
-    } else {
-        res.redirect('/voluntarios/alimento/sub/' + body.id)
+        req.flash('type', 'success');
+        req.flash('intro', 'Sucesso!');
+        res.redirect('/voluntarios/alimento/sub/' + body.id);
     }
 });
 

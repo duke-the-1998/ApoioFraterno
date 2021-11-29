@@ -45,7 +45,7 @@ async function darEntradaProduto(row, nome, produto, alimento_id, validade, peso
 
 async function darSaidaProduto(row, username, alimento, alimento_id, validade, peso, quantidade) {
     const split = validade.split("-");
-    const formatValidade = split[2] + "-" + split[1] + "-" + split[0];;
+    const formatValidade = split[2] + "-" + split[1] + "-" + split[0];
     const acao = "Saída " + quantidade+ " " + alimento + " " + peso + " " + formatValidade;
 
     if (row.length === 0) {
@@ -123,4 +123,3 @@ exports.construirListaCapacidades = construirListaCapacidades;
 exports.darEntradaProduto = darEntradaProduto;
 exports.darSaidaProduto = darSaidaProduto;
 exports.bodyAlimento = bodyAlimento;
-
