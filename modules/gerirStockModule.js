@@ -28,32 +28,53 @@ function construirListaCapacidades(lista) {
 }
 
 async function darEntradaProduto(row, nome, produto, alimento_id, validade, peso, quantidade) {
-    const split = validade.split("-");
-    const formatValidade = split[2] + "-" + split[1] + "-" + split[0];;
-    const acao = "Entrada " + quantidade+ " " + produto + " " + peso + " " + formatValidade;
 
+    var acao = "Entrada " + quantidade + " " + produto + " " + peso + " sem data";
+
+    if(validade !== 'NULL') {
+        const split = validade.split("-");
+        const formatValidade = split[2] + "-" + split[1] + "-" + split[0];
+        acao = "Entrada " + quantidade + " " + produto + " " + peso + " " + formatValidade;
+    }
+    
     if (row.length === 0) {
-        await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}', '${quantidade}')`);
+        if(validade !== 'NULL')
+            await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}', '${quantidade}')`);
+        else
+            await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', 'NULL', '${quantidade}')`);
         await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${nome}', '${acao}')`);
-        return
+        return;
     } else {
-        await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE+'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`);
+        if(validade !== 'NULL')
+            await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE +'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`);
+        else
+            await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE +'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}'`);
         await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${nome}', '${acao}')`);
-        return
+        return;
     }
 }
 
 async function darSaidaProduto(row, username, alimento, alimento_id, validade, peso, quantidade) {
-    const split = validade.split("-");
-    const formatValidade = split[2] + "-" + split[1] + "-" + split[0];
-    const acao = "Saída " + quantidade+ " " + alimento + " " + peso + " " + formatValidade;
+    var acao = "Entrada " + quantidade + " " + produto + " " + peso + " sem data";
+
+    if(validade !== 'NULL') {
+        const split = validade.split("-");
+        const formatValidade = split[2] + "-" + split[1] + "-" + split[0];
+        acao = "Entrada " + quantidade + " " + produto + " " + peso + " " + formatValidade;
+    }
 
     if (row.length === 0) {
-        await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}','${- quantidade}')`);
+        if(validade !== 'NULL')
+            await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}', '${-quantidade}')`);
+        else
+            await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', 'NULL', '${-quantidade}')`);
         await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${username}', '${acao}')`);
-        return
+        return;
     } else {
-        await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`);
+        if(validade !== 'NULL')
+            await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`);
+        else
+            await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}'`);
         await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${username}', '${acao}')`);
         return
     }
