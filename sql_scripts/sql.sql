@@ -59,9 +59,7 @@ CREATE TABLE historico (
     PRIMARY KEY (id)
 );
 
-INSERT INTO users (nome, email, password, tipo) VALUES ('admin', 'admin@admin.pt', '$2a$10$MImNYEhCRGVrSWWVp9DMtOL5m5XCDScsrA1zVkeMpDKC72V95VXzy', 'admin');
-INSERT INTO users (nome, email, password, tipo) VALUES ('admin', 'admin@admin.pt', '$2a$10$ohUHjwo1Nc9dNkM20Na3nu.fLItq3MaObXuvMrOz9GAJ4Uqfn0fGi', 'admin');
-INSERT INTO users (nome, email, password, tipo) VALUES ('Grupo 1', 'grupo1@gmail.com', '$2a$10$7SoIHtKRdAV3F39mq9BFn.HUkGYrwL7dz6HTYFHVfQR1I66CNKkNa', 'voluntario');
+INSERT INTO users (nome, email, password, tipo) VALUES ('admin', 'sobreda@diocese.setubal.pt', '$2a$10$MImNYEhCRGVrSWWVp9DMtOL5m5XCDScsrA1zVkeMpDKC72V95VXzy', 'admin');
 
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ('Açucar', 'Açucar.jpg', 'Dicas sobre os alimentos', 0, 1);
 INSERT INTO inventario (produto, imagem, observacoes, validade, estado) VALUES ('Arroz', 'Arroz.jpg', 'Pacotes com capacidades diferentes das capacidades já existentes inventariar como novo produto (ex: 3Kg / 500g). Não esquecer de dar baixa mesmo que o pacote tenha ido para o lixo.', 1, 1);

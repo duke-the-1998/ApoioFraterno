@@ -42,7 +42,7 @@ router.get('/alimento/add/:id', checkAuthenticated, async (req, res) => {
 
     const id = req.params.id;
     const produto = await db.promise().query(`SELECT * FROM inventario WHERE id ='${id}'`);
-    const listaCapacidades = await db.promise().query(`SELECT * FROM ALIMENTO WHERE INVENTARIO_ID ='${id}'`);
+    const listaCapacidades = await db.promise().query(`SELECT * FROM alimento WHERE inventario_id ='${id}'`);
     const novaListaCapacidades = gerirSotck.construirListaCapacidades(listaCapacidades[0]);
 
     var body;
