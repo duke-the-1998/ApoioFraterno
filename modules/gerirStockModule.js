@@ -41,7 +41,7 @@ async function darEntradaProduto(row, nome, produto, alimento_id, validade, peso
         if(validade !== 'NULL')
             await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}', '${quantidade}')`);
         else
-            await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', 'NULL', '${quantidade}')`);
+            await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', NULL, '${quantidade}')`);
         await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${nome}', '${acao}')`);
         return;
     } else {
@@ -67,7 +67,7 @@ async function darSaidaProduto(row, username, alimento, alimento_id, validade, p
         if(validade !== 'NULL')
             await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', '${validade}', '${-quantidade}')`);
         else
-            await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', 'NULL', '${-quantidade}')`);
+            await db.promise().query(`INSERT INTO validade (alimento_id, data, quantidade) VALUES ('${alimento_id}', NULL, '${-quantidade}')`);
         await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${username}', '${acao}')`);
         return;
     } else {
