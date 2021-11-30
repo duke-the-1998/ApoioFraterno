@@ -80,10 +80,9 @@ router.post('/alimento', checkAuthenticated, async (req, res) => {
     const user = req.session.passport.user;
     const username = await db.promise().query(`SELECT nome FROM users WHERE email = '${user}'`)
     const body = req.body;
-    console.log(body.validade);
     var validade = 'NULL';
     var row = null;
-    
+
     if(body.validade) {
         validade = body.validade + "-01";
         row = await db.promise().query(`SELECT * FROM validade WHERE alimento_id = '${alimento[0][0].id}' AND DATA = '${validade}'`);
@@ -92,7 +91,6 @@ router.post('/alimento', checkAuthenticated, async (req, res) => {
     }
 
     const alimento = await db.promise().query(`SELECT * FROM alimento WHERE inventario_id = '${body.id}' AND CAPACIDADE= '${body.peso}'`);
-    const row = await db.promise().query(`SELECT * FROM validade WHERE alimento_id = '${alimento[0][0].id}' AND DATA = '${validade}'`);
 
     if(body.add) {
         gerirSotck.darEntradaProduto(row[0], username[0][0].nome, body.alimento, alimento[0][0].id, validade, body.peso, body.quantidade);
