@@ -46,9 +46,9 @@ async function darEntradaProduto(row, nome, produto, alimento_id, validade, peso
         return;
     } else {
         if(validade !== 'NULL')
-            await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE +'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`);
+            await db.promise().query(`UPDATE validade SET quantidade = quantidade +'${quantidade}' WHERE alimento_id = '${alimento_id}' AND DATA = '${validade}'`);
         else
-            await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE +'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}'`);
+            await db.promise().query(`UPDATE validade SET quantidade = quantidade +'${quantidade}' WHERE alimento_id = '${alimento_id}'`);
         await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${nome}', '${acao}')`);
         return;
     }
@@ -72,9 +72,9 @@ async function darSaidaProduto(row, username, alimento, alimento_id, validade, p
         return;
     } else {
         if(validade !== 'NULL')
-            await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}' AND DATA = '${validade}'`);
+            await db.promise().query(`UPDATE validade SET quantidade = quantidade-'${quantidade}' WHERE alimento_id = '${alimento_id}' AND DATA = '${validade}'`);
         else
-            await db.promise().query(`UPDATE VALIDADE SET QUANTIDADE = QUANTIDADE-'${quantidade}' WHERE ALIMENTO_ID = '${alimento_id}'`);
+            await db.promise().query(`UPDATE validade SET quantidade = quantidade-'${quantidade}' WHERE alimento_id = '${alimento_id}'`);
         await db.promise().query(`INSERT INTO historico (data, nome, acao) VALUES (NOW(), '${username}', '${acao}')`);
         return
     }
