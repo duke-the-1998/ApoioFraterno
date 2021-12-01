@@ -5,4 +5,5 @@ module.exports = mysql.createConnection({
     user: 'newuser',
     password: '1135!Sobreda',
     database: 'apoiofraterno',
+    charset: 'utf8'
 });
