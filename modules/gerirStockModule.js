@@ -55,7 +55,7 @@ async function darEntradaProduto(row, nome, produto, alimento_id, validade, peso
 }
 
 async function darSaidaProduto(row, nome, produto, alimento_id, validade, peso, quantidade) {
-    var acao = "Entrada " + quantidade + " " + produto + " " + peso + " sem data";
+    var acao = "Saída " + quantidade + " " + produto + " " + peso + " sem data";
 
     if(validade !== 'NULL') {
         const split = validade.split("-");
