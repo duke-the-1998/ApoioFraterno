@@ -4,6 +4,7 @@ function construirInventario(lista) {
     var inventario = new Array();
 
     for (var n of lista) {
+	console.log(n.produto);
         const obj = {
             alimento: n.produto,
             imagem: n.imagem,
@@ -60,7 +61,7 @@ async function darSaidaProduto(row, nome, produto, alimento_id, validade, peso, 
     if(validade !== 'NULL') {
         const split = validade.split("-");
         const formatValidade = split[2] + "-" + split[1] + "-" + split[0];
-        acao = "Entrada " + quantidade + " " + produto + " " + peso + " " + formatValidade;
+        acao = "Entrada" + quantidade + " " + produto + " " + peso + " " + formatValidade;
     }
 
     if (row.length === 0) {
