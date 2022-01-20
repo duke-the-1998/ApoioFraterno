@@ -48,7 +48,7 @@
     }
 }
 
-.btn-submit .btn {
+#criarAlimento .btn-submit .btn {
     background-color: rgb(22, 145, 228);
     color: white;
     padding: 14px 25px;
