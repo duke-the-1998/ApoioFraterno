@@ -72,7 +72,7 @@ router.post('/registarUser', checkAuthenticated, checkAdmin, registarSchema, val
 });
 
 router.get('/tabelaUsers', checkAuthenticated, checkAdmin, async (req, res) => {
-    const sql = `SELECT nome, email, tipo FROM users WHERE email NOT IN (SELECT email FROM users WHERE email = "sobreda@diocese.setubal.pt")`; 
+    const sql = `SELECT nome, email, tipo FROM users WHERE email NOT IN (SELECT email FROM users WHERE email = "sobreda@diocese-setubal.pt") ORDER BY nome ASC`; 
     const data = await db.promise().query(sql);
     const params = req.flash();
 
