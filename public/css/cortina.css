@@ -110,15 +110,15 @@
 }
 
 #editarAlimento #submit:hover,#criarAlimento #submit:active {
-    background-color: rgb(11, 119, 190);
+    background-color: rgb(21, 98, 241);
 }
 
 #editarAlimento #delete{
-    background-color: red;
+    background-color: #f44336;
 }
 
 #editarAlimento #delete:hover,#criarAlimento #delete:active {
-    background-color: rgb(168, 14, 14);
+    background-color: red;
 } 
 
 #editarAlimento .btn-submit input{
